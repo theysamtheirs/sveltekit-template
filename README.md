@@ -254,6 +254,88 @@ This template uses [shadcn-svelte](https://www.shadcn-svelte.com) components. To
 npx shadcn-svelte@latest add <component-name>
 ```
 
+## Icons with Iconify
+
+This template includes [Iconify](https://iconify.design) support for Tailwind CSS 4, giving you access to over 275,000 icons from popular icon sets.
+
+### Basic Usage
+
+Use icons with the dynamic selector syntax:
+
+```html
+<!-- Material Design Light icons -->
+<span class="icon-[mdi-light--home]"></span>
+<span class="icon-[mdi-light--user]"></span>
+
+<!-- Lucide icons -->
+<span class="icon-[lucide--search]"></span>
+<span class="icon-[lucide--heart]"></span>
+
+<!-- Heroicons -->
+<span class="icon-[heroicons--bars-3]"></span>
+<span class="icon-[heroicons--x-mark]"></span>
+```
+
+### Finding Icons
+
+1. Browse icons at [Iconify icon sets website](https://icon-sets.iconify.design/)
+2. Search for the icon you want
+3. Click on the icon
+4. In code options, select "CSS" → "Tailwind CSS"
+5. Copy the generated class name
+
+### Icon Syntax
+
+The syntax follows this pattern: `icon-[{prefix}--{name}]`
+
+- `{prefix}`: Icon set prefix (e.g., `mdi-light`, `lucide`, `heroicons`)
+- `{name}`: Icon name with hyphens instead of spaces
+
+### Styling Icons
+
+Icons inherit text color and can be styled like text:
+
+```html
+<!-- Colored icons -->
+<span class="icon-[lucide--heart] text-red-500"></span>
+<span class="icon-[mdi-light--home] text-blue-600"></span>
+
+<!-- Sized icons -->
+<span class="icon-[lucide--search] text-lg"></span>
+<span class="icon-[heroicons--bars-3] text-2xl"></span>
+
+<!-- Combined styling -->
+<span class="icon-[mdi-light--user] text-green-500 text-xl"></span>
+```
+
+### Popular Icon Sets
+
+- **Lucide** (`lucide--*`) - Clean, consistent icons
+- **Material Design Light** (`mdi-light--*`) - Google's Material Design
+- **Heroicons** (`heroicons--*`) - Tailwind UI's icon set
+- **Tabler** (`tabler--*`) - Free SVG icons
+- **Phosphor** (`ph--*`) - Flexible icon family
+
+### Example in Components
+
+```svelte
+<!-- Navigation.svelte -->
+<nav class="flex items-center gap-4">
+  <a href="/" class="flex items-center gap-2">
+    <span class="icon-[lucide--home] text-lg"></span>
+    Home
+  </a>
+  <a href="/dashboard" class="flex items-center gap-2">
+    <span class="icon-[lucide--layout-dashboard] text-lg"></span>
+    Dashboard
+  </a>
+  <button class="flex items-center gap-2">
+    <span class="icon-[lucide--user] text-lg"></span>
+    Profile
+  </button>
+</nav>
+```
+
 ## Tech Stack
 
 - **Framework**: [SvelteKit](https://kit.svelte.dev)
