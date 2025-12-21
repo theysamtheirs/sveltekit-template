@@ -22,12 +22,17 @@ fi
 sed -i '' '/DATABASE_URL/d' .env 2>/dev/null || true
 sed -i '' '/DATABASE_AUTH_TOKEN/d' .env 2>/dev/null || true
 
+{
+    echo "DATABASE_URL=$DB_URL"
+    echo "DATABASE_AUTH_TOKEN=$DB_TOKEN"
+} >> .env
+
 echo
 echo "✅ Updated .env with Turso credentials for $DB_NAME"
 echo
 echo "🔗 For Vercel, copy the block below and paste into the Environment Variables UI:"
 echo "-----------------------------------------------------"
-echo "TURSO_DB_URL=$DB_URL"
-echo "TURSO_DB_AUTH_TOKEN=$DB_TOKEN"
+echo "DATABASE_URL=$DB_URL"
+echo "DATABASE_AUTH_TOKEN=$DB_TOKEN"
 echo "-----------------------------------------------------"
 echo "Then choose the appropriate environment (Development/Preview/Production)."
