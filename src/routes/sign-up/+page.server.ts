@@ -19,14 +19,18 @@ export const actions: Actions = {
 		const username = formData.get('username');
 		const password = formData.get('password');
 
-		if (!validateUsername(username)) {
+		const usernameValidation = validateUsername(username);
+		if (!usernameValidation.valid) {
 			return fail(400, {
-				message: 'Invalid username (min 3, max 31 characters, alphanumeric only)'
+				message: usernameValidation.error || 'Invalid username'
 			});
 		}
 		if (!validatePassword(password)) {
-			return fail(400, { message: 'Invalid password (min 6, max 255 characters)' });
+			return fail(400, { message: 'Password must be at least 6 characters long' });
 		}
+
+		// Normalize username to lowercase for case-insensitive storage
+		const normalizedUsername = (username as string).trim().toLowerCase();
 
 		const userId = generateUserId();
 		const passwordHash = await hash(password, {
@@ -38,7 +42,7 @@ export const actions: Actions = {
 		});
 
 		try {
-			await db.insert(table.user).values({ id: userId, username, passwordHash });
+			await db.insert(table.user).values({ id: userId, username: normalizedUsername, passwordHash });
 
 			const sessionToken = auth.generateSessionToken();
 			const session = await auth.createSession(sessionToken, userId);
@@ -57,13 +61,45 @@ function generateUserId() {
 	return id;
 }
 
-function validateUsername(username: unknown): username is string {
-	return (
-		typeof username === 'string' &&
-		username.length >= 3 &&
-		username.length <= 31 &&
-		/^[a-z0-9_-]+$/.test(username)
-	);
+function validateUsername(username: unknown): { valid: boolean; error?: string } {
+	if (typeof username !== 'string') {
+		return { valid: false, error: 'Username must be a string' };
+	}
+
+	const trimmed = username.trim();
+
+	if (trimmed.length < 3) {
+		return { valid: false, error: 'Username must be at least 3 characters long' };
+	}
+
+	if (trimmed.length > 31) {
+		return { valid: false, error: 'Username must be 31 characters or less' };
+	}
+
+	// Allow letters (both cases), numbers, underscores, and hyphens
+	if (!/^[a-zA-Z0-9_-]+$/.test(trimmed)) {
+		return {
+			valid: false,
+			error: 'Username can only contain letters, numbers, underscores, and hyphens'
+		};
+	}
+
+	// Cannot start with underscore or hyphen
+	if (/^[_-]/.test(trimmed)) {
+		return { valid: false, error: 'Username cannot start with an underscore or hyphen' };
+	}
+
+	// Cannot end with underscore or hyphen
+	if (/[_-]$/.test(trimmed)) {
+		return { valid: false, error: 'Username cannot end with an underscore or hyphen' };
+	}
+
+	// Cannot be all numbers
+	if (/^\d+$/.test(trimmed)) {
+		return { valid: false, error: 'Username cannot be all numbers' };
+	}
+
+	return { valid: true };
 }
 
 function validatePassword(password: unknown): password is string {

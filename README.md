@@ -1,148 +1,186 @@
 # SvelteKit Template
 
-A modern, production-ready SvelteKit template with authentication, database, and beautiful UI components. Built with SvelteKit, Turso, Lucia Auth, Drizzle ORM, shadcn-svelte, and Tailwind CSS.
+> **A production-ready SvelteKit template that gets you from zero to deployed in under 5 minutes.**
 
-## Features
+This template provides everything you need to build and deploy a modern web application: authentication, database, beautiful UI components, and deployment configuration—all pre-configured and ready to use.
 
-- 🔐 **Authentication** - Secure user authentication with Lucia Auth
-- 🗄️ **Database** - Turso (LibSQL) database with Drizzle ORM
-- 🎨 **UI Components** - shadcn-svelte components with Tailwind CSS v4
-- 🚀 **Deployment Ready** - Configured for Vercel deployment
-- 📱 **Responsive Design** - Mobile-first, modern UI
-- 🔒 **Type Safe** - Full TypeScript support
+## ✨ Features
 
-## Prerequisites
+- 🔐 **Complete Authentication System** - User registration, login, secure password hashing (Argon2), and session management
+- 🗄️ **Database Ready** - Turso (LibSQL) with Drizzle ORM, automated setup script, and type-safe queries
+- 🎨 **Beautiful UI Components** - shadcn-svelte components with Tailwind CSS v4, dark mode, and 275k+ icons
+- ⚡ **Lightning Fast** - Built on SvelteKit with server-side rendering and optimized builds
+- 🚀 **Deploy Ready** - Pre-configured for Vercel with automated environment variable setup
+- 🔒 **Type Safe** - Full TypeScript support with strict type checking
+- 📱 **Responsive Design** - Mobile-first, modern UI that works on all devices
+- 🛠️ **Developer Experience** - ESLint, Prettier, and comprehensive tooling included
 
-Before you begin, make sure you have the following accounts set up:
+## 🚀 Quick Start
 
-- **Turso Account** - For the database ([Sign up here](https://turso.tech))
-- **GitHub Account** - For version control and CI/CD
-- **Vercel Account** - For deployment ([Sign up here](https://vercel.com))
+Get your application running in 3 simple steps:
 
-You'll also need:
-- Node.js 18+ installed
-- npm, pnpm, or yarn package manager
-- Turso CLI installed (`brew install tursodatabase/tap/turso` or see [Turso CLI docs](https://docs.turso.tech/cli/installation))
-
-## Getting Started
-
-### 1. Clone and Install
+### Step 1: Clone and Install
 
 ```bash
-# Clone the repository
-git clone https://github.com/theysamtheirs/sveltekit-template.git
+git clone <your-repo-url>
 cd sveltekit-template
-
-# Install dependencies
 npm install
 ```
 
-### 2. Set Up Turso Database (Automated)
+### Step 2: Run Automated Setup
 
-**Quick Setup** (Recommended):
+```bash
+# Make sure you're logged into Turso first
+turso auth login
 
-1. **Install Turso CLI** (if not already installed):
-   ```bash
-   # macOS
-   brew install tursodatabase/tap/turso
-   
-   # Linux
-   curl -sSfL https://get.tur.so/install.sh | bash
-   
-   # Windows (using Scoop)
-   scoop bucket add turso https://github.com/tursodatabase/scoop-turso.git
-   scoop install turso
-   ```
+# Run the setup script (it handles everything!)
+npm run setup
+```
 
-2. **Log in to Turso**:
+The setup script will:
+- ✅ Create your Turso database
+- ✅ Generate database credentials
+- ✅ Configure your `.env` file automatically
+- ✅ Push the database schema
+- ✅ Show you exactly what to copy for Vercel deployment
+
+### Step 3: Start Building
+
+```bash
+npm run dev
+```
+
+That's it! Visit `http://localhost:5173` and start building your application.
+
+> **💡 Pro Tip**: The setup script works with npm, pnpm, yarn, or bun. It automatically detects your package manager.
+
+## 📋 Prerequisites
+
+Before getting started, you'll need:
+
+### Required Accounts
+- **Turso Account** - Free tier available ([Sign up here](https://turso.tech))
+- **Vercel Account** - Free tier available ([Sign up here](https://vercel.com))
+- **GitHub Account** - For version control (optional but recommended)
+
+### Required Software
+- **Node.js 18+** - [Download here](https://nodejs.org/)
+- **Package Manager** - npm (comes with Node.js), pnpm, yarn, or bun
+- **Turso CLI** - Install with one command:
+  ```bash
+  # macOS
+  brew install tursodatabase/tap/turso
+  
+  # Linux
+  curl -sSfL https://get.tur.so/install.sh | bash
+  
+  # Windows (Scoop)
+  scoop bucket add turso https://github.com/tursodatabase/scoop-turso.git
+  scoop install turso
+  ```
+
+## 📖 Detailed Setup Guide
+
+### Automated Setup (Recommended)
+
+The automated setup is the fastest way to get started:
+
+1. **Log in to Turso**:
    ```bash
    turso auth login
    ```
 
-3. **Run the automated setup script**:
+2. **Run the setup script**:
    ```bash
    npm run setup
-   # or
-   bun run setup
    ```
 
-   This script will:
-   - Prompt you for a database name
-   - Create the Turso database (if it doesn't exist)
-   - Generate database credentials
-   - Update your `.env` file automatically
-   - Push the database schema
+   The script will:
+   - ✅ Check if Turso CLI is installed
+   - ✅ Verify you're logged in
+   - ✅ Prompt for a database name
+   - ✅ Create the database (or use existing)
+   - ✅ Generate and save credentials to `.env`
+   - ✅ Push the database schema
+   - ✅ Display Vercel environment variables to copy
 
-> **Note**: The setup script works with npm, pnpm, yarn, or bun. It will automatically detect which package manager you're using.
+3. **Start developing**:
+   ```bash
+   npm run dev
+   ```
 
-### Alternative: Manual Setup
+### Manual Setup (Alternative)
 
-If you prefer to set up manually:
+If you prefer manual setup or need more control:
 
 1. **Create a database**:
    ```bash
    turso db create <your-database-name>
    ```
 
-2. **Get your database credentials**:
+2. **Get credentials**:
    ```bash
-   # Get the database URL
+   # Get database URL
    turso db show <your-database-name> --url
    
-   # Get the auth token
-   turso db tokens create <your-database-name>
+   # Create auth token (30-day expiration)
+   turso db tokens create <your-database-name> --expiration 30d
    ```
 
-3. **Create a `.env` file**:
+3. **Create `.env` file**:
    ```bash
+   # Create from example (if it exists)
    cp .env.example .env
+   
+   # Or create manually
+   touch .env
    ```
 
-4. **Add your Turso credentials to `.env`**:
+4. **Add credentials to `.env`**:
    ```env
    DATABASE_URL=libsql://your-database-url.turso.io
    DATABASE_AUTH_TOKEN=your-auth-token-here
    ```
 
-5. **Push the database schema**:
+5. **Push schema**:
    ```bash
    npm run db:push
    ```
 
-> **Note**: In development, `DATABASE_AUTH_TOKEN` is optional. However, it's required for production deployments.
+> **Note**: `DATABASE_AUTH_TOKEN` is optional in development but required for production deployments.
 
-### 3. Start Development Server
-
-```bash
-npm run dev
-
-# or start with auto-open
-npm run dev -- --open
-```
-
-Visit `http://localhost:5173` to see your application.
-
-## Project Structure
+## 📁 Project Structure
 
 ```
 sveltekit-template/
 ├── src/
 │   ├── lib/
 │   │   ├── components/
-│   │   │   ├── ui/          # shadcn-svelte components
+│   │   │   ├── ui/              # shadcn-svelte components
+│   │   │   │   ├── button/
+│   │   │   │   ├── card/
+│   │   │   │   ├── input/
+│   │   │   │   └── ...          # More UI components
 │   │   │   └── Navigation.svelte
 │   │   ├── server/
-│   │   │   ├── auth.ts     # Lucia auth configuration
-│   │   │   └── db/         # Database schema and connection
-│   │   └── utils.ts
+│   │   │   ├── auth.ts          # Authentication logic
+│   │   │   └── db/
+│   │   │       ├── index.ts     # Database connection
+│   │   │       └── schema.ts    # Database schema
+│   │   └── utils.ts             # Utility functions
 │   ├── routes/
-│   │   ├── sign-in/        # Sign in page
-│   │   ├── sign-up/        # Sign up page
-│   │   ├── dashboard/      # Protected dashboard
-│   │   └── +layout.svelte  # Root layout with navigation
-│   └── app.css
-├── drizzle.config.ts       # Drizzle ORM configuration
-├── svelte.config.js        # SvelteKit configuration
+│   │   ├── +layout.svelte       # Root layout
+│   │   ├── +page.svelte         # Landing page
+│   │   ├── sign-in/             # Sign in page
+│   │   ├── sign-up/             # Sign up page
+│   │   ├── sign-out/            # Sign out endpoint
+│   │   └── dashboard/           # Protected dashboard
+│   ├── hooks.server.ts           # Server hooks (auth middleware)
+│   └── app.css                  # Global styles
+├── scripts/
+│   └── setup-turso.sh           # Automated setup script
+├── drizzle.config.ts            # Drizzle ORM configuration
+├── svelte.config.js             # SvelteKit configuration
 └── package.json
 ```
 
@@ -162,45 +200,48 @@ npm run db:migrate
 npm run db:studio
 ```
 
-## Deployment to Vercel
+## 🚀 Deployment to Vercel
 
-### 1. Push to GitHub
+Deploying to Vercel is straightforward with this template. The setup script even provides the exact environment variables you need!
 
-1. Create a new repository on GitHub
-2. Push your code:
-   ```bash
-   git remote add origin <your-github-repo-url>
-   git branch -M main
-   git push -u origin main
-   ```
+### Step 1: Push to GitHub
 
-### 2. Deploy to Vercel
+```bash
+# Create a new repository on GitHub, then:
+git remote add origin <your-github-repo-url>
+git branch -M main
+git push -u origin main
+```
 
-1. **Import your GitHub repository**:
+### Step 2: Deploy to Vercel
+
+1. **Import Repository**:
    - Go to [Vercel Dashboard](https://vercel.com/dashboard)
    - Click "Add New Project"
    - Import your GitHub repository
 
-2. **Configure Environment Variables**:
-   - In the Vercel project settings, go to "Environment Variables"
-   - Add the following variables:
-     - `DATABASE_URL` - Your Turso database URL
-     - `DATABASE_AUTH_TOKEN` - Your Turso auth token
+2. **Add Environment Variables**:
+   - The setup script displays these when it completes
+   - Go to Project Settings → Environment Variables
+   - Add both variables for all environments (Production, Preview, Development):
+     ```
+     DATABASE_URL=libsql://your-database-url.turso.io
+     DATABASE_AUTH_TOKEN=your-auth-token-here
+     ```
 
 3. **Deploy**:
-   - Vercel will automatically detect SvelteKit
-   - Click "Deploy" and wait for the build to complete
+   - Vercel automatically detects SvelteKit
+   - Click "Deploy" and wait for the build
+   - Your app will be live in ~2 minutes!
 
-4. **Run Database Migrations** (if needed):
-   - After deployment, you may need to run migrations
-   - You can do this via Vercel's CLI or add a build script
+### Step 3: Verify Deployment
 
-### 3. Post-Deployment
+After deployment:
+- ✅ Test the authentication flow (sign up, sign in)
+- ✅ Verify database connections work
+- ✅ Check that protected routes redirect correctly
 
-After deployment, make sure to:
-- Run database migrations: `npm run db:push` (or set up a migration script)
-- Verify your environment variables are set correctly
-- Test authentication flows
+> **💡 Tip**: The database schema is already pushed during setup, so no additional migrations are needed unless you modify the schema later.
 
 ## Environment Variables
 
@@ -209,48 +250,64 @@ After deployment, make sure to:
 | `DATABASE_URL` | Turso database URL | Yes | Format: `libsql://your-db.turso.io` |
 | `DATABASE_AUTH_TOKEN` | Turso authentication token | Production | Optional in dev, required in production |
 
-## Available Scripts
+## 🛠️ Available Scripts
 
+### Development
 ```bash
-# Development
-npm run dev          # Start development server
+npm run dev          # Start development server (with hot reload)
 npm run build        # Build for production
-npm run preview      # Preview production build
-
-# Database
-npm run db:push      # Push schema to database
-npm run db:generate  # Generate migrations
-npm run db:migrate   # Run migrations
-npm run db:studio    # Open Drizzle Studio
-
-# Code Quality
-npm run check        # Type check
-npm run lint         # Lint code
-npm run format       # Format code
+npm run preview      # Preview production build locally
 ```
 
-## Authentication
+### Setup & Database
+```bash
+npm run setup        # Automated setup (installs deps + configures database)
+npm run db:push      # Push schema changes to database
+npm run db:generate  # Generate migration files
+npm run db:migrate   # Run migrations
+npm run db:studio    # Open Drizzle Studio (database GUI)
+```
 
-This template uses a custom authentication implementation inspired by Lucia Auth patterns. The authentication system includes:
+### Code Quality
+```bash
+npm run check        # TypeScript type checking
+npm run lint         # Lint code (ESLint + Prettier check)
+npm run format       # Format code with Prettier
+npm run check:watch  # Type check in watch mode
+```
 
-- User registration and login
-- Secure password hashing with Argon2
-- Session management
-- Protected routes
+## 🔐 Authentication
 
-### Protected Routes
+This template includes a complete authentication system with secure password hashing and session management.
+
+### Features
+
+- ✅ User registration with validation
+- ✅ Secure login
+- ✅ Argon2 password hashing (industry standard)
+- ✅ Session-based authentication
+- ✅ Automatic session renewal
+- ✅ Protected route helpers
+- ✅ Sign out functionality
+
+### How It Works
+
+Authentication is handled in `src/hooks.server.ts`, which validates sessions on every request. User data is available in `event.locals.user` throughout your application.
+
+### Protecting Routes
 
 To protect a route, add this to your `+page.server.ts`:
 
 ```typescript
 import { redirect } from '@sveltejs/kit';
 import { getRequestEvent } from '$app/server';
+import type { PageServerLoad } from './$types';
 
-export const load = async () => {
+export const load: PageServerLoad = async () => {
   const { locals } = getRequestEvent();
   
   if (!locals.user) {
-    return redirect(302, '/sign-in');
+    redirect(302, '/sign-in');
   }
   
   return {
@@ -259,13 +316,61 @@ export const load = async () => {
 };
 ```
 
-## UI Components
+### Accessing User Data
 
-This template uses [shadcn-svelte](https://www.shadcn-svelte.com) components. To add more components:
+In any server-side code (load functions, actions, API routes):
+
+```typescript
+// User is available in event.locals
+const user = event.locals.user;
+const session = event.locals.session;
+```
+
+In Svelte components:
+
+```svelte
+<script lang="ts">
+  import type { PageData } from './$types';
+  let { data }: { data: PageData } = $props();
+</script>
+
+{#if data.user}
+  <p>Welcome, {data.user.username}!</p>
+{/if}
+```
+
+## 🎨 UI Components
+
+This template uses [shadcn-svelte](https://www.shadcn-svelte.com) components built on top of [bits-ui](https://bits-ui.com) and styled with Tailwind CSS v4.
+
+### Included Components
+
+- Button
+- Card
+- Input
+- Label
+- Alert
+- Dropdown Menu
+
+### Adding More Components
+
+Add any component from the shadcn-svelte library:
 
 ```bash
 npx shadcn-svelte@latest add <component-name>
 ```
+
+Popular components to add:
+- `dialog` - Modal dialogs
+- `select` - Select dropdowns
+- `table` - Data tables
+- `form` - Form handling
+- `toast` - Toast notifications
+- `tabs` - Tabbed interfaces
+
+### Customization
+
+All components are in `src/lib/components/ui/` and can be customized to match your brand. The design system uses CSS variables for easy theming (see `src/app.css`).
 
 ## Icons with Iconify
 
@@ -359,25 +464,65 @@ Icons inherit text color and can be styled like text:
 - **Styling**: [Tailwind CSS v4](https://tailwindcss.com)
 - **Deployment**: [Vercel](https://vercel.com)
 
-## Troubleshooting
+## 🐛 Troubleshooting
 
 ### Database Connection Issues
 
-- Verify your `DATABASE_URL` and `DATABASE_AUTH_TOKEN` are correct
-- Make sure your Turso database is active
-- Check that you've run `npm run db:push` to create tables
+**Problem**: Can't connect to database
+
+**Solutions**:
+- ✅ Verify `DATABASE_URL` in `.env` matches your Turso database
+- ✅ Check that `DATABASE_AUTH_TOKEN` is set (required in production)
+- ✅ Ensure your Turso database is active: `turso db list`
+- ✅ Verify tables exist: `npm run db:push`
+- ✅ Test connection: `npm run db:studio`
 
 ### Authentication Not Working
 
-- Ensure database tables (`user` and `session`) exist
-- Check that environment variables are set correctly
-- Verify session cookies are being set in your browser
+**Problem**: Users can't sign in or sessions don't persist
+
+**Solutions**:
+- ✅ Ensure database tables exist (`user` and `session`)
+- ✅ Check environment variables are loaded correctly
+- ✅ Verify cookies are enabled in your browser
+- ✅ Check browser console for errors
+- ✅ Ensure `hooks.server.ts` is properly configured
+
+### Setup Script Issues
+
+**Problem**: Setup script fails
+
+**Solutions**:
+- ✅ Verify Turso CLI is installed: `turso --version`
+- ✅ Check you're logged in: `turso auth login`
+- ✅ Ensure you have write permissions in the project directory
+- ✅ Try running manually (see Manual Setup section)
 
 ### Build Errors
 
-- Make sure all environment variables are set in Vercel
-- Check that `DATABASE_AUTH_TOKEN` is set for production builds
-- Verify Node.js version is 18+ in Vercel settings
+**Problem**: Build fails on Vercel or locally
+
+**Solutions**:
+- ✅ Set all environment variables in Vercel (Production, Preview, Development)
+- ✅ Verify `DATABASE_AUTH_TOKEN` is set for production builds
+- ✅ Check Node.js version is 18+ in Vercel settings
+- ✅ Review build logs for specific error messages
+- ✅ Run `npm run check` locally to catch TypeScript errors
+
+### Common Issues
+
+**Port already in use**:
+```bash
+# Kill process on port 5173
+lsof -ti:5173 | xargs kill -9
+```
+
+**Module not found errors**:
+```bash
+# Clear cache and reinstall
+rm -rf node_modules .svelte-kit
+npm install
+```
 
 ## License
 
