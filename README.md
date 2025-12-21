@@ -37,7 +37,9 @@ cd sveltekit-template
 npm install
 ```
 
-### 2. Set Up Turso Database
+### 2. Set Up Turso Database (Automated)
+
+**Quick Setup** (Recommended):
 
 1. **Install Turso CLI** (if not already installed):
    ```bash
@@ -57,12 +59,32 @@ npm install
    turso auth login
    ```
 
-3. **Create a database**:
+3. **Run the automated setup script**:
+   ```bash
+   npm run setup
+   # or
+   bun run setup
+   ```
+
+   This script will:
+   - Prompt you for a database name
+   - Create the Turso database (if it doesn't exist)
+   - Generate database credentials
+   - Update your `.env` file automatically
+   - Push the database schema
+
+> **Note**: The setup script works with npm, pnpm, yarn, or bun. It will automatically detect which package manager you're using.
+
+### Alternative: Manual Setup
+
+If you prefer to set up manually:
+
+1. **Create a database**:
    ```bash
    turso db create <your-database-name>
    ```
 
-4. **Get your database credentials**:
+2. **Get your database credentials**:
    ```bash
    # Get the database URL
    turso db show <your-database-name> --url
@@ -71,34 +93,25 @@ npm install
    turso db tokens create <your-database-name>
    ```
 
-### 3. Set Up Environment Variables
+3. **Create a `.env` file**:
+   ```bash
+   cp .env.example .env
+   ```
 
-Create a `.env` file in the root directory:
+4. **Add your Turso credentials to `.env`**:
+   ```env
+   DATABASE_URL=libsql://your-database-url.turso.io
+   DATABASE_AUTH_TOKEN=your-auth-token-here
+   ```
 
-```bash
-cp .env.example .env
-```
-
-Then add your Turso credentials:
-
-```env
-DATABASE_URL=libsql://your-database-url.turso.io
-DATABASE_AUTH_TOKEN=your-auth-token-here
-```
+5. **Push the database schema**:
+   ```bash
+   npm run db:push
+   ```
 
 > **Note**: In development, `DATABASE_AUTH_TOKEN` is optional. However, it's required for production deployments.
 
-### 4. Run Database Migrations
-
-Push the database schema to your Turso database:
-
-```bash
-npm run db:push
-```
-
-This will create the necessary tables (`user` and `session`) in your database.
-
-### 5. Start Development Server
+### 3. Start Development Server
 
 ```bash
 npm run dev
@@ -218,7 +231,7 @@ npm run format       # Format code
 
 ## Authentication
 
-This template uses [Lucia Auth](https://lucia-auth.com) for authentication. The authentication system includes:
+This template uses a custom authentication implementation inspired by Lucia Auth patterns. The authentication system includes:
 
 - User registration and login
 - Secure password hashing with Argon2
@@ -341,7 +354,7 @@ Icons inherit text color and can be styled like text:
 - **Framework**: [SvelteKit](https://kit.svelte.dev)
 - **Database**: [Turso](https://turso.tech) (LibSQL)
 - **ORM**: [Drizzle ORM](https://orm.drizzle.team)
-- **Authentication**: [Lucia Auth](https://lucia-auth.com)
+- **Authentication**: Custom implementation with Argon2 password hashing
 - **UI Components**: [shadcn-svelte](https://www.shadcn-svelte.com)
 - **Styling**: [Tailwind CSS v4](https://tailwindcss.com)
 - **Deployment**: [Vercel](https://vercel.com)
