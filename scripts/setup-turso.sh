@@ -23,8 +23,8 @@ sed -i '' '/DATABASE_URL/d' .env 2>/dev/null || true
 sed -i '' '/DATABASE_AUTH_TOKEN/d' .env 2>/dev/null || true
 
 {
-    echo "DATABASE_URL=$DB_URL"
-    echo "DATABASE_AUTH_TOKEN=$DB_TOKEN"
+    echo "DATABASE_URL=\"$DB_URL\""
+    echo "DATABASE_AUTH_TOKEN=\"$DB_TOKEN\""
 } >> .env
 
 echo
