@@ -4,16 +4,32 @@
 
 This template provides everything you need to build and deploy a modern web application: authentication, database, beautiful UI components, and deployment configuration—all pre-configured and ready to use.
 
-## 🚀 Quick Start (Using This Template)
+## Table of Contents
 
-**The easiest way to use this template:**
-
-1. Click the **"Use this template"** button above (or [here](https://github.com/your-username/sveltekit-template/generate))
-2. Create a new repository with your project name
-3. Clone your new repository: `git clone <your-new-repo-url>`
-4. Follow the setup steps below
-
-> **📖 New to GitHub templates?** See [TEMPLATE_USAGE.md](./TEMPLATE_USAGE.md) for a complete guide on how template repositories work.
+- [Features](#-features)
+- [Requirements](#-requirements)
+- [Getting Started](#-getting-started)
+  - [Using This Template](#using-this-template)
+  - [Quick Start](#quick-start)
+  - [Verify Your Setup](#verify-your-setup)
+- [Detailed Setup Guide](#-detailed-setup-guide)
+  - [Automated Setup (Recommended)](#automated-setup-recommended)
+  - [Manual Setup (Alternative)](#manual-setup-alternative)
+- [Project Structure](#-project-structure)
+- [Deployment](#-deployment-to-vercel)
+- [Development](#-development)
+  - [Available Scripts](#-available-scripts)
+  - [Database Commands](#database-commands)
+  - [Environment Variables](#environment-variables)
+- [Features & Guides](#-features--guides)
+  - [Authentication](#-authentication)
+  - [UI Components](#-ui-components)
+  - [Icons with Iconify](#icons-with-iconify)
+  - [API Routes](#-api-routes)
+- [Tech Stack](#tech-stack)
+- [Troubleshooting](#-troubleshooting)
+- [Additional Resources](#-additional-resources)
+- [Support](#support)
 
 ## ✨ Features
 
@@ -26,11 +42,83 @@ This template provides everything you need to build and deploy a modern web appl
 - 📱 **Responsive Design** - Mobile-first, modern UI that works on all devices
 - 🛠️ **Developer Experience** - ESLint, Prettier, and comprehensive tooling included
 
-## 🚀 Quick Start
+## 📋 Requirements
+
+Before getting started, make sure you have the following installed and set up:
+
+### Required Software
+
+- **Node.js 18+** - [Download here](https://nodejs.org/)
+  - Verify installation: `node --version` (should be 18.0.0 or higher)
+- **Package Manager** - One of the following:
+  - npm (comes with Node.js)
+  - [pnpm](https://pnpm.io/)
+  - [yarn](https://yarnpkg.com/)
+  - [bun](https://bun.sh/)
+- **Turso CLI** - Install with one command:
+
+  ```bash
+  # macOS
+  brew install tursodatabase/tap/turso
+
+  # Linux
+  curl -sSfL https://get.tur.so/install.sh | bash
+
+  # Windows (Scoop)
+  scoop bucket add turso https://github.com/tursodatabase/scoop-turso.git
+  scoop install turso
+  ```
+
+  Verify installation: `turso --version`
+
+### Required Accounts
+
+- **Turso Account** - Free tier available ([Sign up here](https://turso.tech))
+  - You'll need this for the database
+  - Free tier includes generous limits for development
+- **Vercel Account** - Free tier available ([Sign up here](https://vercel.com))
+  - Required for deployment (optional for local development)
+- **GitHub Account** - For version control (optional but recommended)
+  - Useful for deploying to Vercel and version control
+
+### Quick Verification
+
+Run these commands to verify your setup:
+
+```bash
+# Check Node.js version
+node --version  # Should be 18.0.0 or higher
+
+# Check package manager (npm comes with Node.js)
+npm --version
+
+# Check Turso CLI
+turso --version
+
+# Verify Turso login (run this after signing up)
+turso auth login
+```
+
+> **💡 Tip**: If you encounter any issues with the requirements, see the [Troubleshooting](#-troubleshooting) section below.
+
+## 🚀 Getting Started
+
+### Using This Template
+
+**The easiest way to use this template:**
+
+1. Click the **"Use this template"** button on GitHub (or [here](https://github.com/your-username/sveltekit-template/generate))
+2. Create a new repository with your project name
+3. Clone your new repository: `git clone <your-new-repo-url>`
+4. Follow the setup steps below
+
+> **📖 New to GitHub templates?** See [TEMPLATE_USAGE.md](./TEMPLATE_USAGE.md) for a complete guide on how template repositories work.
+
+### Quick Start
 
 Get your application running in 3 simple steps:
 
-### Step 1: Clone and Install
+#### Step 1: Clone and Install
 
 ```bash
 git clone <your-repo-url>
@@ -38,7 +126,7 @@ cd sveltekit-template
 npm install
 ```
 
-### Step 2: Run Automated Setup
+#### Step 2: Run Automated Setup
 
 ```bash
 # Make sure you're logged into Turso first
@@ -56,7 +144,9 @@ The setup script will:
 - ✅ Push the database schema
 - ✅ Show you exactly what to copy for Vercel deployment
 
-### Step 3: Start Building
+> **💡 Pro Tip**: The setup script works with npm, pnpm, yarn, or bun. It automatically detects your package manager.
+
+#### Step 3: Start Building
 
 ```bash
 npm run dev
@@ -84,36 +174,6 @@ This will check:
 You can also check the health endpoint: `http://localhost:5173/api/health`
 
 For a complete verification guide, see [VERIFICATION.md](./VERIFICATION.md).
-
-> **💡 Pro Tip**: The setup script works with npm, pnpm, yarn, or bun. It automatically detects your package manager.
-
-## 📋 Prerequisites
-
-Before getting started, you'll need:
-
-### Required Accounts
-
-- **Turso Account** - Free tier available ([Sign up here](https://turso.tech))
-- **Vercel Account** - Free tier available ([Sign up here](https://vercel.com))
-- **GitHub Account** - For version control (optional but recommended)
-
-### Required Software
-
-- **Node.js 18+** - [Download here](https://nodejs.org/)
-- **Package Manager** - npm (comes with Node.js), pnpm, yarn, or bun
-- **Turso CLI** - Install with one command:
-
-  ```bash
-  # macOS
-  brew install tursodatabase/tap/turso
-
-  # Linux
-  curl -sSfL https://get.tur.so/install.sh | bash
-
-  # Windows (Scoop)
-  scoop bucket add turso https://github.com/tursodatabase/scoop-turso.git
-  scoop install turso
-  ```
 
 ## 📖 Detailed Setup Guide
 
@@ -226,22 +286,6 @@ sveltekit-template/
 └── package.json
 ```
 
-## Database Commands
-
-```bash
-# Push schema changes to database
-npm run db:push
-
-# Generate migrations
-npm run db:generate
-
-# Run migrations
-npm run db:migrate
-
-# Open Drizzle Studio (database GUI)
-npm run db:studio
-```
-
 ## 🚀 Deployment to Vercel
 
 Deploying to Vercel is straightforward with this template. The setup script even provides the exact environment variables you need!
@@ -286,16 +330,11 @@ After deployment:
 
 > **💡 Tip**: The database schema is already pushed during setup, so no additional migrations are needed unless you modify the schema later.
 
-## Environment Variables
+## 🛠️ Development
 
-| Variable              | Description                | Required   | Notes                                   |
-| --------------------- | -------------------------- | ---------- | --------------------------------------- |
-| `DATABASE_URL`        | Turso database URL         | Yes        | Format: `libsql://your-db.turso.io`     |
-| `DATABASE_AUTH_TOKEN` | Turso authentication token | Production | Optional in dev, required in production |
+### Available Scripts
 
-## 🛠️ Available Scripts
-
-### Development
+#### Development
 
 ```bash
 npm run dev          # Start development server (with hot reload)
@@ -303,7 +342,7 @@ npm run build        # Build for production
 npm run preview      # Preview production build locally
 ```
 
-### Setup & Database
+#### Setup & Database
 
 ```bash
 npm run setup        # Automated setup (installs deps + configures database)
@@ -314,7 +353,7 @@ npm run db:migrate   # Run migrations
 npm run db:studio    # Open Drizzle Studio (database GUI)
 ```
 
-### Code Quality
+#### Code Quality
 
 ```bash
 npm run check        # TypeScript type checking
@@ -322,6 +361,29 @@ npm run lint         # Lint code (ESLint + Prettier check)
 npm run format       # Format code with Prettier
 npm run check:watch  # Type check in watch mode
 ```
+
+### Database Commands
+
+```bash
+# Push schema changes to database
+npm run db:push
+
+# Generate migrations
+npm run db:generate
+
+# Run migrations
+npm run db:migrate
+
+# Open Drizzle Studio (database GUI)
+npm run db:studio
+```
+
+### Environment Variables
+
+| Variable              | Description                | Required   | Notes                                   |
+| --------------------- | -------------------------- | ---------- | --------------------------------------- |
+| `DATABASE_URL`        | Turso database URL         | Yes        | Format: `libsql://your-db.turso.io`     |
+| `DATABASE_AUTH_TOKEN` | Turso authentication token | Production | Optional in dev, required in production |
 
 ## 🔐 Authentication
 
@@ -612,6 +674,13 @@ lsof -ti:5173 | xargs kill -9
 rm -rf node_modules .svelte-kit
 npm install
 ```
+
+## Additional Resources
+
+- **[TEMPLATE_USAGE.md](./TEMPLATE_USAGE.md)** - Complete guide on using GitHub templates
+- **[VERIFICATION.md](./VERIFICATION.md)** - Detailed verification guide for all features
+- **[CONTRIBUTING.md](./CONTRIBUTING.md)** - Guidelines for contributing to this template
+- **[ACCESSIBILITY_SEO.md](./ACCESSIBILITY_SEO.md)** - Accessibility and SEO best practices
 
 ## License
 
