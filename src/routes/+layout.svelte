@@ -30,7 +30,7 @@
 
 <SkipToContent />
 <ModeWatcher />
-<Navigation user={data.user} />
+<Navigation user={data.user} isTemplateShowcase={data.isTemplateShowcase} />
 <main id="main-content" tabindex="-1">
 	{@render children()}
 </main>

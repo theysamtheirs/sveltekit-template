@@ -12,9 +12,10 @@
 
 	type Props = {
 		user: { id: string; username: string } | null;
+		isTemplateShowcase?: boolean;
 	};
 
-	let { user }: Props = $props();
+	let { user, isTemplateShowcase = false }: Props = $props();
 
 	async function handleSignOut() {
 		try {
@@ -36,7 +37,19 @@
 		</a>
 		<div class="flex items-center gap-4">
 			<ThemeToggle />
-			{#if user}
+			{#if isTemplateShowcase}
+				<!-- Template showcase mode: Only show GitHub link, no auth buttons -->
+				<Button
+					href="https://github.com/theysamtheirs/sveltekit-template"
+					target="_blank"
+					rel="noopener noreferrer"
+					variant="ghost"
+				>
+					<span class="mr-2 icon-[lucide--github]"></span>
+					GitHub
+				</Button>
+			{:else if user}
+				<!-- Normal mode: Show auth UI when logged in -->
 				<a
 					href="/dashboard"
 					class="rounded text-sm hover:underline focus:ring-2 focus:ring-ring focus:ring-offset-2 focus:outline-none"
@@ -64,6 +77,7 @@
 					</DropdownMenuContent>
 				</DropdownMenu>
 			{:else}
+				<!-- Normal mode: Show auth buttons when not logged in -->
 				<Button href="/sign-in" variant="ghost">Sign in</Button>
 				<Button href="/sign-up">Sign up</Button>
 			{/if}
