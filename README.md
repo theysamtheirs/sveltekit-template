@@ -38,6 +38,7 @@ npm run setup
 ```
 
 The setup script will:
+
 - ✅ Create your Turso database
 - ✅ Generate database credentials
 - ✅ Configure your `.env` file automatically
@@ -52,6 +53,27 @@ npm run dev
 
 That's it! Visit `http://localhost:5173` and start building your application.
 
+### Verify Your Setup
+
+After setup, you can verify everything is configured correctly:
+
+```bash
+npm run verify
+```
+
+This will check:
+
+- ✅ Node.js and package manager
+- ✅ Dependencies installation
+- ✅ Environment variables
+- ✅ Database connection
+- ✅ TypeScript configuration
+- ✅ Build process
+
+You can also check the health endpoint: `http://localhost:5173/api/health`
+
+For a complete verification guide, see [VERIFICATION.md](./VERIFICATION.md).
+
 > **💡 Pro Tip**: The setup script works with npm, pnpm, yarn, or bun. It automatically detects your package manager.
 
 ## 📋 Prerequisites
@@ -59,21 +81,24 @@ That's it! Visit `http://localhost:5173` and start building your application.
 Before getting started, you'll need:
 
 ### Required Accounts
+
 - **Turso Account** - Free tier available ([Sign up here](https://turso.tech))
 - **Vercel Account** - Free tier available ([Sign up here](https://vercel.com))
 - **GitHub Account** - For version control (optional but recommended)
 
 ### Required Software
+
 - **Node.js 18+** - [Download here](https://nodejs.org/)
 - **Package Manager** - npm (comes with Node.js), pnpm, yarn, or bun
 - **Turso CLI** - Install with one command:
+
   ```bash
   # macOS
   brew install tursodatabase/tap/turso
-  
+
   # Linux
   curl -sSfL https://get.tur.so/install.sh | bash
-  
+
   # Windows (Scoop)
   scoop bucket add turso https://github.com/tursodatabase/scoop-turso.git
   scoop install turso
@@ -86,11 +111,13 @@ Before getting started, you'll need:
 The automated setup is the fastest way to get started:
 
 1. **Log in to Turso**:
+
    ```bash
    turso auth login
    ```
 
 2. **Run the setup script**:
+
    ```bash
    npm run setup
    ```
@@ -114,29 +141,33 @@ The automated setup is the fastest way to get started:
 If you prefer manual setup or need more control:
 
 1. **Create a database**:
+
    ```bash
    turso db create <your-database-name>
    ```
 
 2. **Get credentials**:
+
    ```bash
    # Get database URL
    turso db show <your-database-name> --url
-   
+
    # Create auth token (30-day expiration)
    turso db tokens create <your-database-name> --expiration 30d
    ```
 
 3. **Create `.env` file**:
+
    ```bash
    # Create from example (if it exists)
    cp .env.example .env
-   
+
    # Or create manually
    touch .env
    ```
 
 4. **Add credentials to `.env`**:
+
    ```env
    DATABASE_URL=libsql://your-database-url.turso.io
    DATABASE_AUTH_TOKEN=your-auth-token-here
@@ -237,6 +268,7 @@ git push -u origin main
 ### Step 3: Verify Deployment
 
 After deployment:
+
 - ✅ Test the authentication flow (sign up, sign in)
 - ✅ Verify database connections work
 - ✅ Check that protected routes redirect correctly
@@ -245,14 +277,15 @@ After deployment:
 
 ## Environment Variables
 
-| Variable | Description | Required | Notes |
-|----------|-------------|----------|-------|
-| `DATABASE_URL` | Turso database URL | Yes | Format: `libsql://your-db.turso.io` |
+| Variable              | Description                | Required   | Notes                                   |
+| --------------------- | -------------------------- | ---------- | --------------------------------------- |
+| `DATABASE_URL`        | Turso database URL         | Yes        | Format: `libsql://your-db.turso.io`     |
 | `DATABASE_AUTH_TOKEN` | Turso authentication token | Production | Optional in dev, required in production |
 
 ## 🛠️ Available Scripts
 
 ### Development
+
 ```bash
 npm run dev          # Start development server (with hot reload)
 npm run build        # Build for production
@@ -260,8 +293,10 @@ npm run preview      # Preview production build locally
 ```
 
 ### Setup & Database
+
 ```bash
 npm run setup        # Automated setup (installs deps + configures database)
+npm run verify       # Verify your setup is correct
 npm run db:push      # Push schema changes to database
 npm run db:generate  # Generate migration files
 npm run db:migrate   # Run migrations
@@ -269,6 +304,7 @@ npm run db:studio    # Open Drizzle Studio (database GUI)
 ```
 
 ### Code Quality
+
 ```bash
 npm run check        # TypeScript type checking
 npm run lint         # Lint code (ESLint + Prettier check)
@@ -305,11 +341,11 @@ import type { PageServerLoad } from './$types';
 
 export const load: PageServerLoad = async () => {
   const { locals } = getRequestEvent();
-  
+
   if (!locals.user) {
     redirect(302, '/sign-in');
   }
-  
+
   return {
     user: locals.user
   };
@@ -330,12 +366,12 @@ In Svelte components:
 
 ```svelte
 <script lang="ts">
-  import type { PageData } from './$types';
-  let { data }: { data: PageData } = $props();
+	import type { PageData } from './$types';
+	let { data }: { data: PageData } = $props();
 </script>
 
 {#if data.user}
-  <p>Welcome, {data.user.username}!</p>
+	<p>Welcome, {data.user.username}!</p>
 {/if}
 ```
 
@@ -361,6 +397,7 @@ npx shadcn-svelte@latest add <component-name>
 ```
 
 Popular components to add:
+
 - `dialog` - Modal dialogs
 - `select` - Select dropdowns
 - `table` - Data tables
@@ -423,7 +460,7 @@ Icons inherit text color and can be styled like text:
 <span class="icon-[heroicons--bars-3] text-2xl"></span>
 
 <!-- Combined styling -->
-<span class="icon-[mdi-light--user] text-green-500 text-xl"></span>
+<span class="text-xl text-green-500 icon-[mdi-light--user]"></span>
 ```
 
 ### Popular Icon Sets
@@ -439,19 +476,54 @@ Icons inherit text color and can be styled like text:
 ```svelte
 <!-- Navigation.svelte -->
 <nav class="flex items-center gap-4">
-  <a href="/" class="flex items-center gap-2">
-    <span class="icon-[lucide--home] text-lg"></span>
-    Home
-  </a>
-  <a href="/dashboard" class="flex items-center gap-2">
-    <span class="icon-[lucide--layout-dashboard] text-lg"></span>
-    Dashboard
-  </a>
-  <button class="flex items-center gap-2">
-    <span class="icon-[lucide--user] text-lg"></span>
-    Profile
-  </button>
+	<a href="/" class="flex items-center gap-2">
+		<span class="icon-[lucide--home] text-lg"></span>
+		Home
+	</a>
+	<a href="/dashboard" class="flex items-center gap-2">
+		<span class="icon-[lucide--layout-dashboard] text-lg"></span>
+		Dashboard
+	</a>
+	<button class="flex items-center gap-2">
+		<span class="icon-[lucide--user] text-lg"></span>
+		Profile
+	</button>
 </nav>
+```
+
+## 🔌 API Routes
+
+This template includes example API routes to demonstrate common patterns:
+
+### Health Check Endpoint
+
+Check if your setup is working correctly:
+
+```bash
+curl http://localhost:5173/api/health
+```
+
+Returns database connection status and environment configuration. Useful for verifying your setup after running `npm run setup`.
+
+### Example API Route
+
+See `src/routes/api/example/+server.ts` for a complete example showing:
+
+- GET endpoint with query parameters
+- POST endpoint with authentication
+- Error handling
+- Type-safe responses
+
+You can test it:
+
+```bash
+# GET request
+curl http://localhost:5173/api/example?name=World&count=5
+
+# POST request (requires authentication)
+curl -X POST http://localhost:5173/api/example \
+  -H "Content-Type: application/json" \
+  -d '{"test": "data"}'
 ```
 
 ## Tech Stack
@@ -471,6 +543,7 @@ Icons inherit text color and can be styled like text:
 **Problem**: Can't connect to database
 
 **Solutions**:
+
 - ✅ Verify `DATABASE_URL` in `.env` matches your Turso database
 - ✅ Check that `DATABASE_AUTH_TOKEN` is set (required in production)
 - ✅ Ensure your Turso database is active: `turso db list`
@@ -482,6 +555,7 @@ Icons inherit text color and can be styled like text:
 **Problem**: Users can't sign in or sessions don't persist
 
 **Solutions**:
+
 - ✅ Ensure database tables exist (`user` and `session`)
 - ✅ Check environment variables are loaded correctly
 - ✅ Verify cookies are enabled in your browser
@@ -493,6 +567,7 @@ Icons inherit text color and can be styled like text:
 **Problem**: Setup script fails
 
 **Solutions**:
+
 - ✅ Verify Turso CLI is installed: `turso --version`
 - ✅ Check you're logged in: `turso auth login`
 - ✅ Ensure you have write permissions in the project directory
@@ -503,6 +578,7 @@ Icons inherit text color and can be styled like text:
 **Problem**: Build fails on Vercel or locally
 
 **Solutions**:
+
 - ✅ Set all environment variables in Vercel (Production, Preview, Development)
 - ✅ Verify `DATABASE_AUTH_TOKEN` is set for production builds
 - ✅ Check Node.js version is 18+ in Vercel settings
@@ -512,12 +588,14 @@ Icons inherit text color and can be styled like text:
 ### Common Issues
 
 **Port already in use**:
+
 ```bash
 # Kill process on port 5173
 lsof -ti:5173 | xargs kill -9
 ```
 
 **Module not found errors**:
+
 ```bash
 # Clear cache and reinstall
 rm -rf node_modules .svelte-kit
