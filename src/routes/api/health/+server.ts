@@ -15,7 +15,7 @@ export const GET: RequestHandler = async () => {
 
 	try {
 		// Test database connection
-		await db.execute('SELECT 1');
+		await db.$client.execute('SELECT 1');
 		checks.database = true;
 	} catch (error) {
 		console.error('Database health check failed:', error);
@@ -36,4 +36,3 @@ export const GET: RequestHandler = async () => {
 		}
 	);
 };
-

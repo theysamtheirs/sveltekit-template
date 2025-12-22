@@ -7,9 +7,15 @@
 		CardHeader,
 		CardTitle
 	} from '$lib/components/ui/card';
-	import type { ErrorHandler } from './$types';
 
-	let { status, error }: Parameters<ErrorHandler>[0] = $props();
+	type Props = { status: number; error: unknown };
+	let { status, error }: Props = $props();
+
+	const errorMessage = $derived(() => {
+		if (error instanceof Error) return error.message;
+		if (typeof error === 'string') return error;
+		return 'An error occurred';
+	});
 </script>
 
 <div class="flex min-h-[calc(100vh-4rem)] items-center justify-center p-4">
@@ -31,7 +37,7 @@
 				{:else if status === 500}
 					An unexpected error occurred. Please try again later.
 				{:else}
-					{error?.message || 'An error occurred'}
+					{errorMessage}
 				{/if}
 			</CardDescription>
 		</CardHeader>
@@ -42,10 +48,9 @@
 					<summary class="cursor-pointer text-sm text-muted-foreground">
 						Error Details
 					</summary>
-					<pre class="mt-2 overflow-auto rounded bg-muted p-2 text-xs">{error.message}</pre>
+					<pre class="mt-2 overflow-auto rounded bg-muted p-2 text-xs">{errorMessage}</pre>
 				</details>
 			{/if}
 		</CardContent>
 	</Card>
 </div>
-

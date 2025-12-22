@@ -4,8 +4,7 @@ import { sha256 } from '@oslojs/crypto/sha2';
 import { encodeBase64url, encodeHexLowerCase } from '@oslojs/encoding';
 import { db } from '$lib/server/db';
 import * as table from '$lib/server/db/schema';
-
-const DAY_IN_MS = 1000 * 60 * 60 * 24;
+import { sessionCookieDeleteOptions, sessionCookieOptions, sessionPolicy } from '$lib/server/security';
 
 export const sessionCookieName = 'auth-session';
 
@@ -20,7 +19,7 @@ export async function createSession(token: string, userId: string) {
 	const session: table.Session = {
 		id: sessionId,
 		userId,
-		expiresAt: new Date(Date.now() + DAY_IN_MS * 30)
+		expiresAt: new Date(Date.now() + sessionPolicy.lifetimeMs)
 	};
 	await db.insert(table.session).values(session);
 	return session;
@@ -49,9 +48,9 @@ export async function validateSessionToken(token: string) {
 		return { session: null, user: null };
 	}
 
-	const renewSession = Date.now() >= session.expiresAt.getTime() - DAY_IN_MS * 15;
+	const renewSession = Date.now() >= session.expiresAt.getTime() - sessionPolicy.renewalWindowMs;
 	if (renewSession) {
-		session.expiresAt = new Date(Date.now() + DAY_IN_MS * 30);
+		session.expiresAt = new Date(Date.now() + sessionPolicy.lifetimeMs);
 		await db
 			.update(table.session)
 			.set({ expiresAt: session.expiresAt })
@@ -68,14 +67,9 @@ export async function invalidateSession(sessionId: string) {
 }
 
 export function setSessionTokenCookie(event: RequestEvent, token: string, expiresAt: Date) {
-	event.cookies.set(sessionCookieName, token, {
-		expires: expiresAt,
-		path: '/'
-	});
+	event.cookies.set(sessionCookieName, token, sessionCookieOptions(expiresAt));
 }
 
 export function deleteSessionTokenCookie(event: RequestEvent) {
-	event.cookies.delete(sessionCookieName, {
-		path: '/'
-	});
+	event.cookies.delete(sessionCookieName, sessionCookieDeleteOptions());
 }

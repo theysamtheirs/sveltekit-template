@@ -4,6 +4,8 @@ import { fail, redirect } from '@sveltejs/kit';
 import * as auth from '$lib/server/auth';
 import { db } from '$lib/server/db';
 import * as table from '$lib/server/db/schema';
+import { argon2Options } from '$lib/server/security';
+import { buildRateLimitKey, enforceRateLimit } from '$lib/server/rate-limit';
 import type { Actions, PageServerLoad } from './$types';
 
 export const load: PageServerLoad = async (event) => {
@@ -15,6 +17,13 @@ export const load: PageServerLoad = async (event) => {
 
 export const actions: Actions = {
 	register: async (event) => {
+		const clientAddress = event.getClientAddress();
+		enforceRateLimit({
+			key: buildRateLimitKey(['auth', 'register', 'ip', clientAddress]),
+			windowMs: 60_000,
+			max: 10
+		});
+
 		const formData = await event.request.formData();
 		const username = formData.get('username');
 		const password = formData.get('password');
@@ -32,14 +41,14 @@ export const actions: Actions = {
 		// Normalize username to lowercase for case-insensitive storage
 		const normalizedUsername = (username as string).trim().toLowerCase();
 
-		const userId = generateUserId();
-		const passwordHash = await hash(password, {
-			// recommended minimum parameters
-			memoryCost: 19456,
-			timeCost: 2,
-			outputLen: 32,
-			parallelism: 1
+		enforceRateLimit({
+			key: buildRateLimitKey(['auth', 'register', 'ip-user', clientAddress, normalizedUsername]),
+			windowMs: 60_000,
+			max: 3
 		});
+
+		const userId = generateUserId();
+		const passwordHash = await hash(password, argon2Options);
 
 		try {
 			await db.insert(table.user).values({ id: userId, username: normalizedUsername, passwordHash });
@@ -105,4 +114,3 @@ function validateUsername(username: unknown): { valid: boolean; error?: string }
 function validatePassword(password: unknown): password is string {
 	return typeof password === 'string' && password.length >= 6 && password.length <= 255;
 }
-

@@ -396,12 +396,24 @@ This template includes a complete authentication system with secure password has
 - ✅ Argon2 password hashing (industry standard)
 - ✅ Session-based authentication
 - ✅ Automatic session renewal
+- ✅ Hardened session cookies (`HttpOnly`, `SameSite=Lax`, `Secure` in production)
+- ✅ Basic rate limiting on sign-in/sign-up actions
 - ✅ Protected route helpers
 - ✅ Sign out functionality
 
 ### How It Works
 
 Authentication is handled in `src/hooks.server.ts`, which validates sessions on every request. User data is available in `event.locals.user` throughout your application.
+
+### Security Hardening
+
+- **Security headers**: Set globally in `src/hooks.server.ts` (e.g. `X-Content-Type-Options`, `Referrer-Policy`, `X-Frame-Options`, `Permissions-Policy`, COOP/CORP, and HSTS in production).
+- **Cookie policy**: Centralized in `src/lib/server/security.ts` and applied by `src/lib/server/auth.ts`.
+- **Rate limiting**: Implemented in `src/lib/server/rate-limit.ts` and enforced in:
+  - `src/routes/sign-in/+page.server.ts`
+  - `src/routes/sign-up/+page.server.ts`
+
+> Note: Rate limiting is in-memory (per server instance). For stronger protection in serverless/edge deployments, replace it with a shared store (Upstash Redis, Turso table, etc.).
 
 ### Protecting Routes
 
