@@ -7,6 +7,7 @@
 		DropdownMenuSeparator,
 		DropdownMenuTrigger
 	} from '$lib/components/ui/dropdown-menu';
+	import ThemeToggle from '$lib/components/ThemeToggle.svelte';
 	import { invalidateAll } from '$app/navigation';
 
 	type Props = {
@@ -29,11 +30,12 @@
 	<div class="container mx-auto flex h-16 items-center justify-between px-4">
 		<a href="/" class="text-lg font-semibold">SvelteKit Template</a>
 		<div class="flex items-center gap-4">
+			<ThemeToggle />
 			{#if user}
 				<a href="/dashboard" class="text-sm hover:underline">Dashboard</a>
 				<DropdownMenu>
 					<DropdownMenuTrigger
-						class="inline-flex h-9 items-center justify-center gap-2 whitespace-nowrap rounded-md px-4 py-2 text-sm font-medium transition-colors hover:bg-accent hover:text-accent-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50"
+						class="inline-flex h-9 items-center justify-center gap-2 rounded-md px-4 py-2 text-sm font-medium whitespace-nowrap transition-colors hover:bg-accent hover:text-accent-foreground focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-none disabled:pointer-events-none disabled:opacity-50"
 					>
 						<span class="size-2 rounded-full bg-primary"></span>
 						{user.username}
@@ -44,14 +46,13 @@
 							<div class="text-xs text-muted-foreground">{user.id}</div>
 						</div>
 						<DropdownMenuSeparator />
-						<DropdownMenuItem onclick={handleSignOut}> Sign out </DropdownMenuItem>
+						<DropdownMenuItem onclick={handleSignOut}>Sign out</DropdownMenuItem>
 					</DropdownMenuContent>
 				</DropdownMenu>
 			{:else}
-				<Button href="/sign-in" variant="ghost"> Sign in </Button>
-				<Button href="/sign-up"> Sign up </Button>
+				<Button href="/sign-in" variant="ghost">Sign in</Button>
+				<Button href="/sign-up">Sign up</Button>
 			{/if}
 		</div>
 	</div>
 </nav>
-

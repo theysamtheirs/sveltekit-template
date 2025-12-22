@@ -7,6 +7,12 @@
 		CardHeader,
 		CardTitle
 	} from '$lib/components/ui/card';
+	import githubLight from '$lib/assets/logos/github-mark-light.svg';
+	import githubDark from '$lib/assets/logos/github-mark-dark.svg';
+	import tursoLight from '$lib/assets/logos/turso-logo-light.svg';
+	import tursoDark from '$lib/assets/logos/turso-logo-dark.svg';
+	import vercelLight from '$lib/assets/logos/vercel-logotype-light.svg';
+	import vercelDark from '$lib/assets/logos/vercel-logotype-dark.svg';
 	import type { PageData } from './$types';
 
 	let { data }: { data: PageData } = $props();
@@ -16,6 +22,9 @@
 	<!-- Hero Section -->
 	<section class="flex flex-1 flex-col items-center justify-center px-4 py-16">
 		<div class="mx-auto max-w-4xl text-center">
+			<div class="mb-4 flex items-center justify-center gap-2">
+				<span class="icon-[lucide--rocket] text-4xl text-primary sm:text-5xl"></span>
+			</div>
 			<h1 class="mb-6 text-4xl font-bold tracking-tight sm:text-6xl lg:text-7xl">
 				Build Fast. Ship Faster.
 			</h1>
@@ -24,16 +33,132 @@
 				application in minutes, not hours.
 			</p>
 			<p class="mb-8 text-lg leading-8 text-muted-foreground">
-				Authentication, database, beautiful UI components, and deployment configuration —
-				all set up and ready to go.
+				Authentication, database, beautiful UI components, and deployment configuration — all set up
+				and ready to go.
 			</p>
 			<div class="flex flex-col items-center justify-center gap-4 sm:flex-row">
 				{#if data.user}
-					<Button href="/dashboard" size="lg"> Go to Dashboard </Button>
+					<Button href="/dashboard" size="lg">
+						<span class="mr-2 icon-[lucide--layout-dashboard]"></span>
+						Go to Dashboard
+					</Button>
 				{:else}
-					<Button href="/sign-up" size="lg"> Get Started </Button>
-					<Button href="/sign-in" variant="outline" size="lg"> Sign In </Button>
+					<Button href="/sign-up" size="lg">
+						<span class="mr-2 icon-[lucide--arrow-right]"></span>
+						Get Started
+					</Button>
+					<Button href="/sign-in" variant="outline" size="lg">
+						<span class="mr-2 icon-[lucide--log-in]"></span>
+						Sign In
+					</Button>
 				{/if}
+			</div>
+		</div>
+	</section>
+
+	<!-- Prerequisites Section -->
+	<section class="border-t py-16">
+		<div class="container mx-auto max-w-6xl px-4">
+			<div class="mb-12 text-center">
+				<h2 class="mb-4 text-3xl font-bold">What You'll Need</h2>
+				<p class="text-lg text-muted-foreground">
+					Get these accounts set up before you start (all free to get started)
+				</p>
+			</div>
+			<div class="grid gap-6 md:grid-cols-3">
+				<Card>
+					<CardHeader>
+						<div class="mb-4 flex items-center justify-center">
+							<a
+								href="https://github.com/signup"
+								target="_blank"
+								rel="noopener noreferrer"
+								class="transition-opacity hover:opacity-80"
+							>
+								<img src={githubLight} alt="GitHub" class="h-12 dark:hidden" />
+								<img src={githubDark} alt="GitHub" class="hidden h-12 dark:block" />
+							</a>
+						</div>
+						<CardTitle>GitHub Account</CardTitle>
+						<CardDescription>For version control and deployment</CardDescription>
+					</CardHeader>
+					<CardContent>
+						<p class="mb-4 text-sm text-muted-foreground">
+							You'll need a GitHub account to store your code and enable automatic deployments.
+						</p>
+						<a
+							href="https://github.com/signup"
+							target="_blank"
+							rel="noopener noreferrer"
+							class="text-sm font-medium text-primary hover:underline"
+						>
+							Create GitHub account →
+						</a>
+					</CardContent>
+				</Card>
+
+				<Card>
+					<CardHeader>
+						<div class="mb-4 flex items-center justify-center">
+							<a
+								href="https://turso.tech"
+								target="_blank"
+								rel="noopener noreferrer"
+								class="transition-opacity hover:opacity-80"
+							>
+								<img src={tursoLight} alt="Turso" class="h-12 dark:hidden" />
+								<img src={tursoDark} alt="Turso" class="hidden h-12 dark:block" />
+							</a>
+						</div>
+						<CardTitle>Turso Account</CardTitle>
+						<CardDescription>For your production database</CardDescription>
+					</CardHeader>
+					<CardContent>
+						<p class="mb-4 text-sm text-muted-foreground">
+							Turso provides a fast, serverless SQLite database. Free tier includes 500 databases.
+						</p>
+						<a
+							href="https://turso.tech"
+							target="_blank"
+							rel="noopener noreferrer"
+							class="text-sm font-medium text-primary hover:underline"
+						>
+							Sign up for Turso →
+						</a>
+					</CardContent>
+				</Card>
+
+				<Card>
+					<CardHeader>
+						<div class="mb-4 flex items-center justify-center">
+							<a
+								href="https://vercel.com/signup"
+								target="_blank"
+								rel="noopener noreferrer"
+								class="transition-opacity hover:opacity-80"
+							>
+								<img src={vercelLight} alt="Vercel" class="h-8 max-w-32 dark:hidden" />
+								<img src={vercelDark} alt="Vercel" class="hidden h-8 max-w-32 dark:block" />
+							</a>
+						</div>
+						<CardTitle>Vercel Account</CardTitle>
+						<CardDescription>For hosting and deployment</CardDescription>
+					</CardHeader>
+					<CardContent>
+						<p class="mb-4 text-sm text-muted-foreground">
+							Vercel offers seamless deployment with automatic previews. Free tier is perfect for
+							getting started.
+						</p>
+						<a
+							href="https://vercel.com/signup"
+							target="_blank"
+							rel="noopener noreferrer"
+							class="text-sm font-medium text-primary hover:underline"
+						>
+							Sign up for Vercel →
+						</a>
+					</CardContent>
+				</Card>
 			</div>
 		</div>
 	</section>
@@ -43,18 +168,20 @@
 		<div class="container mx-auto max-w-6xl px-4">
 			<div class="mb-12 text-center">
 				<h2 class="mb-4 text-3xl font-bold">Get Started in 3 Steps</h2>
-				<p class="text-lg text-muted-foreground">
-					From zero to deployed in under 5 minutes
-				</p>
+				<p class="text-lg text-muted-foreground">From zero to deployed in under 5 minutes</p>
 			</div>
 			<div class="grid gap-6 md:grid-cols-3">
 				<Card>
 					<CardHeader>
-						<div class="mb-2 flex h-12 w-12 items-center justify-center rounded-lg bg-primary text-2xl font-bold text-primary-foreground">
+						<div
+							class="mb-2 flex h-12 w-12 items-center justify-center rounded-lg bg-primary text-2xl font-bold text-primary-foreground"
+						>
 							1
 						</div>
 						<CardTitle>Install & Setup</CardTitle>
-						<CardDescription>Clone, install dependencies, and run the automated setup</CardDescription>
+						<CardDescription
+							>Clone, install dependencies, and run the automated setup</CardDescription
+						>
 					</CardHeader>
 					<CardContent>
 						<div class="space-y-2 font-mono text-sm">
@@ -71,7 +198,9 @@
 
 				<Card>
 					<CardHeader>
-						<div class="mb-2 flex h-12 w-12 items-center justify-center rounded-lg bg-primary text-2xl font-bold text-primary-foreground">
+						<div
+							class="mb-2 flex h-12 w-12 items-center justify-center rounded-lg bg-primary text-2xl font-bold text-primary-foreground"
+						>
 							2
 						</div>
 						<CardTitle>Start Building</CardTitle>
@@ -82,15 +211,17 @@
 							<p class="font-semibold text-foreground">$ npm run dev</p>
 						</div>
 						<p class="mt-4 text-sm text-muted-foreground">
-							Everything is already configured: authentication, database, UI components,
-							and routing. Just start building your features!
+							Everything is already configured: authentication, database, UI components, and
+							routing. Just start building your features!
 						</p>
 					</CardContent>
 				</Card>
 
 				<Card>
 					<CardHeader>
-						<div class="mb-2 flex h-12 w-12 items-center justify-center rounded-lg bg-primary text-2xl font-bold text-primary-foreground">
+						<div
+							class="mb-2 flex h-12 w-12 items-center justify-center rounded-lg bg-primary text-2xl font-bold text-primary-foreground"
+						>
 							3
 						</div>
 						<CardTitle>Deploy to Vercel</CardTitle>
@@ -102,8 +233,8 @@
 							<p class="font-semibold text-foreground">→ Connect to Vercel</p>
 						</div>
 						<p class="mt-4 text-sm text-muted-foreground">
-							Vercel adapter is pre-configured. Just add your environment variables and
-							deploy. The setup script even provides the exact values to copy!
+							Vercel adapter is pre-configured. Just add your environment variables and deploy. The
+							setup script even provides the exact values to copy!
 						</p>
 					</CardContent>
 				</Card>
@@ -116,14 +247,14 @@
 		<div class="container mx-auto max-w-6xl px-4">
 			<div class="mb-12 text-center">
 				<h2 class="mb-4 text-3xl font-bold">Everything You Need, Nothing You Don't</h2>
-				<p class="text-lg text-muted-foreground">
-					Production-ready features without the bloat
-				</p>
+				<p class="text-lg text-muted-foreground">Production-ready features without the bloat</p>
 			</div>
 			<div class="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
 				<Card>
 					<CardHeader>
-						<div class="mb-4 text-4xl">🔐</div>
+						<div class="mb-4 flex items-center justify-center">
+							<span class="icon-[lucide--lock] text-4xl text-primary"></span>
+						</div>
 						<CardTitle>Authentication</CardTitle>
 						<CardDescription>Secure user authentication out of the box</CardDescription>
 					</CardHeader>
@@ -139,7 +270,9 @@
 
 				<Card>
 					<CardHeader>
-						<div class="mb-4 text-4xl">🗄️</div>
+						<div class="mb-4 flex items-center justify-center">
+							<span class="icon-[lucide--database] text-4xl text-primary"></span>
+						</div>
 						<CardTitle>Database Ready</CardTitle>
 						<CardDescription>Turso + Drizzle ORM configured</CardDescription>
 					</CardHeader>
@@ -155,7 +288,9 @@
 
 				<Card>
 					<CardHeader>
-						<div class="mb-4 text-4xl">🎨</div>
+						<div class="mb-4 flex items-center justify-center">
+							<span class="icon-[lucide--palette] text-4xl text-primary"></span>
+						</div>
 						<CardTitle>Beautiful UI</CardTitle>
 						<CardDescription>shadcn-svelte components included</CardDescription>
 					</CardHeader>
@@ -171,7 +306,9 @@
 
 				<Card>
 					<CardHeader>
-						<div class="mb-4 text-4xl">⚡</div>
+						<div class="mb-4 flex items-center justify-center">
+							<span class="icon-[lucide--zap] text-4xl text-primary"></span>
+						</div>
 						<CardTitle>Lightning Fast</CardTitle>
 						<CardDescription>Built on SvelteKit for performance</CardDescription>
 					</CardHeader>
@@ -187,7 +324,9 @@
 
 				<Card>
 					<CardHeader>
-						<div class="mb-4 text-4xl">🚀</div>
+						<div class="mb-4 flex items-center justify-center">
+							<span class="icon-[lucide--rocket] text-4xl text-primary"></span>
+						</div>
 						<CardTitle>Deploy Ready</CardTitle>
 						<CardDescription>Vercel adapter pre-configured</CardDescription>
 					</CardHeader>
@@ -203,7 +342,9 @@
 
 				<Card>
 					<CardHeader>
-						<div class="mb-4 text-4xl">🔒</div>
+						<div class="mb-4 flex items-center justify-center">
+							<span class="icon-[lucide--shield-check] text-4xl text-primary"></span>
+						</div>
 						<CardTitle>Type Safe</CardTitle>
 						<CardDescription>Full TypeScript support</CardDescription>
 					</CardHeader>
@@ -233,25 +374,108 @@
 				<div class="rounded-lg border bg-card p-4">
 					<h3 class="mb-2 font-semibold">Framework & Runtime</h3>
 					<p class="text-sm text-muted-foreground">
-						SvelteKit • Node.js 22 • Vite
+						<a
+							href="https://kit.svelte.dev"
+							target="_blank"
+							rel="noopener noreferrer"
+							class="text-primary hover:underline"
+						>
+							SvelteKit
+						</a>
+						{' • '}
+						<a
+							href="https://nodejs.org"
+							target="_blank"
+							rel="noopener noreferrer"
+							class="text-primary hover:underline"
+						>
+							Node.js 22
+						</a>
+						{' • '}
+						<a
+							href="https://vitejs.dev"
+							target="_blank"
+							rel="noopener noreferrer"
+							class="text-primary hover:underline"
+						>
+							Vite
+						</a>
 					</p>
 				</div>
 				<div class="rounded-lg border bg-card p-4">
 					<h3 class="mb-2 font-semibold">Database & ORM</h3>
 					<p class="text-sm text-muted-foreground">
-						Turso (LibSQL) • Drizzle ORM
+						<a
+							href="https://turso.tech"
+							target="_blank"
+							rel="noopener noreferrer"
+							class="text-primary hover:underline"
+						>
+							Turso (LibSQL)
+						</a>
+						{' • '}
+						<a
+							href="https://orm.drizzle.team"
+							target="_blank"
+							rel="noopener noreferrer"
+							class="text-primary hover:underline"
+						>
+							Drizzle ORM
+						</a>
 					</p>
 				</div>
 				<div class="rounded-lg border bg-card p-4">
 					<h3 class="mb-2 font-semibold">Styling & UI</h3>
 					<p class="text-sm text-muted-foreground">
-						Tailwind CSS v4 • shadcn-svelte • Iconify
+						<a
+							href="https://tailwindcss.com"
+							target="_blank"
+							rel="noopener noreferrer"
+							class="text-primary hover:underline"
+						>
+							Tailwind CSS v4
+						</a>
+						{' • '}
+						<a
+							href="https://www.shadcn-svelte.com"
+							target="_blank"
+							rel="noopener noreferrer"
+							class="text-primary hover:underline"
+						>
+							shadcn-svelte
+						</a>
+						{' • '}
+						<a
+							href="https://iconify.design"
+							target="_blank"
+							rel="noopener noreferrer"
+							class="text-primary hover:underline"
+						>
+							Iconify
+						</a>
 					</p>
 				</div>
 				<div class="rounded-lg border bg-card p-4">
 					<h3 class="mb-2 font-semibold">Deployment</h3>
 					<p class="text-sm text-muted-foreground">
-						Vercel • GitHub Actions ready
+						<a
+							href="https://vercel.com"
+							target="_blank"
+							rel="noopener noreferrer"
+							class="text-primary hover:underline"
+						>
+							Vercel
+						</a>
+						{' • '}
+						<a
+							href="https://github.com/features/actions"
+							target="_blank"
+							rel="noopener noreferrer"
+							class="text-primary hover:underline"
+						>
+							GitHub Actions
+						</a>
+						{' ready'}
 					</p>
 				</div>
 			</div>
@@ -263,15 +487,23 @@
 		<div class="container mx-auto max-w-2xl px-4 text-center">
 			<h2 class="mb-4 text-3xl font-bold">Ready to Build Something Great?</h2>
 			<p class="mb-8 text-lg text-muted-foreground">
-				Start your next project with a solid foundation. No configuration headaches, just
-				code.
+				Start your next project with a solid foundation. No configuration headaches, just code.
 			</p>
 			<div class="flex flex-col items-center justify-center gap-4 sm:flex-row">
 				{#if data.user}
-					<Button href="/dashboard" size="lg"> Go to Dashboard </Button>
+					<Button href="/dashboard" size="lg">
+						<span class="mr-2 icon-[lucide--layout-dashboard]"></span>
+						Go to Dashboard
+					</Button>
 				{:else}
-					<Button href="/sign-up" size="lg"> Get Started Now </Button>
-					<Button href="/sign-in" variant="outline" size="lg"> Sign In </Button>
+					<Button href="/sign-up" size="lg">
+						<span class="mr-2 icon-[lucide--arrow-right]"></span>
+						Get Started Now
+					</Button>
+					<Button href="/sign-in" variant="outline" size="lg">
+						<span class="mr-2 icon-[lucide--log-in]"></span>
+						Sign In
+					</Button>
 				{/if}
 			</div>
 		</div>
