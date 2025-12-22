@@ -5,6 +5,7 @@ set -e
 RED='\033[0;31m'
 GREEN='\033[0;32m'
 YELLOW='\033[1;33m'
+BLUE='\033[0;34m'
 NC='\033[0m' # No Color
 
 # Check if turso CLI is installed
@@ -116,3 +117,133 @@ echo "DATABASE_AUTH_TOKEN=$DB_TOKEN"
 echo "-----------------------------------------------------"
 echo "Go to: Project Settings → Environment Variables"
 echo "Then choose the appropriate environment (Development/Preview/Production)."
+echo
+
+# Ask if user wants to create GitHub repository
+read -p "Would you like to create a GitHub repository? (y/n): " CREATE_REPO
+
+if [[ "$CREATE_REPO" =~ ^[Yy]$ ]]; then
+	# Check if GitHub CLI is installed
+	if ! command -v gh &> /dev/null; then
+		echo -e "${YELLOW}⚠️  GitHub CLI (gh) is not installed.${NC}"
+		echo "Install it with:"
+		echo "  macOS:   brew install gh"
+		echo "  Linux:   See https://cli.github.com/manual/installation"
+		echo "  Windows: winget install --id GitHub.cli"
+		echo
+		echo "You can create a repository manually at: https://github.com/new"
+		exit 0
+	fi
+
+	# Check if user is logged in to GitHub
+	if ! gh auth status &> /dev/null; then
+		echo -e "${YELLOW}⚠️  You're not logged in to GitHub.${NC}"
+		echo "Please run: gh auth login"
+		echo
+		echo "You can create a repository manually at: https://github.com/new"
+		exit 0
+	fi
+
+	echo
+	echo -e "${BLUE}🚀 Creating GitHub repository...${NC}"
+	echo "This will open an interactive prompt. Select:"
+	echo "  • 'Push an existing local repository to github.com'"
+	echo "  • Use current directory (.)"
+	echo "  • Follow the prompts for name, visibility, etc."
+	echo
+
+	# Temporarily disable exit on error for gh repo create
+	# (user might cancel, which is fine)
+	set +e
+	gh repo create
+	GH_EXIT_CODE=$?
+	set -e
+
+	if [ $GH_EXIT_CODE -eq 0 ]; then
+		echo
+		echo -e "${GREEN}✅ GitHub repository created successfully!${NC}"
+		echo
+		echo "Next steps:"
+		echo "  1. Your code is now on GitHub"
+		echo "  2. Deploy to Vercel: https://vercel.com/new"
+		echo "  3. Add the environment variables shown above to Vercel"
+	else
+		echo
+		echo -e "${YELLOW}⚠️  Repository creation was cancelled or failed.${NC}"
+		echo "You can create a repository manually at: https://github.com/new"
+		echo "Or try again later with: gh repo create"
+	fi
+elif [[ "$CREATE_REPO" =~ ^[Nn]$ ]]; then
+	echo
+	echo "You can create a repository later with:"
+	echo "  gh repo create"
+	echo "Or manually at: https://github.com/new"
+else
+	echo
+	echo -e "${YELLOW}⚠️  Invalid response. Skipping repository creation.${NC}"
+	echo "You can create a repository later with:"
+	echo "  gh repo create"
+fi
+echo
+
+# Ask if user wants to create GitHub repository
+read -p "Would you like to create a GitHub repository? (y/n): " CREATE_REPO
+
+if [[ "$CREATE_REPO" =~ ^[Yy]$ ]]; then
+	# Check if GitHub CLI is installed
+	if ! command -v gh &> /dev/null; then
+		echo -e "${YELLOW}⚠️  GitHub CLI (gh) is not installed.${NC}"
+		echo "Install it with:"
+		echo "  macOS:   brew install gh"
+		echo "  Linux:   See https://cli.github.com/manual/installation"
+		echo "  Windows: winget install --id GitHub.cli"
+		echo
+		echo "You can create a repository manually at: https://github.com/new"
+		exit 0
+	fi
+
+	# Check if user is logged in to GitHub
+	if ! gh auth status &> /dev/null; then
+		echo -e "${YELLOW}⚠️  You're not logged in to GitHub.${NC}"
+		echo "Please run: gh auth login"
+		echo
+		echo "You can create a repository manually at: https://github.com/new"
+		exit 0
+	fi
+
+	echo
+	echo -e "${BLUE}🚀 Creating GitHub repository...${NC}"
+	echo "This will open an interactive prompt. Select:"
+	echo "  • 'Push an existing local repository to github.com'"
+	echo "  • Use current directory (.)"
+	echo "  • Follow the prompts for name, visibility, etc."
+	echo
+
+	# Run gh repo create interactively
+	# This will prompt the user for all the details
+	gh repo create
+
+	if [ $? -eq 0 ]; then
+		echo
+		echo -e "${GREEN}✅ GitHub repository created successfully!${NC}"
+		echo
+		echo "Next steps:"
+		echo "  1. Your code is now on GitHub"
+		echo "  2. Deploy to Vercel: https://vercel.com/new"
+		echo "  3. Add the environment variables shown above to Vercel"
+	else
+		echo
+		echo -e "${YELLOW}⚠️  Repository creation was cancelled or failed.${NC}"
+		echo "You can create a repository manually at: https://github.com/new"
+	fi
+elif [[ "$CREATE_REPO" =~ ^[Nn]$ ]]; then
+	echo
+	echo "You can create a repository later with:"
+	echo "  gh repo create"
+	echo "Or manually at: https://github.com/new"
+else
+	echo
+	echo -e "${YELLOW}⚠️  Invalid response. Skipping repository creation.${NC}"
+	echo "You can create a repository later with:"
+	echo "  gh repo create"
+fi
