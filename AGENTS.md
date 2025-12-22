@@ -165,6 +165,100 @@ const users = await db.select().from(table.user).where(eq(table.user.id, userId)
 - Use CSS variables for theming (see `app.css`)
 - Icons: `class="icon-[lucide--home]"` format
 
+### Icon Usage Patterns
+
+**CRITICAL**: This project uses **TWO different icon systems**. Understand when to use each:
+
+#### System 1: Iconify via Tailwind CSS Classes (Primary Method)
+
+**Use this for**: Most icons in your custom components and pages.
+
+**Package**: `@iconify/tailwind4` (configured in `app.css`)
+
+**Syntax**: `class="icon-[{prefix}--{name}]"`
+
+**Examples**:
+```svelte
+<!-- ✅ CORRECT - Real icon names -->
+<span class="icon-[lucide--home]"></span>
+<span class="icon-[lucide--user]"></span>
+<span class="icon-[mdi-light--account]"></span>
+<span class="icon-[heroicons--bars-3]"></span>
+
+<!-- ❌ WRONG - Placeholder names don't exist -->
+<span class="icon-[lucide--icon-name]"></span>
+<span class="icon-[mdi-light--user]"></span>
+```
+
+**Finding correct icon names**:
+1. Visit [Iconify Icon Sets](https://icon-sets.iconify.design/)
+2. Search for the icon you want
+3. Click on the icon
+4. Select "CSS" → "Tailwind CSS" in code options
+5. Copy the exact class name (e.g., `icon-[lucide--home]`)
+
+**Popular icon sets**:
+- **Lucide**: `icon-[lucide--home]`, `icon-[lucide--user]`, `icon-[lucide--search]`
+- **Material Design Light**: `icon-[mdi-light--account]`, `icon-[mdi-light--home]`
+- **Heroicons**: `icon-[heroicons--bars-3]`, `icon-[heroicons--x-mark]`
+- **Tabler**: `icon-[tabler--home]`, `icon-[tabler--user]`
+
+**Styling icons**:
+```svelte
+<!-- Size and color -->
+<span class="icon-[lucide--heart] text-red-500 text-xl"></span>
+<span class="icon-[mdi-light--home] text-blue-600 text-2xl"></span>
+
+<!-- With other classes -->
+<button class="flex items-center gap-2">
+  <span class="icon-[lucide--search] size-4"></span>
+  Search
+</button>
+```
+
+#### System 2: @lucide/svelte Components (For shadcn-svelte)
+
+**Use this for**: Icons inside shadcn-svelte components (already configured).
+
+**Package**: `@lucide/svelte`
+
+**Syntax**: Import and use as Svelte components
+
+**Examples**:
+```svelte
+<script lang="ts">
+  // ✅ CORRECT - Direct import from @lucide/svelte
+  import CheckIcon from "@lucide/svelte/icons/check";
+  import ChevronRightIcon from "@lucide/svelte/icons/chevron-right";
+  import CircleIcon from "@lucide/svelte/icons/circle";
+</script>
+
+<CheckIcon class="size-4" />
+<ChevronRightIcon class="ml-auto size-4" />
+```
+
+**When to use each**:
+- ✅ **Iconify classes** (`icon-[...]`): For custom components, pages, navigation, buttons
+- ✅ **@lucide/svelte imports**: Only when modifying shadcn-svelte components that already use them
+
+**Icon naming rules**:
+1. ❌ **NEVER use placeholder names** like `icon-[lucide--icon-name]` or `icon-[mdi-light--user]`
+2. ✅ **ALWAYS verify icon names** at [icon-sets.iconify.design](https://icon-sets.iconify.design/)
+3. ✅ **Use exact names** from Iconify - icon names are case-sensitive and must match exactly
+4. ✅ **Use double hyphens** (`--`) between prefix and name: `icon-[prefix--name]`
+5. ✅ **Replace spaces with hyphens** in icon names: `layout-dashboard` not `layout dashboard`
+
+**Common mistakes**:
+```svelte
+<!-- ❌ WRONG - Placeholder/example names -->
+<span class="icon-[lucide--icon-name]"></span>
+<span class="icon-[mdi-light--user]"></span>
+
+<!-- ✅ CORRECT - Real icon names -->
+<span class="icon-[lucide--home]"></span>
+<span class="icon-[mdi-light--account]"></span>
+```
+
 ### Form Handling
 
 **Use SvelteKit's `enhance` action** for progressive enhancement:
@@ -191,6 +285,8 @@ const users = await db.select().from(table.user).where(eq(table.user.id, userId)
 4. ❌ **Don't bypass authentication** - always check `event.locals.user`
 5. ❌ **Don't use raw SQL** - always use Drizzle ORM
 6. ❌ **Don't hardcode environment variables** - use `$env/dynamic/private`
+7. ❌ **Don't use placeholder icon names** - always verify icon names at [icon-sets.iconify.design](https://icon-sets.iconify.design/) and use exact names
+8. ❌ **Don't mix icon systems unnecessarily** - prefer Iconify classes for custom components, only use @lucide/svelte imports in shadcn-svelte components
 
 ### Always Do This
 
@@ -201,6 +297,9 @@ const users = await db.select().from(table.user).where(eq(table.user.id, userId)
 5. ✅ **Check authentication** - verify `event.locals.user` exists
 6. ✅ **Use Drizzle ORM** - for all database operations
 7. ✅ **Follow file structure** - keep server code in `+page.server.ts`, components in `.svelte`
+8. ✅ **Verify icon names** - always check [icon-sets.iconify.design](https://icon-sets.iconify.design/) for correct icon names before using
+9. ✅ **Use Iconify classes** - prefer `class="icon-[prefix--name]"` syntax for custom components
+10. ✅ **Use exact icon names** - icon names are case-sensitive and must match Iconify exactly
 
 ## 🔧 Common Tasks
 
@@ -250,7 +349,7 @@ Components are added to `src/lib/components/ui/` and can be customized.
 - Use utility classes: `class="flex items-center gap-4"`
 - Use CSS variables for theming: `var(--primary)`
 - Dark mode: Use `.dark` class on parent
-- Icons: `class="icon-[lucide--icon-name]"`
+- Icons: Use Iconify classes - see "Icon Usage Patterns" section above for details
 
 ### Component Styling
 
@@ -299,6 +398,16 @@ Components are added to `src/lib/components/ui/` and can be customized.
 - Check `DATABASE_AUTH_TOKEN` in production
 - Ensure Turso database is active
 
+### Icon errors ("Cannot find icon-name. Bad icon name?")
+- **Verify the icon exists**: Visit [icon-sets.iconify.design](https://icon-sets.iconify.design/) and search for the icon
+- **Check the exact name**: Icon names are case-sensitive and must match exactly
+- **Verify the prefix**: Common prefixes are `lucide`, `mdi-light`, `heroicons`, `tabler`
+- **Check the syntax**: Must be `icon-[prefix--name]` with double hyphens (`--`)
+- **Common mistakes**:
+  - Using placeholder names like `icon-[lucide--icon-name]` (use real names like `icon-[lucide--home]`)
+  - Wrong prefix (e.g., `mdi-light--user` doesn't exist, use `mdi-light--account` instead)
+  - Missing double hyphen: `icon-[lucide-home]` should be `icon-[lucide--home]`
+
 ## 📚 Key Files Reference
 
 - **Auth logic**: `src/lib/server/auth.ts`
@@ -320,3 +429,4 @@ Components are added to `src/lib/components/ui/` and can be customized.
 **Type props**: `let { data }: { data: PageData } = $props();`
 **State**: `let count = $state(0);`
 **Derived**: `let doubled = $derived(count * 2);`
+**Icons**: `class="icon-[lucide--home]"` (verify names at [icon-sets.iconify.design](https://icon-sets.iconify.design/))
