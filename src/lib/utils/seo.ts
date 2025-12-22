@@ -78,4 +78,3 @@ export function getSEOTags(props: SEOProps = {}): {
 		canonical: fullUrl
 	};
 }
-

@@ -61,13 +61,24 @@
 						Go to Dashboard
 					</Button>
 				{:else}
-					<Button href="/sign-up" size="lg">
-						<span class="mr-2 icon-[lucide--arrow-right]"></span>
-						Get Started
+					<Button
+						href="https://github.com/theysamtheirs/sveltekit-template"
+						target="_blank"
+						rel="noopener noreferrer"
+						size="lg"
+					>
+						<span class="mr-2 icon-[lucide--github]"></span>
+						View on GitHub
 					</Button>
-					<Button href="/sign-in" variant="outline" size="lg">
-						<span class="mr-2 icon-[lucide--log-in]"></span>
-						Sign In
+					<Button
+						href="https://github.com/theysamtheirs/sveltekit-template"
+						target="_blank"
+						rel="noopener noreferrer"
+						variant="outline"
+						size="lg"
+					>
+						<span class="mr-2 icon-[lucide--star]"></span>
+						Star Template
 					</Button>
 				{/if}
 			</div>
@@ -559,13 +570,24 @@
 						Go to Dashboard
 					</Button>
 				{:else}
-					<Button href="/sign-up" size="lg">
-						<span class="mr-2 icon-[lucide--arrow-right]"></span>
-						Get Started Now
+					<Button
+						href="https://github.com/theysamtheirs/sveltekit-template"
+						target="_blank"
+						rel="noopener noreferrer"
+						size="lg"
+					>
+						<span class="mr-2 icon-[lucide--github]"></span>
+						View on GitHub
 					</Button>
-					<Button href="/sign-in" variant="outline" size="lg">
-						<span class="mr-2 icon-[lucide--log-in]"></span>
-						Sign In
+					<Button
+						href="https://github.com/theysamtheirs/sveltekit-template"
+						target="_blank"
+						rel="noopener noreferrer"
+						variant="outline"
+						size="lg"
+					>
+						<span class="mr-2 icon-[lucide--star]"></span>
+						Star Template
 					</Button>
 				{/if}
 			</div>

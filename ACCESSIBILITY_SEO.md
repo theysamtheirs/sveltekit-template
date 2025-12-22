@@ -5,6 +5,7 @@ This template includes comprehensive accessibility and SEO best practices out of
 ## 🎯 Overview
 
 This template follows **WCAG 2.1 Level AA** guidelines and implements modern SEO best practices to ensure your site is:
+
 - ✅ Accessible to users with disabilities
 - ✅ Optimized for search engines
 - ✅ Performant and well-scoring
@@ -103,14 +104,14 @@ Use the `<SEO>` component directly in your page:
 
 ```svelte
 <script lang="ts">
-  import SEO from '$lib/components/SEO.svelte';
+	import SEO from '$lib/components/SEO.svelte';
 </script>
 
 <SEO
-  title="My Page Title"
-  description="A compelling description of this page"
-  url="/my-page"
-  keywords="keyword1, keyword2, keyword3"
+	title="My Page Title"
+	description="A compelling description of this page"
+	url="/my-page"
+	keywords="keyword1, keyword2, keyword3"
 />
 ```
 
@@ -125,7 +126,7 @@ import type { SEOProps } from '$lib/utils/seo';
 
 export const load: PageServerLoad = async ({ params }) => {
   const post = await fetchPost(params.slug);
-  
+
   return {
     post,
     // SEO data will be automatically used by layout
@@ -152,6 +153,7 @@ return {
 ```
 
 **Available Props:**
+
 - `title` (string): Page title (defaults to site title)
 - `description` (string): Meta description
 - `url` (string): Page URL path (e.g., "/about")
@@ -167,15 +169,15 @@ Add JSON-LD structured data in `svelte:head`:
 
 ```svelte
 <svelte:head>
-  {@html `<script type="application/ld+json">${JSON.stringify({
-    '@context': 'https://schema.org',
-    '@type': 'Article',
-    headline: 'Article Title',
-    author: {
-      '@type': 'Person',
-      name: 'Author Name'
-    }
-  })}</script>`}
+	{@html `<script type="application/ld+json">${JSON.stringify({
+		'@context': 'https://schema.org',
+		'@type': 'Article',
+		headline: 'Article Title',
+		author: {
+			'@type': 'Person',
+			name: 'Author Name'
+		}
+	})}</script>`}
 </svelte:head>
 ```
 
@@ -212,19 +214,19 @@ Example:
 
 ```svelte
 <div class="space-y-2">
-  <Label for="email">Email</Label>
-  <Input
-    id="email"
-    name="email"
-    type="email"
-    aria-describedby={hasError ? 'email-error' : undefined}
-    aria-invalid={hasError ? 'true' : undefined}
-  />
-  {#if hasError}
-    <p id="email-error" class="text-xs text-destructive" role="alert">
-      {errorMessage}
-    </p>
-  {/if}
+	<Label for="email">Email</Label>
+	<Input
+		id="email"
+		name="email"
+		type="email"
+		aria-describedby={hasError ? 'email-error' : undefined}
+		aria-invalid={hasError ? 'true' : undefined}
+	/>
+	{#if hasError}
+		<p id="email-error" class="text-xs text-destructive" role="alert">
+			{errorMessage}
+		</p>
+	{/if}
 </div>
 ```
 
@@ -236,8 +238,8 @@ Focus styles are defined in `src/app.css`. Customize the focus ring:
 
 ```css
 *:focus-visible {
-  outline: 2px solid var(--ring);
-  outline-offset: 2px;
+	outline: 2px solid var(--ring);
+	outline-offset: 2px;
 }
 ```
 
@@ -342,7 +344,7 @@ export const load: PageServerLoad = async ({ params }) => {
   return {
     // Your page data
     content: await getContent(),
-    
+
     // SEO data - automatically rendered by layout
     seo: {
       title: 'Dynamic Page Title',
@@ -365,6 +367,7 @@ URLs are normalized to prevent duplicate content issues. Configured in `svelte.c
 ### Build Optimizations
 
 The Vite config includes:
+
 - **Manual chunk splitting**: Separates vendor code for better caching
 - **Asset inlining**: Small assets (<4KB) are inlined
 - **Dependency optimization**: Pre-bundles common dependencies
@@ -372,6 +375,7 @@ The Vite config includes:
 ### Additional Meta Tags
 
 The SEO component includes:
+
 - Language and revisit-after meta tags
 - Mobile web app capabilities
 
@@ -389,4 +393,3 @@ The SEO component includes:
 ---
 
 **Remember**: Accessibility and SEO are ongoing processes. Regularly audit your site and keep up with best practices!
-
