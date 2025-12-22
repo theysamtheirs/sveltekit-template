@@ -7,6 +7,7 @@
 		CardHeader,
 		CardTitle
 	} from '$lib/components/ui/card';
+	import SEO from '$lib/components/SEO.svelte';
 	import githubLight from '$lib/assets/logos/github-mark-light.svg';
 	import githubDark from '$lib/assets/logos/github-mark-dark.svg';
 	import tursoLight from '$lib/assets/logos/turso-logo-light.svg';
@@ -17,6 +18,23 @@
 
 	let { data }: { data: PageData } = $props();
 </script>
+
+<SEO
+	title="SvelteKit Template - Production-Ready Starter"
+	description="A production-ready SvelteKit template with authentication, database, beautiful UI components, and deployment configuration — all set up and ready to go."
+	url="/"
+/>
+
+<svelte:head>
+	{@html `<script type="application/ld+json">${JSON.stringify({
+		'@context': 'https://schema.org',
+		'@type': 'WebSite',
+		name: 'SvelteKit Template',
+		description:
+			'A production-ready SvelteKit template with authentication, database, beautiful UI components, and deployment configuration',
+		url: 'https://your-site.com'
+	})}</script>`}
+</svelte:head>
 
 <div class="flex min-h-[calc(100vh-4rem)] flex-col">
 	<!-- Hero Section -->
@@ -73,10 +91,25 @@
 								href="https://github.com/signup"
 								target="_blank"
 								rel="noopener noreferrer"
-								class="transition-opacity hover:opacity-80"
+								class="rounded transition-opacity hover:opacity-80 focus:ring-2 focus:ring-ring focus:ring-offset-2 focus:outline-none"
+								aria-label="GitHub - Create an account (opens in new tab)"
 							>
-								<img src={githubLight} alt="GitHub" class="h-12 dark:hidden" />
-								<img src={githubDark} alt="GitHub" class="hidden h-12 dark:block" />
+								<img
+									src={githubLight}
+									alt="GitHub logo"
+									class="h-12 dark:hidden"
+									loading="lazy"
+									width="48"
+									height="48"
+								/>
+								<img
+									src={githubDark}
+									alt="GitHub logo"
+									class="hidden h-12 dark:block"
+									loading="lazy"
+									width="48"
+									height="48"
+								/>
 							</a>
 						</div>
 						<CardTitle>GitHub Account</CardTitle>
@@ -104,10 +137,25 @@
 								href="https://turso.tech"
 								target="_blank"
 								rel="noopener noreferrer"
-								class="transition-opacity hover:opacity-80"
+								class="rounded transition-opacity hover:opacity-80 focus:ring-2 focus:ring-ring focus:ring-offset-2 focus:outline-none"
+								aria-label="Turso - Database service (opens in new tab)"
 							>
-								<img src={tursoLight} alt="Turso" class="h-12 dark:hidden" />
-								<img src={tursoDark} alt="Turso" class="hidden h-12 dark:block" />
+								<img
+									src={tursoLight}
+									alt="Turso logo"
+									class="h-12 dark:hidden"
+									loading="lazy"
+									width="48"
+									height="48"
+								/>
+								<img
+									src={tursoDark}
+									alt="Turso logo"
+									class="hidden h-12 dark:block"
+									loading="lazy"
+									width="48"
+									height="48"
+								/>
 							</a>
 						</div>
 						<CardTitle>Turso Account</CardTitle>
@@ -135,10 +183,25 @@
 								href="https://vercel.com/signup"
 								target="_blank"
 								rel="noopener noreferrer"
-								class="transition-opacity hover:opacity-80"
+								class="rounded transition-opacity hover:opacity-80 focus:ring-2 focus:ring-ring focus:ring-offset-2 focus:outline-none"
+								aria-label="Vercel - Hosting and deployment (opens in new tab)"
 							>
-								<img src={vercelLight} alt="Vercel" class="h-8 max-w-32 dark:hidden" />
-								<img src={vercelDark} alt="Vercel" class="hidden h-8 max-w-32 dark:block" />
+								<img
+									src={vercelLight}
+									alt="Vercel logo"
+									class="h-8 max-w-32 dark:hidden"
+									loading="lazy"
+									width="128"
+									height="32"
+								/>
+								<img
+									src={vercelDark}
+									alt="Vercel logo"
+									class="hidden h-8 max-w-32 dark:block"
+									loading="lazy"
+									width="128"
+									height="32"
+								/>
 							</a>
 						</div>
 						<CardTitle>Vercel Account</CardTitle>

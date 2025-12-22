@@ -26,24 +26,38 @@
 	}
 </script>
 
-<nav class="border-b">
+<nav class="border-b" aria-label="Main navigation">
 	<div class="container mx-auto flex h-16 items-center justify-between px-4">
-		<a href="/" class="text-lg font-semibold">SvelteKit Template</a>
+		<a
+			href="/"
+			class="rounded text-lg font-semibold focus:ring-2 focus:ring-ring focus:ring-offset-2 focus:outline-none"
+		>
+			SvelteKit Template
+		</a>
 		<div class="flex items-center gap-4">
 			<ThemeToggle />
 			{#if user}
-				<a href="/dashboard" class="text-sm hover:underline">Dashboard</a>
+				<a
+					href="/dashboard"
+					class="rounded text-sm hover:underline focus:ring-2 focus:ring-ring focus:ring-offset-2 focus:outline-none"
+				>
+					Dashboard
+				</a>
 				<DropdownMenu>
 					<DropdownMenuTrigger
 						class="inline-flex h-9 items-center justify-center gap-2 rounded-md px-4 py-2 text-sm font-medium whitespace-nowrap transition-colors hover:bg-accent hover:text-accent-foreground focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-none disabled:pointer-events-none disabled:opacity-50"
+						aria-label="User menu for {user.username}"
 					>
-						<span class="size-2 rounded-full bg-primary"></span>
+						<span class="size-2 rounded-full bg-primary" aria-hidden="true"></span>
+						<span class="sr-only">User menu: </span>
 						{user.username}
 					</DropdownMenuTrigger>
 					<DropdownMenuContent align="end">
-						<div class="px-2 py-1.5 text-sm">
+						<div class="px-2 py-1.5 text-sm" role="presentation">
 							<div class="font-medium">{user.username}</div>
-							<div class="text-xs text-muted-foreground">{user.id}</div>
+							<div class="text-xs text-muted-foreground" aria-label="User ID: {user.id}">
+								{user.id}
+							</div>
 						</div>
 						<DropdownMenuSeparator />
 						<DropdownMenuItem onclick={handleSignOut}>Sign out</DropdownMenuItem>

@@ -12,6 +12,7 @@
 		CardTitle
 	} from '$lib/components/ui/card';
 	import { Alert, AlertDescription } from '$lib/components/ui/alert';
+	import SEO from '$lib/components/SEO.svelte';
 
 	let { form }: { form: ActionData } = $props();
 
@@ -21,6 +22,10 @@
 	let passwordTouched = $state(false);
 	let usernameValidationMessage = $state('');
 	let passwordValidationMessage = $state('');
+
+	const usernameErrorId = 'username-error';
+	const passwordErrorId = 'password-error';
+	const formErrorId = 'form-error';
 
 	function validateUsernameInput(value: string): string {
 		const trimmed = value.trim();
@@ -74,7 +79,17 @@
 	const isFormValid = $derived(
 		!validateUsernameInput(username) && !validatePasswordInput(password)
 	);
+
+	const hasUsernameError = $derived(usernameTouched && !!usernameValidationMessage);
+	const hasPasswordError = $derived(passwordTouched && !!passwordValidationMessage);
+	const hasFormError = $derived(!!form?.message);
 </script>
+
+<SEO
+	title="Sign Up"
+	description="Create a new account to get started with the SvelteKit template."
+	url="/sign-up"
+/>
 
 <div class="flex min-h-screen items-center justify-center p-4">
 	<Card class="w-full max-w-md">
@@ -84,11 +99,18 @@
 		</CardHeader>
 		<CardContent>
 			{#if form?.message}
-				<Alert variant="destructive" class="mb-4">
+				<Alert
+					variant="destructive"
+					class="mb-4"
+					role="alert"
+					aria-live="assertive"
+					aria-atomic="true"
+					id={formErrorId}
+				>
 					<AlertDescription>{form.message}</AlertDescription>
 				</Alert>
 			{/if}
-			<form method="post" action="?/register" use:enhance class="space-y-4">
+			<form method="post" action="?/register" use:enhance class="space-y-4" novalidate>
 				<div class="space-y-2">
 					<Label for="username">Username</Label>
 					<Input
@@ -100,10 +122,14 @@
 						placeholder="Choose a username"
 						bind:value={username}
 						onblur={handleUsernameBlur}
-						class={(usernameTouched && usernameValidationMessage) || form?.message ? 'border-destructive' : ''}
+						class={hasUsernameError || hasFormError ? 'border-destructive' : ''}
+						aria-describedby={hasUsernameError ? usernameErrorId : hasFormError ? formErrorId : undefined}
+						aria-invalid={hasUsernameError || hasFormError ? 'true' : undefined}
 					/>
-					{#if usernameTouched && usernameValidationMessage}
-						<p class="text-xs text-destructive">{usernameValidationMessage}</p>
+					{#if hasUsernameError}
+						<p id={usernameErrorId} class="text-xs text-destructive" role="alert">
+							{usernameValidationMessage}
+						</p>
 					{:else}
 						<p class="text-xs text-muted-foreground">
 							3-31 characters. Letters, numbers, underscores, and hyphens allowed.
@@ -121,10 +147,14 @@
 						placeholder="Choose a password"
 						bind:value={password}
 						onblur={handlePasswordBlur}
-						class={(passwordTouched && passwordValidationMessage) || form?.message ? 'border-destructive' : ''}
+						class={hasPasswordError || hasFormError ? 'border-destructive' : ''}
+						aria-describedby={hasPasswordError ? passwordErrorId : hasFormError ? formErrorId : undefined}
+						aria-invalid={hasPasswordError || hasFormError ? 'true' : undefined}
 					/>
-					{#if passwordTouched && passwordValidationMessage}
-						<p class="text-xs text-destructive">{passwordValidationMessage}</p>
+					{#if hasPasswordError}
+						<p id={passwordErrorId} class="text-xs text-destructive" role="alert">
+							{passwordValidationMessage}
+						</p>
 					{:else}
 						<p class="text-xs text-muted-foreground">Minimum 6 characters</p>
 					{/if}

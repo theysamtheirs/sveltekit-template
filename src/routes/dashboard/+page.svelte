@@ -7,9 +7,17 @@
 		CardHeader,
 		CardTitle
 	} from '$lib/components/ui/card';
+	import SEO from '$lib/components/SEO.svelte';
 
 	let { data }: { data: PageData } = $props();
 </script>
+
+<SEO
+	title="Dashboard"
+	description="Your personal dashboard with account information and quick actions."
+	url="/dashboard"
+	noindex={true}
+/>
 
 <div class="container mx-auto px-4 py-8">
 	<div class="mb-8">

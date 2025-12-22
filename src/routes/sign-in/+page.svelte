@@ -12,9 +12,16 @@
 		CardTitle
 	} from '$lib/components/ui/card';
 	import { Alert, AlertDescription } from '$lib/components/ui/alert';
+	import SEO from '$lib/components/SEO.svelte';
 
 	let { form }: { form: ActionData } = $props();
 </script>
+
+<SEO
+	title="Sign In"
+	description="Sign in to your account to access the dashboard and features."
+	url="/sign-in"
+/>
 
 <div class="flex min-h-screen items-center justify-center p-4">
 	<Card class="w-full max-w-md">
@@ -24,11 +31,17 @@
 		</CardHeader>
 		<CardContent>
 			{#if form?.message}
-				<Alert variant="destructive" class="mb-4">
-					<AlertDescription>{form.message}</AlertDescription>
+				<Alert
+					variant="destructive"
+					class="mb-4"
+					role="alert"
+					aria-live="assertive"
+					aria-atomic="true"
+				>
+					<AlertDescription id="error-message">{form.message}</AlertDescription>
 				</Alert>
 			{/if}
-			<form method="post" action="?/login" use:enhance class="space-y-4">
+			<form method="post" action="?/login" use:enhance class="space-y-4" novalidate>
 				<div class="space-y-2">
 					<Label for="username">Username</Label>
 					<Input
@@ -38,6 +51,8 @@
 						required
 						autocomplete="username"
 						placeholder="Enter your username"
+						aria-describedby={form?.message ? 'error-message' : undefined}
+						aria-invalid={form?.message ? 'true' : undefined}
 					/>
 				</div>
 				<div class="space-y-2">
@@ -49,6 +64,8 @@
 						required
 						autocomplete="current-password"
 						placeholder="Enter your password"
+						aria-describedby={form?.message ? 'error-message' : undefined}
+						aria-invalid={form?.message ? 'true' : undefined}
 					/>
 				</div>
 				<Button type="submit" class="w-full"> Sign In </Button>
