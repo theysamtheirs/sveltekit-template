@@ -4,6 +4,17 @@
 
 This template provides everything you need to build and deploy a modern web application: authentication, database, beautiful UI components, and deployment configuration—all pre-configured and ready to use.
 
+## 🚀 Quick Start (Using This Template)
+
+**The easiest way to use this template:**
+
+1. Click the **"Use this template"** button above (or [here](https://github.com/your-username/sveltekit-template/generate))
+2. Create a new repository with your project name
+3. Clone your new repository: `git clone <your-new-repo-url>`
+4. Follow the setup steps below
+
+> **📖 New to GitHub templates?** See [TEMPLATE_USAGE.md](./TEMPLATE_USAGE.md) for a complete guide on how template repositories work.
+
 ## ✨ Features
 
 - 🔐 **Complete Authentication System** - User registration, login, secure password hashing (Argon2), and session management
