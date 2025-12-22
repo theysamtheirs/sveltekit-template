@@ -93,16 +93,23 @@ echo -e "${GREEN}✅ Updated .env with Turso credentials${NC}"
 export DATABASE_URL="$DB_URL"
 export DATABASE_AUTH_TOKEN="$DB_TOKEN"
 
-# Run database push
-echo "Pushing database schema..."
+# Clear any potential drizzle-kit cache to avoid stale schema comparisons
+if [ -d ".drizzle" ]; then
+    echo "Clearing Drizzle cache..."
+    rm -rf .drizzle
+fi
+
+# Run database push with explicit environment variables
+# This ensures the new database URL is used, not any cached values
+echo "Pushing database schema to new database..."
 if command -v bun &> /dev/null; then
-    bun db:push
+    DATABASE_URL="$DB_URL" DATABASE_AUTH_TOKEN="$DB_TOKEN" bun db:push
 elif command -v npm &> /dev/null; then
-    npm run db:push
+    DATABASE_URL="$DB_URL" DATABASE_AUTH_TOKEN="$DB_TOKEN" npm run db:push
 elif command -v pnpm &> /dev/null; then
-    pnpm db:push
+    DATABASE_URL="$DB_URL" DATABASE_AUTH_TOKEN="$DB_TOKEN" pnpm db:push
 elif command -v yarn &> /dev/null; then
-    yarn db:push
+    DATABASE_URL="$DB_URL" DATABASE_AUTH_TOKEN="$DB_TOKEN" yarn db:push
 else
     echo -e "${YELLOW}⚠️  Could not find package manager. Please run 'npm run db:push' manually.${NC}"
 fi
