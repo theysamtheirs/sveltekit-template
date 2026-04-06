@@ -24,7 +24,11 @@ export default defineConfig(
 		rules: {
 			// typescript-eslint strongly recommend that you do not use the no-undef lint rule on TypeScript projects.
 			// see: https://typescript-eslint.io/troubleshooting/faqs/eslint/#i-get-errors-from-the-no-undef-rule-about-global-variables-not-being-defined-even-though-there-are-no-typescript-errors
-			'no-undef': 'off'
+			'no-undef': 'off',
+			// False positive: flags standard <a href> links as requiring resolve(). Normal SvelteKit routing.
+			'svelte/no-navigation-without-resolve': 'off',
+			// Does not account for +error.svelte's valid `status` and `error` props.
+			'svelte/valid-prop-names-in-kit-pages': 'off'
 		}
 	},
 	{

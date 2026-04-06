@@ -18,6 +18,15 @@
 
 	let { data }: { data: PageData } = $props();
 
+	const jsonLd = JSON.stringify({
+		'@context': 'https://schema.org',
+		'@type': 'WebSite',
+		name: 'SvelteKit Template',
+		description:
+			'A production-ready SvelteKit template with authentication, database, beautiful UI components, and deployment configuration',
+		url: 'https://your-site.com'
+	});
+
 	const cloneCommand = 'git clone https://github.com/theysamtheirs/sveltekit-template.git';
 	let copied = $state(false);
 
@@ -35,14 +44,8 @@
 />
 
 <svelte:head>
-	{@html `<script type="application/ld+json">${JSON.stringify({
-		'@context': 'https://schema.org',
-		'@type': 'WebSite',
-		name: 'SvelteKit Template',
-		description:
-			'A production-ready SvelteKit template with authentication, database, beautiful UI components, and deployment configuration',
-		url: 'https://your-site.com'
-	})}</script>`}
+	<!-- eslint-disable-next-line svelte/no-at-html-tags -->
+	{@html '<script type="application/ld+json">' + jsonLd + '<' + '/script>'}
 </svelte:head>
 
 <div class="flex min-h-[calc(100vh-4rem)] flex-col">
@@ -602,7 +605,7 @@
 						>
 							SvelteKit
 						</a>
-						{' • '}
+						•
 						<a
 							href="https://nodejs.org"
 							target="_blank"
@@ -611,7 +614,7 @@
 						>
 							Node.js 22
 						</a>
-						{' • '}
+						•
 						<a
 							href="https://vitejs.dev"
 							target="_blank"
@@ -633,7 +636,7 @@
 						>
 							Turso (LibSQL)
 						</a>
-						{' • '}
+						•
 						<a
 							href="https://orm.drizzle.team"
 							target="_blank"
@@ -655,7 +658,7 @@
 						>
 							Tailwind CSS v4
 						</a>
-						{' • '}
+						•
 						<a
 							href="https://www.shadcn-svelte.com"
 							target="_blank"
@@ -664,7 +667,7 @@
 						>
 							shadcn-svelte
 						</a>
-						{' • '}
+						•
 						<a
 							href="https://iconify.design"
 							target="_blank"
@@ -686,7 +689,7 @@
 						>
 							Vercel
 						</a>
-						{' • '}
+						•
 						<a
 							href="https://github.com/features/actions"
 							target="_blank"
@@ -695,7 +698,7 @@
 						>
 							GitHub Actions
 						</a>
-						{' ready'}
+						ready
 					</p>
 				</div>
 			</div>

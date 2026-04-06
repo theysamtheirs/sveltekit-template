@@ -64,4 +64,4 @@ jobs:
         env:
           # These are required for build but won't be used in CI
           DATABASE_URL: ${{ secrets.DATABASE_URL || 'libsql://placeholder.turso.io' }}
-          DATABASE_AUTH_TOKEN: ${{ secrets.DATABASE_AUTH_TOKEN || '' }}
+          DATABASE_AUTH_TOKEN: ${{ secrets.DATABASE_AUTH_TOKEN || 'ci-placeholder-token' }}
