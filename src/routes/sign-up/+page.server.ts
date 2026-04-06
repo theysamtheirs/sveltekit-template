@@ -5,7 +5,8 @@ import * as auth from '$lib/server/auth';
 import { db } from '$lib/server/db';
 import * as table from '$lib/server/db/schema';
 import { argon2Options } from '$lib/server/security';
-import { buildRateLimitKey, enforceRateLimit } from '$lib/server/rate-limit';
+import { enforceRateLimit } from '$lib/server/rate-limit';
+import { buildRateLimitKey, validatePassword, validateUsername } from '$lib/server/validation';
 import type { Actions, PageServerLoad } from './$types';
 
 export const load: PageServerLoad = async (event) => {
@@ -18,7 +19,7 @@ export const load: PageServerLoad = async (event) => {
 export const actions: Actions = {
 	register: async (event) => {
 		const clientAddress = event.getClientAddress();
-		enforceRateLimit({
+		await enforceRateLimit({
 			key: buildRateLimitKey(['auth', 'register', 'ip', clientAddress]),
 			windowMs: 60_000,
 			max: 10
@@ -30,18 +31,15 @@ export const actions: Actions = {
 
 		const usernameValidation = validateUsername(username);
 		if (!usernameValidation.valid) {
-			return fail(400, {
-				message: usernameValidation.error || 'Invalid username'
-			});
+			return fail(400, { message: usernameValidation.error || 'Invalid username' });
 		}
 		if (!validatePassword(password)) {
 			return fail(400, { message: 'Password must be at least 6 characters long' });
 		}
 
-		// Normalize username to lowercase for case-insensitive storage
 		const normalizedUsername = (username as string).trim().toLowerCase();
 
-		enforceRateLimit({
+		await enforceRateLimit({
 			key: buildRateLimitKey(['auth', 'register', 'ip-user', clientAddress, normalizedUsername]),
 			windowMs: 60_000,
 			max: 3
@@ -51,7 +49,9 @@ export const actions: Actions = {
 		const passwordHash = await hash(password, argon2Options);
 
 		try {
-			await db.insert(table.user).values({ id: userId, username: normalizedUsername, passwordHash });
+			await db
+				.insert(table.user)
+				.values({ id: userId, username: normalizedUsername, passwordHash });
 
 			const sessionToken = auth.generateSessionToken();
 			const session = await auth.createSession(sessionToken, userId);
@@ -63,54 +63,8 @@ export const actions: Actions = {
 	}
 };
 
-function generateUserId() {
-	// ID with 120 bits of entropy, or about the same as UUID v4.
+function generateUserId(): string {
+	// 120 bits of entropy — same as UUID v4
 	const bytes = crypto.getRandomValues(new Uint8Array(15));
-	const id = encodeBase32LowerCase(bytes);
-	return id;
-}
-
-function validateUsername(username: unknown): { valid: boolean; error?: string } {
-	if (typeof username !== 'string') {
-		return { valid: false, error: 'Username must be a string' };
-	}
-
-	const trimmed = username.trim();
-
-	if (trimmed.length < 3) {
-		return { valid: false, error: 'Username must be at least 3 characters long' };
-	}
-
-	if (trimmed.length > 31) {
-		return { valid: false, error: 'Username must be 31 characters or less' };
-	}
-
-	// Allow letters (both cases), numbers, underscores, and hyphens
-	if (!/^[a-zA-Z0-9_-]+$/.test(trimmed)) {
-		return {
-			valid: false,
-			error: 'Username can only contain letters, numbers, underscores, and hyphens'
-		};
-	}
-
-	// Cannot start with underscore or hyphen
-	if (/^[_-]/.test(trimmed)) {
-		return { valid: false, error: 'Username cannot start with an underscore or hyphen' };
-	}
-
-	// Cannot end with underscore or hyphen
-	if (/[_-]$/.test(trimmed)) {
-		return { valid: false, error: 'Username cannot end with an underscore or hyphen' };
-	}
-
-	// Cannot be all numbers
-	if (/^\d+$/.test(trimmed)) {
-		return { valid: false, error: 'Username cannot be all numbers' };
-	}
-
-	return { valid: true };
-}
-
-function validatePassword(password: unknown): password is string {
-	return typeof password === 'string' && password.length >= 6 && password.length <= 255;
+	return encodeBase32LowerCase(bytes);
 }

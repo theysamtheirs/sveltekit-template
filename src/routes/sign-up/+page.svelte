@@ -123,7 +123,11 @@
 						bind:value={username}
 						onblur={handleUsernameBlur}
 						class={hasUsernameError || hasFormError ? 'border-destructive' : ''}
-						aria-describedby={hasUsernameError ? usernameErrorId : hasFormError ? formErrorId : undefined}
+						aria-describedby={hasUsernameError
+							? usernameErrorId
+							: hasFormError
+								? formErrorId
+								: undefined}
 						aria-invalid={hasUsernameError || hasFormError ? 'true' : undefined}
 					/>
 					{#if hasUsernameError}
@@ -148,7 +152,11 @@
 						bind:value={password}
 						onblur={handlePasswordBlur}
 						class={hasPasswordError || hasFormError ? 'border-destructive' : ''}
-						aria-describedby={hasPasswordError ? passwordErrorId : hasFormError ? formErrorId : undefined}
+						aria-describedby={hasPasswordError
+							? passwordErrorId
+							: hasFormError
+								? formErrorId
+								: undefined}
 						aria-invalid={hasPasswordError || hasFormError ? 'true' : undefined}
 					/>
 					{#if hasPasswordError}
@@ -159,17 +167,12 @@
 						<p class="text-xs text-muted-foreground">Minimum 6 characters</p>
 					{/if}
 				</div>
-				<Button type="submit" class="w-full" disabled={!isFormValid}>
-					Create Account
-				</Button>
+				<Button type="submit" class="w-full" disabled={!isFormValid}>Create Account</Button>
 			</form>
 			<div class="mt-4 text-center text-sm">
 				Already have an account?
-				<a href="/sign-in" class="text-primary underline-offset-4 hover:underline">
-					Sign in
-				</a>
+				<a href="/sign-in" class="text-primary underline-offset-4 hover:underline"> Sign in </a>
 			</div>
 		</CardContent>
 	</Card>
 </div>
-

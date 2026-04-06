@@ -16,4 +16,3 @@ function requireLogin() {
 
 	return locals.user;
 }
-

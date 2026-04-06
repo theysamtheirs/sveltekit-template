@@ -1,6 +1,10 @@
+import { sequence } from '@sveltejs/kit/hooks';
 import type { Handle } from '@sveltejs/kit';
 import * as auth from '$lib/server/auth';
 import { dev } from '$app/environment';
+import { lt } from 'drizzle-orm';
+import { db } from '$lib/server/db';
+import * as table from '$lib/server/db/schema';
 
 const handleAuth: Handle = async ({ event, resolve }) => {
 	const sessionToken = event.cookies.get(auth.sessionCookieName);
@@ -26,7 +30,21 @@ const handleAuth: Handle = async ({ event, resolve }) => {
 	return withSecurityHeaders(response);
 };
 
-export const handle: Handle = handleAuth;
+// Opportunistically purge expired rate limit rows on ~2% of requests.
+// Keeps the table lean without a dedicated cron job.
+const CLEANUP_PROBABILITY = 0.02;
+
+async function maybeCleanRateLimits(): Promise<void> {
+	if (Math.random() > CLEANUP_PROBABILITY) return;
+	await db.delete(table.rateLimit).where(lt(table.rateLimit.resetAt, Date.now()));
+}
+
+const handleRateLimitCleanup: Handle = async ({ event, resolve }) => {
+	maybeCleanRateLimits(); // fire-and-forget, never blocks the request
+	return resolve(event);
+};
+
+export const handle: Handle = sequence(handleRateLimitCleanup, handleAuth);
 
 function withSecurityHeaders(response: Response): Response {
 	response.headers.set('X-Content-Type-Options', 'nosniff');
@@ -37,7 +55,10 @@ function withSecurityHeaders(response: Response): Response {
 	response.headers.set('Cross-Origin-Resource-Policy', 'same-origin');
 
 	if (!dev) {
-		response.headers.set('Strict-Transport-Security', 'max-age=31536000; includeSubDomains; preload');
+		response.headers.set(
+			'Strict-Transport-Security',
+			'max-age=31536000; includeSubDomains; preload'
+		);
 	}
 
 	return response;

@@ -68,15 +68,12 @@
 						aria-invalid={form?.message ? 'true' : undefined}
 					/>
 				</div>
-				<Button type="submit" class="w-full"> Sign In </Button>
+				<Button type="submit" class="w-full">Sign In</Button>
 			</form>
 			<div class="mt-4 text-center text-sm">
 				Don't have an account?
-				<a href="/sign-up" class="text-primary underline-offset-4 hover:underline">
-					Sign up
-				</a>
+				<a href="/sign-up" class="text-primary underline-offset-4 hover:underline"> Sign up </a>
 			</div>
 		</CardContent>
 	</Card>
 </div>
-

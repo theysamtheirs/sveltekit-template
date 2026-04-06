@@ -5,6 +5,7 @@
 	import SkipToContent from '$lib/components/SkipToContent.svelte';
 	import SEO from '$lib/components/SEO.svelte';
 	import { ModeWatcher } from 'mode-watcher';
+	import type { Snippet } from 'svelte';
 	import type { LayoutData } from './$types';
 	import type { SEOProps } from '$lib/utils/seo';
 
@@ -12,7 +13,7 @@
 		seo?: SEOProps & { skipDefault?: boolean };
 	};
 
-	let { children, data }: { children: any; data: LayoutDataWithSEO } = $props();
+	let { children, data }: { children: Snippet; data: LayoutDataWithSEO } = $props();
 
 	// Default SEO - can be overridden by child pages via data.seo
 	// Only render if seo data is provided and skipDefault is not true

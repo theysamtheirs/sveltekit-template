@@ -7,10 +7,11 @@ This guide helps you verify that all template features are working correctly.
 Run the automated verification script:
 
 ```bash
-npm run verify
+bun run verify
 ```
 
 This checks:
+
 - ✅ Node.js installation
 - ✅ Package manager
 - ✅ Dependencies
@@ -28,10 +29,11 @@ This checks:
 turso auth login
 
 # Run setup (or verify existing setup)
-npm run setup
+bun run setup
 ```
 
 **Expected output:**
+
 - ✅ Database created or found
 - ✅ Credentials generated
 - ✅ `.env` file updated
@@ -53,24 +55,25 @@ cat .env
 
 ```bash
 # Start dev server
-npm run dev
+bun run dev
 
 # In another terminal, test health endpoint
 curl http://localhost:5173/api/health
 ```
 
 **Expected response:**
+
 ```json
 {
-  "status": "healthy",
-  "checks": {
-    "database": true,
-    "environment": {
-      "databaseUrl": true,
-      "databaseToken": true
-    },
-    "timestamp": "2024-..."
-  }
+	"status": "healthy",
+	"checks": {
+		"database": true,
+		"environment": {
+			"databaseUrl": true,
+			"databaseToken": true
+		},
+		"timestamp": "2024-..."
+	}
 }
 ```
 
@@ -137,10 +140,11 @@ http://localhost:5173/nonexistent-page
 
 ```bash
 # Open Drizzle Studio
-npm run db:studio
+bun run db:studio
 ```
 
 **Expected:**
+
 - Browser opens with Drizzle Studio
 - Can see `user` and `session` tables
 - Can query data
@@ -149,7 +153,7 @@ npm run db:studio
 
 ```bash
 # Type check
-npm run check
+bun run check
 
 # Should complete without errors
 ```
@@ -158,7 +162,7 @@ npm run check
 
 ```bash
 # Run linter
-npm run lint
+bun run lint
 
 # Should pass without errors
 ```
@@ -167,13 +171,13 @@ npm run lint
 
 ```bash
 # Build for production
-npm run build
+bun run build
 
 # Should complete successfully
 # Output in .svelte-kit directory
 
 # Preview build
-npm run preview
+bun run preview
 
 # Should start preview server
 ```
@@ -212,20 +216,20 @@ If you've pushed to GitHub:
 
 ```bash
 # Development
-npm run dev          # Should start dev server
+bun run dev          # Should start dev server
 
 # Database
-npm run db:push      # Should push schema (no-op if already synced)
-npm run db:studio    # Should open Drizzle Studio
+bun run db:push      # Should push schema (no-op if already synced)
+bun run db:studio    # Should open Drizzle Studio
 
 # Code Quality
-npm run check        # Should type check
-npm run lint         # Should lint
-npm run format       # Should format code
+bun run check        # Should type check
+bun run lint         # Should lint
+bun run format       # Should format code
 
 # Build
-npm run build        # Should build successfully
-npm run preview      # Should preview build
+bun run build        # Should build successfully
+bun run preview      # Should preview build
 ```
 
 ## ✅ Complete Checklist
@@ -251,11 +255,13 @@ npm run preview      # Should preview build
 If something doesn't work:
 
 1. **Run verification script:**
+
    ```bash
-   npm run verify
+   bun run verify
    ```
 
 2. **Check health endpoint:**
+
    ```bash
    curl http://localhost:5173/api/health
    ```
@@ -266,14 +272,15 @@ If something doesn't work:
    - Check network tab for API calls
 
 4. **Re-run setup:**
+
    ```bash
-   npm run setup
+   bun run setup
    ```
 
 5. **Clear and reinstall:**
    ```bash
    rm -rf node_modules .svelte-kit
-   npm install
+   bun install
    ```
 
 ## 🎯 Quick Test Commands
@@ -282,10 +289,10 @@ Run these all at once to verify everything:
 
 ```bash
 # 1. Verify setup
-npm run verify
+bun run verify
 
 # 2. Start dev server (in background or new terminal)
-npm run dev
+bun run dev
 
 # 3. Test health endpoint
 curl http://localhost:5173/api/health
@@ -294,14 +301,13 @@ curl http://localhost:5173/api/health
 curl "http://localhost:5173/api/example?name=World"
 
 # 5. Type check
-npm run check
+bun run check
 
 # 6. Lint
-npm run lint
+bun run lint
 
 # 7. Build
-npm run build
+bun run build
 ```
 
 If all commands succeed, your template is fully functional! 🎉
-

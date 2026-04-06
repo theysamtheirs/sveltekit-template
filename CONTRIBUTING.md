@@ -5,21 +5,22 @@ Thank you for your interest in improving this template! This guide will help you
 ## 🚀 Quick Start
 
 1. **Fork and clone** the repository
-2. **Install dependencies**: `npm install`
-3. **Set up your environment**: `npm run setup`
-4. **Start developing**: `npm run dev`
+2. **Install dependencies**: `bun install`
+3. **Set up your environment**: `bun run setup`
+4. **Start developing**: `bun run dev`
 
 ## 📋 Development Workflow
 
 ### Before You Start
 
-- Run `npm run verify-setup` to ensure everything is configured correctly
+- Run `bun run verify-setup` to ensure everything is configured correctly
 - Check existing issues and pull requests to avoid duplicate work
 - For major changes, consider opening an issue first to discuss
 
 ### Making Changes
 
 1. **Create a branch** from `main`:
+
    ```bash
    git checkout -b feature/your-feature-name
    ```
@@ -27,14 +28,16 @@ Thank you for your interest in improving this template! This guide will help you
 2. **Make your changes** following the code style guidelines below
 
 3. **Test your changes**:
+
    ```bash
-   npm run lint      # Check linting
-   npm run check     # Check types
-   npm run build     # Ensure it builds
-   npm run dev       # Test locally
+   bun run lint      # Check linting
+   bun run check     # Check types
+   bun run build     # Ensure it builds
+   bun run dev       # Test locally
    ```
 
 4. **Commit your changes**:
+
    ```bash
    git add .
    git commit -m "feat: add your feature description"
@@ -63,7 +66,7 @@ Thank you for your interest in improving this template! This guide will help you
 
 ### Formatting
 
-- Run `npm run format` before committing
+- Run `bun run format` before committing
 - Use tabs for indentation (configured in Prettier)
 - Single quotes for JavaScript/TypeScript
 - Double quotes for HTML attributes
@@ -78,9 +81,9 @@ Thank you for your interest in improving this template! This guide will help you
 
 Before submitting a PR, ensure:
 
-- ✅ Code passes linting: `npm run lint`
-- ✅ TypeScript checks pass: `npm run check`
-- ✅ Project builds successfully: `npm run build`
+- ✅ Code passes linting: `bun run lint`
+- ✅ TypeScript checks pass: `bun run check`
+- ✅ Project builds successfully: `bun run build`
 - ✅ No console errors in development
 - ✅ Changes work in both dev and production builds
 
@@ -102,6 +105,7 @@ Before submitting a PR, ensure:
 ### Adding a UI Component
 
 Use shadcn-svelte CLI:
+
 ```bash
 npx shadcn-svelte@latest add component-name
 ```
@@ -122,6 +126,7 @@ When reporting issues, please include:
 ### PR Title Format
 
 Use conventional commits format:
+
 - `feat:` for new features
 - `fix:` for bug fixes
 - `docs:` for documentation
@@ -131,6 +136,7 @@ Use conventional commits format:
 - `chore:` for maintenance
 
 Examples:
+
 - `feat: add user profile page`
 - `fix: resolve database connection issue`
 - `docs: update README with new setup steps`
@@ -138,6 +144,7 @@ Examples:
 ### PR Description
 
 Include:
+
 - **What**: What changes you made
 - **Why**: Why you made these changes
 - **How**: How to test the changes
@@ -169,4 +176,3 @@ We welcome contributions in these areas:
 - Be respectful and constructive in all interactions
 
 Thank you for contributing! 🎉
-

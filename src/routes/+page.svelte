@@ -17,23 +17,35 @@
 	import type { PageData } from './$types';
 
 	let { data }: { data: PageData } = $props();
-</script>
 
-<SEO
-	title="SvelteKit Template - Production-Ready Starter"
-	description="A production-ready SvelteKit template with authentication, database, beautiful UI components, and deployment configuration — all set up and ready to go."
-	url="/"
-/>
-
-<svelte:head>
-	{@html `<script type="application/ld+json">${JSON.stringify({
+	const jsonLd = JSON.stringify({
 		'@context': 'https://schema.org',
 		'@type': 'WebSite',
 		name: 'SvelteKit Template',
 		description:
 			'A production-ready SvelteKit template with authentication, database, beautiful UI components, and deployment configuration',
 		url: 'https://your-site.com'
-	})}</script>`}
+	});
+
+	const cloneCommand = 'git clone https://github.com/theysamtheirs/sveltekit-template.git';
+	let copied = $state(false);
+
+	async function copyCloneCommand() {
+		await navigator.clipboard.writeText(cloneCommand);
+		copied = true;
+		setTimeout(() => (copied = false), 2000);
+	}
+</script>
+
+<SEO
+	title="SvelteKit Template - Production-Ready Starter"
+	description="A production-ready SvelteKit template with authentication, database, beautiful UI components, and deployment configuration. All set up and ready to go."
+	url="/"
+/>
+
+<svelte:head>
+	<!-- eslint-disable-next-line svelte/no-at-html-tags -->
+	{@html '<script type="application/ld+json">' + jsonLd + '<' + '/script>'}
 </svelte:head>
 
 <div class="flex min-h-[calc(100vh-4rem)] flex-col">
@@ -51,9 +63,27 @@
 				application in minutes, not hours.
 			</p>
 			<p class="mb-8 text-lg leading-8 text-muted-foreground">
-				Authentication, database, beautiful UI components, and deployment configuration — all set up
+				Authentication, database, beautiful UI components, and deployment configuration. All set up
 				and ready to go.
 			</p>
+			<div
+				class="mx-auto mb-8 flex w-full max-w-lg items-center justify-between gap-3 rounded-lg border bg-muted/50 px-4 py-3 font-mono text-sm"
+			>
+				<span class="truncate text-muted-foreground select-all">
+					<span class="mr-2 text-primary">$</span>{cloneCommand}
+				</span>
+				<button
+					onclick={copyCloneCommand}
+					aria-label="Copy clone command"
+					class="shrink-0 rounded p-1 text-muted-foreground transition-colors hover:text-foreground focus:ring-2 focus:ring-ring focus:outline-none"
+				>
+					{#if copied}
+						<span class="icon-[lucide--check] text-base text-green-500"></span>
+					{:else}
+						<span class="icon-[lucide--copy] text-base"></span>
+					{/if}
+				</button>
+			</div>
 			<div class="flex flex-col items-center justify-center gap-4 sm:flex-row">
 				{#if data.user}
 					<Button href="/dashboard" size="lg">
@@ -154,18 +184,18 @@
 								<img
 									src={tursoLight}
 									alt="Turso logo"
-									class="h-12 dark:hidden"
+									class="h-10 max-w-44 dark:hidden"
 									loading="lazy"
-									width="48"
-									height="48"
+									width="137"
+									height="40"
 								/>
 								<img
 									src={tursoDark}
 									alt="Turso logo"
-									class="hidden h-12 dark:block"
+									class="hidden h-10 max-w-44 dark:block"
 									loading="lazy"
-									width="48"
-									height="48"
+									width="137"
+									height="40"
 								/>
 							</a>
 						</div>
@@ -174,7 +204,8 @@
 					</CardHeader>
 					<CardContent>
 						<p class="mb-4 text-sm text-muted-foreground">
-							Turso provides a fast, serverless SQLite database. Free tier includes 500 databases.
+							Fast, serverless SQLite. The free tier is genuinely generous: 100 databases, 5GB
+							storage, 500M row reads and 10M row writes per month. Plenty to launch and grow.
 						</p>
 						<a
 							href="https://turso.tech"
@@ -220,8 +251,9 @@
 					</CardHeader>
 					<CardContent>
 						<p class="mb-4 text-sm text-muted-foreground">
-							Vercel offers seamless deployment with automatic previews. Free tier is perfect for
-							getting started.
+							Push to GitHub and your app deploys automatically. The free tier includes unlimited
+							personal projects, preview deployments on every PR, and custom domains. No credit card
+							required.
 						</p>
 						<a
 							href="https://vercel.com/signup"
@@ -260,8 +292,8 @@
 					<CardContent>
 						<div class="space-y-2 font-mono text-sm">
 							<p class="text-muted-foreground">$ git clone &lt;repo&gt;</p>
-							<p class="text-muted-foreground">$ npm install</p>
-							<p class="font-semibold text-foreground">$ npm run setup</p>
+							<p class="text-muted-foreground">$ bun install</p>
+							<p class="font-semibold text-foreground">$ bun run setup</p>
 						</div>
 						<p class="mt-4 text-sm text-muted-foreground">
 							The setup script automatically creates your database, configures environment
@@ -282,7 +314,7 @@
 					</CardHeader>
 					<CardContent>
 						<div class="space-y-2 font-mono text-sm">
-							<p class="font-semibold text-foreground">$ npm run dev</p>
+							<p class="font-semibold text-foreground">$ bun run dev</p>
 						</div>
 						<p class="mt-4 text-sm text-muted-foreground">
 							Everything is already configured: authentication, database, UI components, and
@@ -435,6 +467,123 @@
 		</div>
 	</section>
 
+	<!-- Vibe Coding Section -->
+	<section class="border-t bg-muted/30 py-16">
+		<div class="container mx-auto max-w-6xl px-4">
+			<div class="mb-12 text-center">
+				<h2 class="mb-4 text-3xl font-bold">Why SvelteKit?</h2>
+				<p class="text-lg text-muted-foreground">
+					The cleaner choice when you'd rather build than configure
+				</p>
+			</div>
+			<div class="grid gap-6 md:grid-cols-3">
+				<Card>
+					<CardHeader>
+						<div class="mb-4 flex items-center justify-center">
+							<span class="icon-[lucide--book-open] text-4xl text-primary"></span>
+						</div>
+						<CardTitle>Code that reads like code</CardTitle>
+					</CardHeader>
+					<CardContent>
+						<p class="text-sm text-muted-foreground">
+							Svelte components look like HTML, not JavaScript pretending to be HTML. The code your
+							AI writes is shorter, more direct, and actually makes sense when you read it back.
+						</p>
+					</CardContent>
+				</Card>
+
+				<Card>
+					<CardHeader>
+						<div class="mb-4 flex items-center justify-center">
+							<span class="icon-[lucide--folders] text-4xl text-primary"></span>
+						</div>
+						<CardTitle>Structure you can see</CardTitle>
+					</CardHeader>
+					<CardContent>
+						<p class="text-sm text-muted-foreground">
+							Your folder structure is your URL structure. Server logic stays in one file, UI in
+							another. No routing config, no framework magic to untangle. Just folders.
+						</p>
+					</CardContent>
+				</Card>
+
+				<Card>
+					<CardHeader>
+						<div class="mb-4 flex items-center justify-center">
+							<span class="icon-[lucide--wand] text-4xl text-primary"></span>
+						</div>
+						<CardTitle>AI gets it right more often</CardTitle>
+					</CardHeader>
+					<CardContent>
+						<p class="text-sm text-muted-foreground">
+							SvelteKit's conventions are clear enough that AI tools follow them reliably. The code
+							that gets generated actually works. You spend time on features, not fixing mistakes.
+						</p>
+					</CardContent>
+				</Card>
+			</div>
+		</div>
+	</section>
+
+	<!-- AI-Ready Section -->
+	<section class="border-t py-16">
+		<div class="container mx-auto max-w-6xl px-4">
+			<div class="mb-12 text-center">
+				<h2 class="mb-4 text-3xl font-bold">AI-Ready from Day One</h2>
+				<p class="text-lg text-muted-foreground">
+					Most starters assume you'll orient your AI tool on the codebase yourself. This one ships
+					with that already done.
+				</p>
+			</div>
+			<Card class="border-l-4 border-l-primary bg-primary/5">
+				<CardHeader>
+					<div class="flex items-start gap-4">
+						<span class="mt-1 icon-[lucide--bot] shrink-0 text-4xl text-primary"></span>
+						<div>
+							<CardTitle class="mb-1 text-xl">AGENTS.md: pre-written codebase context</CardTitle>
+							<CardDescription class="text-base">
+								Claude Code, Cursor, and GitHub Copilot all scan
+								<code class="rounded bg-muted px-1.5 py-0.5 font-mono text-sm text-foreground"
+									>AGENTS.md</code
+								>
+								automatically when a session starts. This template ships with one already written.
+							</CardDescription>
+						</div>
+					</div>
+				</CardHeader>
+				<CardContent>
+					<div class="grid gap-8 md:grid-cols-2">
+						<div>
+							<p class="mb-3 text-sm font-semibold tracking-wide text-muted-foreground uppercase">
+								What's pre-documented
+							</p>
+							<ul class="space-y-2 text-sm text-muted-foreground">
+								<li>• Complete DB schema with table-level explanations</li>
+								<li>• Auth session flow: token generation through cookie lifecycle</li>
+								<li>• Validation patterns: where they live, how to extend them</li>
+								<li>• Icon system rules: which syntax to use and when</li>
+								<li>• Explicit "what NOT to do" list (Svelte 4 syntax, raw SQL, etc.)</li>
+								<li>• Environment variable reference for dev and production</li>
+							</ul>
+						</div>
+						<div>
+							<p class="mb-3 text-sm font-semibold tracking-wide text-muted-foreground uppercase">
+								What this means in practice
+							</p>
+							<ul class="space-y-2 text-sm text-muted-foreground">
+								<li>• AI understands your conventions from the very first message</li>
+								<li>• No "please use Drizzle not raw SQL" in every prompt</li>
+								<li>• Generated code uses $state and $derived correctly by default</li>
+								<li>• New routes follow the +page.server.ts pattern automatically</li>
+								<li>• You spend prompts on features, not on correcting style</li>
+							</ul>
+						</div>
+					</div>
+				</CardContent>
+			</Card>
+		</div>
+	</section>
+
 	<!-- Tech Stack Section -->
 	<section class="border-t bg-muted/30 py-16">
 		<div class="container mx-auto max-w-4xl px-4">
@@ -456,7 +605,7 @@
 						>
 							SvelteKit
 						</a>
-						{' • '}
+						•
 						<a
 							href="https://nodejs.org"
 							target="_blank"
@@ -465,7 +614,7 @@
 						>
 							Node.js 22
 						</a>
-						{' • '}
+						•
 						<a
 							href="https://vitejs.dev"
 							target="_blank"
@@ -487,7 +636,7 @@
 						>
 							Turso (LibSQL)
 						</a>
-						{' • '}
+						•
 						<a
 							href="https://orm.drizzle.team"
 							target="_blank"
@@ -509,7 +658,7 @@
 						>
 							Tailwind CSS v4
 						</a>
-						{' • '}
+						•
 						<a
 							href="https://www.shadcn-svelte.com"
 							target="_blank"
@@ -518,7 +667,7 @@
 						>
 							shadcn-svelte
 						</a>
-						{' • '}
+						•
 						<a
 							href="https://iconify.design"
 							target="_blank"
@@ -540,7 +689,7 @@
 						>
 							Vercel
 						</a>
-						{' • '}
+						•
 						<a
 							href="https://github.com/features/actions"
 							target="_blank"
@@ -549,7 +698,7 @@
 						>
 							GitHub Actions
 						</a>
-						{' ready'}
+						ready
 					</p>
 				</div>
 			</div>

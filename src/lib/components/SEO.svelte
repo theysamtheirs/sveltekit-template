@@ -71,4 +71,3 @@
 	<!-- should be set in server configuration (Vercel, headers.ts, or hooks.server.ts) -->
 	<!-- not in meta tags, as they are HTTP headers, not HTML meta tags -->
 </svelte:head>
-

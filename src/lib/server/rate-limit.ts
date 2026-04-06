@@ -1,11 +1,7 @@
 import { error } from '@sveltejs/kit';
-
-type Bucket = {
-	count: number;
-	resetAtMs: number;
-};
-
-const buckets = new Map<string, Bucket>();
+import { eq } from 'drizzle-orm';
+import { db } from '$lib/server/db';
+import * as table from '$lib/server/db/schema';
 
 type RateLimitOptions = {
 	key: string;
@@ -13,12 +9,20 @@ type RateLimitOptions = {
 	max: number;
 };
 
-export function enforceRateLimit({ key, windowMs, max }: RateLimitOptions): void {
+export async function enforceRateLimit({ key, windowMs, max }: RateLimitOptions): Promise<void> {
 	const now = Date.now();
-	const existing = buckets.get(key);
 
-	if (!existing || now >= existing.resetAtMs) {
-		buckets.set(key, { count: 1, resetAtMs: now + windowMs });
+	const [existing] = await db.select().from(table.rateLimit).where(eq(table.rateLimit.key, key));
+
+	if (!existing || now >= existing.resetAt) {
+		// Start a fresh window — onConflictDoUpdate handles both insert and reset atomically
+		await db
+			.insert(table.rateLimit)
+			.values({ key, count: 1, resetAt: now + windowMs })
+			.onConflictDoUpdate({
+				target: table.rateLimit.key,
+				set: { count: 1, resetAt: now + windowMs }
+			});
 		return;
 	}
 
@@ -26,9 +30,8 @@ export function enforceRateLimit({ key, windowMs, max }: RateLimitOptions): void
 		error(429, 'Too many requests');
 	}
 
-	existing.count += 1;
-}
-
-export function buildRateLimitKey(parts: Array<string | null | undefined>): string {
-	return parts.filter((p) => typeof p === 'string' && p.length > 0).join(':');
+	await db
+		.update(table.rateLimit)
+		.set({ count: existing.count + 1 })
+		.where(eq(table.rateLimit.key, key));
 }

@@ -5,7 +5,8 @@ import * as auth from '$lib/server/auth';
 import { db } from '$lib/server/db';
 import * as table from '$lib/server/db/schema';
 import { argon2Options } from '$lib/server/security';
-import { buildRateLimitKey, enforceRateLimit } from '$lib/server/rate-limit';
+import { enforceRateLimit } from '$lib/server/rate-limit';
+import { buildRateLimitKey, validatePassword, validateUsername } from '$lib/server/validation';
 import type { Actions, PageServerLoad } from './$types';
 
 export const load: PageServerLoad = async (event) => {
@@ -18,7 +19,7 @@ export const load: PageServerLoad = async (event) => {
 export const actions: Actions = {
 	login: async (event) => {
 		const clientAddress = event.getClientAddress();
-		enforceRateLimit({
+		await enforceRateLimit({
 			key: buildRateLimitKey(['auth', 'login', 'ip', clientAddress]),
 			windowMs: 60_000,
 			max: 20
@@ -30,24 +31,24 @@ export const actions: Actions = {
 
 		const usernameValidation = validateUsername(username);
 		if (!usernameValidation.valid) {
-			return fail(400, {
-				message: usernameValidation.error || 'Invalid username'
-			});
+			return fail(400, { message: usernameValidation.error || 'Invalid username' });
 		}
 		if (!validatePassword(password)) {
 			return fail(400, { message: 'Password must be at least 6 characters long' });
 		}
 
-		// Normalize username to lowercase for case-insensitive lookup
 		const normalizedUsername = (username as string).trim().toLowerCase();
 
-		enforceRateLimit({
+		await enforceRateLimit({
 			key: buildRateLimitKey(['auth', 'login', 'ip-user', clientAddress, normalizedUsername]),
 			windowMs: 60_000,
 			max: 5
 		});
 
-		const results = await db.select().from(table.user).where(eq(table.user.username, normalizedUsername));
+		const results = await db
+			.select()
+			.from(table.user)
+			.where(eq(table.user.username, normalizedUsername));
 
 		const existingUser = results.at(0);
 		if (!existingUser) {
@@ -66,33 +67,3 @@ export const actions: Actions = {
 		return redirect(302, '/');
 	}
 };
-
-function validateUsername(username: unknown): { valid: boolean; error?: string } {
-	if (typeof username !== 'string') {
-		return { valid: false, error: 'Username must be a string' };
-	}
-
-	const trimmed = username.trim();
-
-	if (trimmed.length < 3) {
-		return { valid: false, error: 'Username must be at least 3 characters long' };
-	}
-
-	if (trimmed.length > 31) {
-		return { valid: false, error: 'Username must be 31 characters or less' };
-	}
-
-	// Allow letters (both cases), numbers, underscores, and hyphens
-	if (!/^[a-zA-Z0-9_-]+$/.test(trimmed)) {
-		return {
-			valid: false,
-			error: 'Username can only contain letters, numbers, underscores, and hyphens'
-		};
-	}
-
-	return { valid: true };
-}
-
-function validatePassword(password: unknown): password is string {
-	return typeof password === 'string' && password.length >= 6 && password.length <= 255;
-}

@@ -48,13 +48,11 @@ Before getting started, make sure you have the following installed and set up:
 
 ### Required Software
 
-- **Node.js 18+** - [Download here](https://nodejs.org/)
-  - Verify installation: `node --version` (should be 18.0.0 or higher)
-- **Package Manager** - One of the following:
-  - npm (comes with Node.js)
-  - [pnpm](https://pnpm.io/)
-  - [yarn](https://yarnpkg.com/)
-  - [bun](https://bun.sh/)
+- **Node.js 22+** - [Download here](https://nodejs.org/)
+  - Verify installation: `node --version` (should be 22.0.0 or higher)
+- **Bun** (recommended) - [Install here](https://bun.sh/)
+  - This project uses bun as its primary package manager
+  - Alternatives: npm, pnpm, or yarn also work
 - **Turso CLI** - Install with one command:
 
   ```bash
@@ -87,16 +85,13 @@ Run these commands to verify your setup:
 
 ```bash
 # Check Node.js version
-node --version  # Should be 18.0.0 or higher
+node --version  # Should be 22.0.0 or higher
 
-# Check package manager (npm comes with Node.js)
-npm --version
+# Check bun
+bun --version
 
-# Check Turso CLI
+# Check Turso CLI (only needed for production/cloud setup)
 turso --version
-
-# Verify Turso login (run this after signing up)
-turso auth login
 ```
 
 > **💡 Tip**: If you encounter any issues with the requirements, see the [Troubleshooting](#-troubleshooting) section below.
@@ -116,24 +111,31 @@ turso auth login
 
 ### Quick Start
 
-Get your application running in 3 simple steps:
+#### Option A: Local dev (no Turso account needed)
 
-#### Step 1: Clone and Install
+Get running in under a minute — no database setup required:
 
 ```bash
 git clone <your-repo-url>
 cd sveltekit-template
-npm install
+bun install
+bun run db:push   # creates a local SQLite file (local.db)
+bun run dev
 ```
 
-#### Step 2: Run Automated Setup
+Visit `http://localhost:5173`. The template uses a local SQLite file automatically when `DATABASE_URL` isn't set.
+
+#### Option B: With Turso (for production-ready setup)
 
 ```bash
-# Make sure you're logged into Turso first
-turso auth login
+git clone <your-repo-url>
+cd sveltekit-template
+bun install
 
-# Run the setup script (it handles everything!)
-npm run setup
+# Log in and run the setup script — it handles everything
+turso auth login
+bun run setup
+bun run dev
 ```
 
 The setup script will:
@@ -144,22 +146,12 @@ The setup script will:
 - ✅ Push the database schema
 - ✅ Show you exactly what to copy for Vercel deployment
 
-> **💡 Pro Tip**: The setup script works with npm, pnpm, yarn, or bun. It automatically detects your package manager.
-
-#### Step 3: Start Building
-
-```bash
-npm run dev
-```
-
-That's it! Visit `http://localhost:5173` and start building your application.
-
 ### Verify Your Setup
 
 After setup, you can verify everything is configured correctly:
 
 ```bash
-npm run verify
+bun run verify
 ```
 
 This will check:
@@ -190,7 +182,7 @@ The automated setup is the fastest way to get started:
 2. **Run the setup script**:
 
    ```bash
-   npm run setup
+   bun run setup
    ```
 
    The script will:
@@ -204,7 +196,7 @@ The automated setup is the fastest way to get started:
 
 3. **Start developing**:
    ```bash
-   npm run dev
+   bun run dev
    ```
 
 ### Manual Setup (Alternative)
@@ -246,7 +238,7 @@ If you prefer manual setup or need more control:
 
 5. **Push schema**:
    ```bash
-   npm run db:push
+   bun run db:push
    ```
 
 > **Note**: `DATABASE_AUTH_TOKEN` is optional in development but required for production deployments.
@@ -337,53 +329,61 @@ After deployment:
 #### Development
 
 ```bash
-npm run dev          # Start development server (with hot reload)
-npm run build        # Build for production
-npm run preview      # Preview production build locally
+bun run dev          # Start development server (with hot reload)
+bun run build        # Build for production
+bun run preview      # Preview production build locally
+```
+
+#### Testing
+
+```bash
+bun run test         # Run tests in watch mode
+bun run test:run     # Run tests once (used in CI)
 ```
 
 #### Setup & Database
 
 ```bash
-npm run setup        # Automated setup (installs deps + configures database)
-npm run verify       # Verify your setup is correct
-npm run db:push      # Push schema changes to database
-npm run db:generate  # Generate migration files
-npm run db:migrate   # Run migrations
-npm run db:studio    # Open Drizzle Studio (database GUI)
+bun run setup        # Automated setup (installs deps + configures database)
+bun run verify       # Verify your setup is correct
+bun run db:push      # Push schema changes to database
+bun run db:generate  # Generate migration files
+bun run db:migrate   # Run migrations
+bun run db:studio    # Open Drizzle Studio (database GUI)
 ```
 
 #### Code Quality
 
 ```bash
-npm run check        # TypeScript type checking
-npm run lint         # Lint code (ESLint + Prettier check)
-npm run format       # Format code with Prettier
-npm run check:watch  # Type check in watch mode
+bun run check        # TypeScript type checking
+bun run lint         # Lint code (ESLint + Prettier check)
+bun run format       # Format code with Prettier
+bun run check:watch  # Type check in watch mode
 ```
 
 ### Database Commands
 
 ```bash
 # Push schema changes to database
-npm run db:push
+bun run db:push
 
 # Generate migrations
-npm run db:generate
+bun run db:generate
 
 # Run migrations
-npm run db:migrate
+bun run db:migrate
 
 # Open Drizzle Studio (database GUI)
-npm run db:studio
+bun run db:studio
 ```
 
 ### Environment Variables
 
-| Variable              | Description                | Required   | Notes                                   |
-| --------------------- | -------------------------- | ---------- | --------------------------------------- |
-| `DATABASE_URL`        | Turso database URL         | Yes        | Format: `libsql://your-db.turso.io`     |
-| `DATABASE_AUTH_TOKEN` | Turso authentication token | Production | Optional in dev, required in production |
+| Variable                 | Description                | Required   | Notes                                                  |
+| ------------------------ | -------------------------- | ---------- | ------------------------------------------------------ |
+| `DATABASE_URL`           | Turso database URL         | Production | Falls back to `file:local.db` in dev if not set        |
+| `DATABASE_AUTH_TOKEN`    | Turso authentication token | Production | Optional in dev, required in production                |
+| `TEMPLATE_SHOWCASE_MODE` | Hides auth UI              | No         | Set to `true` on your live demo deployment (see below) |
 
 ## 🔐 Authentication
 
@@ -397,7 +397,7 @@ This template includes a complete authentication system with secure password has
 - ✅ Session-based authentication
 - ✅ Automatic session renewal
 - ✅ Hardened session cookies (`HttpOnly`, `SameSite=Lax`, `Secure` in production)
-- ✅ Basic rate limiting on sign-in/sign-up actions
+- ✅ Persistent rate limiting on sign-in/sign-up (database-backed, survives serverless cold starts)
 - ✅ Protected route helpers
 - ✅ Sign out functionality
 
@@ -413,7 +413,7 @@ Authentication is handled in `src/hooks.server.ts`, which validates sessions on 
   - `src/routes/sign-in/+page.server.ts`
   - `src/routes/sign-up/+page.server.ts`
 
-> Note: Rate limiting is in-memory (per server instance). For stronger protection in serverless/edge deployments, replace it with a shared store (Upstash Redis, Turso table, etc.).
+> Rate limiting uses the same Turso database as the rest of the app, so limits are shared across all serverless instances and survive cold starts. The `rate_limit` table is cleaned up automatically on ~2% of requests via `hooks.server.ts`.
 
 ### Protecting Routes
 
@@ -425,15 +425,15 @@ import { getRequestEvent } from '$app/server';
 import type { PageServerLoad } from './$types';
 
 export const load: PageServerLoad = async () => {
-  const { locals } = getRequestEvent();
+	const { locals } = getRequestEvent();
 
-  if (!locals.user) {
-    redirect(302, '/sign-in');
-  }
+	if (!locals.user) {
+		redirect(302, '/sign-in');
+	}
 
-  return {
-    user: locals.user
-  };
+	return {
+		user: locals.user
+	};
 };
 ```
 
@@ -505,7 +505,7 @@ Use icons with the dynamic selector syntax:
 ```html
 <!-- Material Design Light icons -->
 <span class="icon-[mdi-light--home]"></span>
-<span class="icon-[mdi-light--user]"></span>
+<span class="icon-[mdi-light--account]"></span>
 
 <!-- Lucide icons -->
 <span class="icon-[lucide--search]"></span>
@@ -545,7 +545,7 @@ Icons inherit text color and can be styled like text:
 <span class="icon-[heroicons--bars-3] text-2xl"></span>
 
 <!-- Combined styling -->
-<span class="text-xl text-green-500 icon-[mdi-light--user]"></span>
+<span class="icon-[mdi-light--account] text-xl text-green-500"></span>
 ```
 
 ### Popular Icon Sets
@@ -588,7 +588,7 @@ Check if your setup is working correctly:
 curl http://localhost:5173/api/health
 ```
 
-Returns database connection status and environment configuration. Useful for verifying your setup after running `npm run setup`.
+Returns database connection status and environment configuration. Useful for verifying your setup after running `bun run setup`.
 
 ### Example API Route
 
@@ -621,6 +621,28 @@ curl -X POST http://localhost:5173/api/example \
 - **Styling**: [Tailwind CSS v4](https://tailwindcss.com)
 - **Deployment**: [Vercel](https://vercel.com)
 
+## 🎭 Showcase Deployment
+
+You can run two separate deployments from one codebase:
+
+|             | GitHub Template      | Live Demo                               |
+| ----------- | -------------------- | --------------------------------------- |
+| **Purpose** | What people clone    | What you link to publicly               |
+| **Auth UI** | Visible              | Hidden (no real user auth)              |
+| **DB**      | Not required for dev | Real Turso DB                           |
+| **Setup**   | None                 | `TEMPLATE_SHOWCASE_MODE=true` in Vercel |
+
+**How to set up the live demo:**
+
+1. Deploy to Vercel normally
+2. In Vercel → Project Settings → Environment Variables, add:
+   ```
+   TEMPLATE_SHOWCASE_MODE=true
+   ```
+3. The navigation auth buttons disappear, making the UI safe to showcase without a working login flow
+
+The GitHub template repo stays clean — users who clone it get the full auth experience.
+
 ## 🐛 Troubleshooting
 
 ### Database Connection Issues
@@ -629,11 +651,11 @@ curl -X POST http://localhost:5173/api/example \
 
 **Solutions**:
 
-- ✅ Verify `DATABASE_URL` in `.env` matches your Turso database
-- ✅ Check that `DATABASE_AUTH_TOKEN` is set (required in production)
+- ✅ In dev with no `.env` — run `bun run db:push` once to create `local.db`
+- ✅ In production — verify `DATABASE_URL` and `DATABASE_AUTH_TOKEN` are set in Vercel
 - ✅ Ensure your Turso database is active: `turso db list`
-- ✅ Verify tables exist: `npm run db:push`
-- ✅ Test connection: `npm run db:studio`
+- ✅ Verify tables exist: `bun run db:push`
+- ✅ Test connection: `bun run db:studio`
 
 ### Authentication Not Working
 
@@ -666,9 +688,9 @@ curl -X POST http://localhost:5173/api/example \
 
 - ✅ Set all environment variables in Vercel (Production, Preview, Development)
 - ✅ Verify `DATABASE_AUTH_TOKEN` is set for production builds
-- ✅ Check Node.js version is 18+ in Vercel settings
+- ✅ Check Node.js version is 22+ in Vercel settings
 - ✅ Review build logs for specific error messages
-- ✅ Run `npm run check` locally to catch TypeScript errors
+- ✅ Run `bun run check` locally to catch TypeScript errors
 
 ### Common Issues
 
@@ -684,7 +706,7 @@ lsof -ti:5173 | xargs kill -9
 ```bash
 # Clear cache and reinstall
 rm -rf node_modules .svelte-kit
-npm install
+bun install
 ```
 
 ## Additional Resources
