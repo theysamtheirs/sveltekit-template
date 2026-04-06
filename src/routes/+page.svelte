@@ -15,6 +15,7 @@
 	import vercelLight from '$lib/assets/logos/vercel-logotype-light.svg';
 	import vercelDark from '$lib/assets/logos/vercel-logotype-dark.svg';
 	import type { PageData } from './$types';
+	import { inView } from '$lib/utils/motion';
 
 	let { data }: { data: PageData } = $props();
 
@@ -52,22 +53,35 @@
 	<!-- Hero Section -->
 	<section class="flex flex-1 flex-col items-center justify-center px-4 py-16">
 		<div class="mx-auto max-w-4xl text-center">
-			<div class="mb-4 flex items-center justify-center gap-2">
+			<div
+				class="hero-animate mb-4 flex items-center justify-center gap-2"
+				style="animation-delay: 0ms"
+			>
 				<span class="icon-[lucide--rocket] text-4xl text-primary sm:text-5xl"></span>
 			</div>
-			<h1 class="mb-6 text-4xl font-bold tracking-tight sm:text-6xl lg:text-7xl">
+			<h1
+				class="hero-animate mb-6 text-4xl font-bold tracking-tight sm:text-6xl lg:text-7xl"
+				style="animation-delay: 80ms"
+			>
 				Build Fast. Ship Faster.
 			</h1>
-			<p class="mb-4 text-xl leading-8 text-muted-foreground sm:text-2xl">
+			<p
+				class="hero-animate mb-4 text-xl leading-8 text-muted-foreground sm:text-2xl"
+				style="animation-delay: 160ms"
+			>
 				A production-ready SvelteKit template with everything you need to launch your next
 				application in minutes, not hours.
 			</p>
-			<p class="mb-8 text-lg leading-8 text-muted-foreground">
+			<p
+				class="hero-animate mb-8 text-lg leading-8 text-muted-foreground"
+				style="animation-delay: 220ms"
+			>
 				Authentication, database, beautiful UI components, and deployment configuration. All set up
 				and ready to go.
 			</p>
 			<div
-				class="mx-auto mb-8 flex w-full max-w-lg items-center justify-between gap-3 rounded-lg border bg-muted/50 px-4 py-3 font-mono text-sm"
+				class="hero-animate mx-auto mb-8 flex w-full max-w-lg items-center justify-between gap-3 rounded-lg border bg-muted/50 px-4 py-3 font-mono text-sm"
+				style="animation-delay: 300ms"
 			>
 				<span class="truncate text-muted-foreground select-all">
 					<span class="mr-2 text-primary">$</span>{cloneCommand}
@@ -84,7 +98,10 @@
 					{/if}
 				</button>
 			</div>
-			<div class="flex flex-col items-center justify-center gap-4 sm:flex-row">
+			<div
+				class="hero-animate flex flex-col items-center justify-center gap-4 sm:flex-row"
+				style="animation-delay: 380ms"
+			>
 				{#if data.user}
 					<Button href="/dashboard" size="lg">
 						<span class="mr-2 icon-[lucide--layout-dashboard]"></span>
@@ -118,13 +135,13 @@
 	<!-- Prerequisites Section -->
 	<section class="border-t py-16">
 		<div class="container mx-auto max-w-6xl px-4">
-			<div class="mb-12 text-center">
+			<div use:inView class="mb-12 text-center">
 				<h2 class="mb-4 text-3xl font-bold">What You'll Need</h2>
 				<p class="text-lg text-muted-foreground">
 					Get these accounts set up before you start (all free to get started)
 				</p>
 			</div>
-			<div class="grid gap-6 md:grid-cols-3">
+			<div use:inView={{ delay: 100 }} class="grid gap-6 md:grid-cols-3">
 				<Card>
 					<CardHeader>
 						<div class="mb-4 flex items-center justify-center">
@@ -272,11 +289,11 @@
 	<!-- Quick Start Section -->
 	<section class="border-t bg-muted/30 py-16">
 		<div class="container mx-auto max-w-6xl px-4">
-			<div class="mb-12 text-center">
+			<div use:inView class="mb-12 text-center">
 				<h2 class="mb-4 text-3xl font-bold">Get Started in 3 Steps</h2>
 				<p class="text-lg text-muted-foreground">From zero to deployed in under 5 minutes</p>
 			</div>
-			<div class="grid gap-6 md:grid-cols-3">
+			<div use:inView={{ delay: 100 }} class="grid gap-6 md:grid-cols-3">
 				<Card>
 					<CardHeader>
 						<div
@@ -351,11 +368,11 @@
 	<!-- Features Section -->
 	<section class="border-t py-16">
 		<div class="container mx-auto max-w-6xl px-4">
-			<div class="mb-12 text-center">
+			<div use:inView class="mb-12 text-center">
 				<h2 class="mb-4 text-3xl font-bold">Everything You Need, Nothing You Don't</h2>
 				<p class="text-lg text-muted-foreground">Production-ready features without the bloat</p>
 			</div>
-			<div class="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+			<div use:inView={{ delay: 100 }} class="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
 				<Card>
 					<CardHeader>
 						<div class="mb-4 flex items-center justify-center">
@@ -470,13 +487,13 @@
 	<!-- Vibe Coding Section -->
 	<section class="border-t bg-muted/30 py-16">
 		<div class="container mx-auto max-w-6xl px-4">
-			<div class="mb-12 text-center">
+			<div use:inView class="mb-12 text-center">
 				<h2 class="mb-4 text-3xl font-bold">Why SvelteKit?</h2>
 				<p class="text-lg text-muted-foreground">
 					The cleaner choice when you'd rather build than configure
 				</p>
 			</div>
-			<div class="grid gap-6 md:grid-cols-3">
+			<div use:inView={{ delay: 100 }} class="grid gap-6 md:grid-cols-3">
 				<Card>
 					<CardHeader>
 						<div class="mb-4 flex items-center justify-center">
@@ -528,72 +545,74 @@
 	<!-- AI-Ready Section -->
 	<section class="border-t py-16">
 		<div class="container mx-auto max-w-6xl px-4">
-			<div class="mb-12 text-center">
+			<div use:inView class="mb-12 text-center">
 				<h2 class="mb-4 text-3xl font-bold">AI-Ready from Day One</h2>
 				<p class="text-lg text-muted-foreground">
 					Most starters assume you'll orient your AI tool on the codebase yourself. This one ships
 					with that already done.
 				</p>
 			</div>
-			<Card class="border-l-4 border-l-primary bg-primary/5">
-				<CardHeader>
-					<div class="flex items-start gap-4">
-						<span class="mt-1 icon-[lucide--bot] shrink-0 text-4xl text-primary"></span>
-						<div>
-							<CardTitle class="mb-1 text-xl">AGENTS.md: pre-written codebase context</CardTitle>
-							<CardDescription class="text-base">
-								Claude Code, Cursor, and GitHub Copilot all scan
-								<code class="rounded bg-muted px-1.5 py-0.5 font-mono text-sm text-foreground"
-									>AGENTS.md</code
-								>
-								automatically when a session starts. This template ships with one already written.
-							</CardDescription>
+			<div use:inView={{ delay: 100 }}>
+				<Card class="border-l-4 border-l-primary bg-primary/5">
+					<CardHeader>
+						<div class="flex items-start gap-4">
+							<span class="mt-1 icon-[lucide--bot] shrink-0 text-4xl text-primary"></span>
+							<div>
+								<CardTitle class="mb-1 text-xl">AGENTS.md: pre-written codebase context</CardTitle>
+								<CardDescription class="text-base">
+									Claude Code, Cursor, and GitHub Copilot all scan
+									<code class="rounded bg-muted px-1.5 py-0.5 font-mono text-sm text-foreground"
+										>AGENTS.md</code
+									>
+									automatically when a session starts. This template ships with one already written.
+								</CardDescription>
+							</div>
 						</div>
-					</div>
-				</CardHeader>
-				<CardContent>
-					<div class="grid gap-8 md:grid-cols-2">
-						<div>
-							<p class="mb-3 text-sm font-semibold tracking-wide text-muted-foreground uppercase">
-								What's pre-documented
-							</p>
-							<ul class="space-y-2 text-sm text-muted-foreground">
-								<li>• Complete DB schema with table-level explanations</li>
-								<li>• Auth session flow: token generation through cookie lifecycle</li>
-								<li>• Validation patterns: where they live, how to extend them</li>
-								<li>• Icon system rules: which syntax to use and when</li>
-								<li>• Explicit "what NOT to do" list (Svelte 4 syntax, raw SQL, etc.)</li>
-								<li>• Environment variable reference for dev and production</li>
-							</ul>
+					</CardHeader>
+					<CardContent>
+						<div class="grid gap-8 md:grid-cols-2">
+							<div>
+								<p class="mb-3 text-sm font-semibold tracking-wide text-muted-foreground uppercase">
+									What's pre-documented
+								</p>
+								<ul class="space-y-2 text-sm text-muted-foreground">
+									<li>• Complete DB schema with table-level explanations</li>
+									<li>• Auth session flow: token generation through cookie lifecycle</li>
+									<li>• Validation patterns: where they live, how to extend them</li>
+									<li>• Icon system rules: which syntax to use and when</li>
+									<li>• Explicit "what NOT to do" list (Svelte 4 syntax, raw SQL, etc.)</li>
+									<li>• Environment variable reference for dev and production</li>
+								</ul>
+							</div>
+							<div>
+								<p class="mb-3 text-sm font-semibold tracking-wide text-muted-foreground uppercase">
+									What this means in practice
+								</p>
+								<ul class="space-y-2 text-sm text-muted-foreground">
+									<li>• AI understands your conventions from the very first message</li>
+									<li>• No "please use Drizzle not raw SQL" in every prompt</li>
+									<li>• Generated code uses $state and $derived correctly by default</li>
+									<li>• New routes follow the +page.server.ts pattern automatically</li>
+									<li>• You spend prompts on features, not on correcting style</li>
+								</ul>
+							</div>
 						</div>
-						<div>
-							<p class="mb-3 text-sm font-semibold tracking-wide text-muted-foreground uppercase">
-								What this means in practice
-							</p>
-							<ul class="space-y-2 text-sm text-muted-foreground">
-								<li>• AI understands your conventions from the very first message</li>
-								<li>• No "please use Drizzle not raw SQL" in every prompt</li>
-								<li>• Generated code uses $state and $derived correctly by default</li>
-								<li>• New routes follow the +page.server.ts pattern automatically</li>
-								<li>• You spend prompts on features, not on correcting style</li>
-							</ul>
-						</div>
-					</div>
-				</CardContent>
-			</Card>
+					</CardContent>
+				</Card>
+			</div>
 		</div>
 	</section>
 
 	<!-- Tech Stack Section -->
 	<section class="border-t bg-muted/30 py-16">
 		<div class="container mx-auto max-w-4xl px-4">
-			<div class="mb-8 text-center">
+			<div use:inView class="mb-8 text-center">
 				<h2 class="mb-4 text-3xl font-bold">Built with Modern Tools</h2>
 				<p class="text-lg text-muted-foreground">
 					Industry-standard technologies for production applications
 				</p>
 			</div>
-			<div class="grid gap-4 sm:grid-cols-2">
+			<div use:inView={{ delay: 100 }} class="grid gap-4 sm:grid-cols-2">
 				<div class="rounded-lg border bg-card p-4">
 					<h3 class="mb-2 font-semibold">Framework & Runtime</h3>
 					<p class="text-sm text-muted-foreground">
@@ -707,7 +726,7 @@
 
 	<!-- CTA Section -->
 	<section class="border-t py-16">
-		<div class="container mx-auto max-w-2xl px-4 text-center">
+		<div use:inView class="container mx-auto max-w-2xl px-4 text-center">
 			<h2 class="mb-4 text-3xl font-bold">Ready to Build Something Great?</h2>
 			<p class="mb-8 text-lg text-muted-foreground">
 				Start your next project with a solid foundation. No configuration headaches, just code.

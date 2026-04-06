@@ -188,6 +188,34 @@ Syntax: `icon-[{prefix}--{name}]` with double hyphens. Verify names at [icon-set
 
 Only use this inside `src/lib/components/ui/` where shadcn-svelte components already use it.
 
+## Motion
+
+Two animation layers work together:
+
+### 1. Hero (CSS keyframes, no JS)
+
+Elements visible on first paint use the `hero-animate` class with an inline `animation-delay`:
+
+```svelte
+<h1 class="hero-animate" style="animation-delay: 100ms">...</h1>
+```
+
+Defined in `src/app.css`. Uses `animation-fill-mode: backwards` so elements stay hidden until their delay elapses. Automatically disabled when the user prefers reduced motion.
+
+### 2. Scroll reveals (inView action)
+
+Below-fold elements use the `inView` Svelte action from `$lib/utils/motion`:
+
+```svelte
+<script lang="ts">
+	import { inView } from '$lib/utils/motion';
+</script>
+
+<div use:inView>...</div><div use:inView={{ delay: 150 }}>...</div>
+```
+
+The action fades the element up when it enters the viewport (one-shot, then disconnects). Respects `prefers-reduced-motion` automatically. Apply to HTML elements only, not Svelte components directly.
+
 ## Testing
 
 Tests use Vitest. Run with `bun run test` (watch) or `bun run test:run` (CI).

@@ -151,3 +151,32 @@
 		outline-offset: 2px;
 	}
 }
+
+/* ─── Motion ─────────────────────────────────────────────────────────────── */
+
+@keyframes fade-up {
+	from {
+		opacity: 0;
+		transform: translateY(18px);
+	}
+	to {
+		opacity: 1;
+		transform: translateY(0);
+	}
+}
+
+/*
+ * Hero entrance animation. Apply to hero elements with an animation-delay
+ * inline style to create a stagger effect.
+ *
+ * Example:
+ *   <h1 class="hero-animate" style="animation-delay: 100ms">
+ *
+ * animation-fill-mode: backwards keeps the element hidden until the delay
+ * elapses, so you don't see a pop-in before the animation starts.
+ */
+@media (prefers-reduced-motion: no-preference) {
+	.hero-animate {
+		animation: fade-up 0.6s cubic-bezier(0.4, 0, 0.2, 1) backwards;
+	}
+}
