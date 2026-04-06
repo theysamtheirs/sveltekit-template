@@ -30,7 +30,7 @@
 
 <SEO
 	title="SvelteKit Template - Production-Ready Starter"
-	description="A production-ready SvelteKit template with authentication, database, beautiful UI components, and deployment configuration — all set up and ready to go."
+	description="A production-ready SvelteKit template with authentication, database, beautiful UI components, and deployment configuration. All set up and ready to go."
 	url="/"
 />
 
@@ -60,7 +60,7 @@
 				application in minutes, not hours.
 			</p>
 			<p class="mb-8 text-lg leading-8 text-muted-foreground">
-				Authentication, database, beautiful UI components, and deployment configuration — all set up
+				Authentication, database, beautiful UI components, and deployment configuration. All set up
 				and ready to go.
 			</p>
 			<div
@@ -202,7 +202,7 @@
 					<CardContent>
 						<p class="mb-4 text-sm text-muted-foreground">
 							Fast, serverless SQLite. The free tier is genuinely generous: 100 databases, 5GB
-							storage, 500M row reads and 10M row writes per month — plenty to launch and grow.
+							storage, 500M row reads and 10M row writes per month. Plenty to launch and grow.
 						</p>
 						<a
 							href="https://turso.tech"
@@ -249,8 +249,8 @@
 					<CardContent>
 						<p class="mb-4 text-sm text-muted-foreground">
 							Push to GitHub and your app deploys automatically. The free tier includes unlimited
-							personal projects, preview deployments on every PR, and custom domains — no credit
-							card required.
+							personal projects, preview deployments on every PR, and custom domains. No credit card
+							required.
 						</p>
 						<a
 							href="https://vercel.com/signup"
@@ -468,117 +468,54 @@
 	<section class="border-t bg-muted/30 py-16">
 		<div class="container mx-auto max-w-6xl px-4">
 			<div class="mb-12 text-center">
-				<h2 class="mb-4 text-3xl font-bold">Built for How AI Actually Writes Code</h2>
+				<h2 class="mb-4 text-3xl font-bold">Why SvelteKit?</h2>
 				<p class="text-lg text-muted-foreground">
-					SvelteKit has structural advantages when an AI agent is doing the typing
+					The cleaner choice when you'd rather build than configure
 				</p>
 			</div>
-			<div class="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+			<div class="grid gap-6 md:grid-cols-3">
 				<Card>
 					<CardHeader>
 						<div class="mb-4 flex items-center justify-center">
-							<span class="icon-[lucide--split] text-4xl text-primary"></span>
+							<span class="icon-[lucide--book-open] text-4xl text-primary"></span>
 						</div>
-						<CardTitle>A Simple, Obvious Split</CardTitle>
-						<CardDescription>Server code and UI code are always in different files</CardDescription>
+						<CardTitle>Code that reads like code</CardTitle>
 					</CardHeader>
 					<CardContent>
-						<ul class="space-y-2 text-sm text-muted-foreground">
-							<li>• +page.server.ts handles DB queries, auth, and secrets</li>
-							<li>• +page.svelte handles the UI and interactions</li>
-							<li>• The file system enforces the boundary — nothing to configure</li>
-							<li>• AI always knows exactly which file new code belongs in</li>
-						</ul>
+						<p class="text-sm text-muted-foreground">
+							Svelte components look like HTML, not JavaScript pretending to be HTML. The code your
+							AI writes is shorter, more direct, and actually makes sense when you read it back.
+						</p>
 					</CardContent>
 				</Card>
 
 				<Card>
 					<CardHeader>
 						<div class="mb-4 flex items-center justify-center">
-							<span class="icon-[lucide--scissors] text-4xl text-primary"></span>
+							<span class="icon-[lucide--folders] text-4xl text-primary"></span>
 						</div>
-						<CardTitle>~40% Less Code to Review</CardTitle>
-						<CardDescription>Shorter components mean fewer AI mistakes to catch</CardDescription>
+						<CardTitle>Structure you can see</CardTitle>
 					</CardHeader>
 					<CardContent>
-						<ul class="space-y-2 text-sm text-muted-foreground">
-							<li>• Svelte components are significantly shorter than React equivalents</li>
-							<li>• No JSX ceremony, no wrapper divs for conditional rendering</li>
-							<li>• Less generated code = less surface area for subtle bugs</li>
-							<li>• Your review time scales with component length</li>
-						</ul>
+						<p class="text-sm text-muted-foreground">
+							Your folder structure is your URL structure. Server logic stays in one file, UI in
+							another. No routing config, no framework magic to untangle. Just folders.
+						</p>
 					</CardContent>
 				</Card>
 
 				<Card>
 					<CardHeader>
 						<div class="mb-4 flex items-center justify-center">
-							<span class="icon-[lucide--eye] text-4xl text-primary"></span>
+							<span class="icon-[lucide--wand] text-4xl text-primary"></span>
 						</div>
-						<CardTitle>Self-Documenting Reactivity</CardTitle>
-						<CardDescription>$state and $derived say exactly what they are</CardDescription>
+						<CardTitle>AI gets it right more often</CardTitle>
 					</CardHeader>
 					<CardContent>
-						<ul class="space-y-2 text-sm text-muted-foreground">
-							<li>• useState/useEffect chains require inference to understand</li>
-							<li>• $state and $derived declare intent explicitly</li>
-							<li>• AI reads Svelte reactivity accurately without guessing</li>
-							<li>• Audit generated reactive logic at a glance</li>
-						</ul>
-					</CardContent>
-				</Card>
-
-				<Card>
-					<CardHeader>
-						<div class="mb-4 flex items-center justify-center">
-							<span class="icon-[lucide--files] text-4xl text-primary"></span>
-						</div>
-						<CardTitle>Actions Live Next to Pages</CardTitle>
-						<CardDescription>+page.server.ts is always exactly where AI expects it</CardDescription>
-					</CardHeader>
-					<CardContent>
-						<ul class="space-y-2 text-sm text-muted-foreground">
-							<li>• AI generates +page.svelte and +page.server.ts as a natural pair</li>
-							<li>• No hunting through separate API directories for form handlers</li>
-							<li>• Data loading and mutations are co-located by convention</li>
-							<li>• The file system enforces the pattern — no decisions required</li>
-						</ul>
-					</CardContent>
-				</Card>
-
-				<Card>
-					<CardHeader>
-						<div class="mb-4 flex items-center justify-center">
-							<span class="icon-[lucide--map] text-4xl text-primary"></span>
-						</div>
-						<CardTitle>File = Route, Always</CardTitle>
-						<CardDescription>No app/layout/page.tsx gymnastics</CardDescription>
-					</CardHeader>
-					<CardContent>
-						<ul class="space-y-2 text-sm text-muted-foreground">
-							<li>• Folder structure is the URL structure — no configuration</li>
-							<li>• AI tools navigate and generate routes without lookup</li>
-							<li>• No parallel route segments, no route groups to explain</li>
-							<li>• New pages are predictable — AI knows exactly where to put things</li>
-						</ul>
-					</CardContent>
-				</Card>
-
-				<Card>
-					<CardHeader>
-						<div class="mb-4 flex items-center justify-center">
-							<span class="icon-[lucide--type] text-4xl text-primary"></span>
-						</div>
-						<CardTitle>TypeScript Without the Ceremony</CardTitle>
-						<CardDescription>No React.FC, no forwardRef, no prop drilling types</CardDescription>
-					</CardHeader>
-					<CardContent>
-						<ul class="space-y-2 text-sm text-muted-foreground">
-							<li>• Props typed with a single $props() call</li>
-							<li>• No React.FC&lt;Props&gt; wrappers or forwardRef gymnastics</li>
-							<li>• SvelteKit auto-generates PageData and ActionData types</li>
-							<li>• Strict mode passes on AI-generated code far more often</li>
-						</ul>
+						<p class="text-sm text-muted-foreground">
+							SvelteKit's conventions are clear enough that AI tools follow them reliably. The code
+							that gets generated actually works. You spend time on features, not fixing mistakes.
+						</p>
 					</CardContent>
 				</Card>
 			</div>
@@ -600,7 +537,7 @@
 					<div class="flex items-start gap-4">
 						<span class="mt-1 icon-[lucide--bot] shrink-0 text-4xl text-primary"></span>
 						<div>
-							<CardTitle class="mb-1 text-xl">AGENTS.md — pre-written codebase context</CardTitle>
+							<CardTitle class="mb-1 text-xl">AGENTS.md: pre-written codebase context</CardTitle>
 							<CardDescription class="text-base">
 								Claude Code, Cursor, and GitHub Copilot all scan
 								<code class="rounded bg-muted px-1.5 py-0.5 font-mono text-sm text-foreground"
@@ -619,9 +556,9 @@
 							</p>
 							<ul class="space-y-2 text-sm text-muted-foreground">
 								<li>• Complete DB schema with table-level explanations</li>
-								<li>• Auth session flow — token generation through cookie lifecycle</li>
-								<li>• Validation patterns — where they live, how to extend them</li>
-								<li>• Icon system rules — which syntax to use and when</li>
+								<li>• Auth session flow: token generation through cookie lifecycle</li>
+								<li>• Validation patterns: where they live, how to extend them</li>
+								<li>• Icon system rules: which syntax to use and when</li>
 								<li>• Explicit "what NOT to do" list (Svelte 4 syntax, raw SQL, etc.)</li>
 								<li>• Environment variable reference for dev and production</li>
 							</ul>
