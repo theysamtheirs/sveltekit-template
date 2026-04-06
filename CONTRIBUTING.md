@@ -5,15 +5,15 @@ Thank you for your interest in improving this template! This guide will help you
 ## 🚀 Quick Start
 
 1. **Fork and clone** the repository
-2. **Install dependencies**: `npm install`
-3. **Set up your environment**: `npm run setup`
-4. **Start developing**: `npm run dev`
+2. **Install dependencies**: `bun install`
+3. **Set up your environment**: `bun run setup`
+4. **Start developing**: `bun run dev`
 
 ## 📋 Development Workflow
 
 ### Before You Start
 
-- Run `npm run verify-setup` to ensure everything is configured correctly
+- Run `bun run verify-setup` to ensure everything is configured correctly
 - Check existing issues and pull requests to avoid duplicate work
 - For major changes, consider opening an issue first to discuss
 
@@ -28,10 +28,10 @@ Thank you for your interest in improving this template! This guide will help you
 
 3. **Test your changes**:
    ```bash
-   npm run lint      # Check linting
-   npm run check     # Check types
-   npm run build     # Ensure it builds
-   npm run dev       # Test locally
+   bun run lint      # Check linting
+   bun run check     # Check types
+   bun run build     # Ensure it builds
+   bun run dev       # Test locally
    ```
 
 4. **Commit your changes**:
@@ -63,7 +63,7 @@ Thank you for your interest in improving this template! This guide will help you
 
 ### Formatting
 
-- Run `npm run format` before committing
+- Run `bun run format` before committing
 - Use tabs for indentation (configured in Prettier)
 - Single quotes for JavaScript/TypeScript
 - Double quotes for HTML attributes
@@ -78,9 +78,9 @@ Thank you for your interest in improving this template! This guide will help you
 
 Before submitting a PR, ensure:
 
-- ✅ Code passes linting: `npm run lint`
-- ✅ TypeScript checks pass: `npm run check`
-- ✅ Project builds successfully: `npm run build`
+- ✅ Code passes linting: `bun run lint`
+- ✅ TypeScript checks pass: `bun run check`
+- ✅ Project builds successfully: `bun run build`
 - ✅ No console errors in development
 - ✅ Changes work in both dev and production builds
 

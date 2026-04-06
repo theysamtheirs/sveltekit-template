@@ -154,18 +154,18 @@
 								<img
 									src={tursoLight}
 									alt="Turso logo"
-									class="h-12 dark:hidden"
+									class="h-10 max-w-44 dark:hidden"
 									loading="lazy"
-									width="48"
-									height="48"
+									width="137"
+									height="40"
 								/>
 								<img
 									src={tursoDark}
 									alt="Turso logo"
-									class="hidden h-12 dark:block"
+									class="hidden h-10 max-w-44 dark:block"
 									loading="lazy"
-									width="48"
-									height="48"
+									width="137"
+									height="40"
 								/>
 							</a>
 						</div>
@@ -260,8 +260,8 @@
 					<CardContent>
 						<div class="space-y-2 font-mono text-sm">
 							<p class="text-muted-foreground">$ git clone &lt;repo&gt;</p>
-							<p class="text-muted-foreground">$ npm install</p>
-							<p class="font-semibold text-foreground">$ npm run setup</p>
+							<p class="text-muted-foreground">$ bun install</p>
+							<p class="font-semibold text-foreground">$ bun run setup</p>
 						</div>
 						<p class="mt-4 text-sm text-muted-foreground">
 							The setup script automatically creates your database, configures environment
@@ -282,7 +282,7 @@
 					</CardHeader>
 					<CardContent>
 						<div class="space-y-2 font-mono text-sm">
-							<p class="font-semibold text-foreground">$ npm run dev</p>
+							<p class="font-semibold text-foreground">$ bun run dev</p>
 						</div>
 						<p class="mt-4 text-sm text-muted-foreground">
 							Everything is already configured: authentication, database, UI components, and

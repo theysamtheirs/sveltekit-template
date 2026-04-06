@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { dev } from '$app/environment';
 	import { Button } from '$lib/components/ui/button';
 	import {
 		Card,
@@ -11,7 +12,8 @@
 	type Props = { status: number; error: unknown };
 	let { status, error }: Props = $props();
 
-	const errorMessage = $derived(() => {
+	// $derived.by() is needed for multi-line derivations; $derived() takes a single expression
+	const errorMessage = $derived.by(() => {
 		if (error instanceof Error) return error.message;
 		if (typeof error === 'string') return error;
 		return 'An error occurred';
@@ -43,10 +45,10 @@
 		</CardHeader>
 		<CardContent class="flex flex-col gap-4">
 			<Button href="/" class="w-full"> Go Home </Button>
-			{#if status === 500 && error}
+			{#if dev && status === 500 && error}
 				<details class="mt-4">
 					<summary class="cursor-pointer text-sm text-muted-foreground">
-						Error Details
+						Error Details (dev only)
 					</summary>
 					<pre class="mt-2 overflow-auto rounded bg-muted p-2 text-xs">{errorMessage}</pre>
 				</details>

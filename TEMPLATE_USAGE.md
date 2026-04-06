@@ -87,26 +87,27 @@ cd my-new-project
 ### 2. Install Dependencies
 
 ```bash
-npm install
-# or
-pnpm install
-# or
-yarn install
-# or
 bun install
 ```
 
-### 3. Run Setup
+### 3. Start Developing
 
+**Option A: Local dev (instant, no accounts needed)**
 ```bash
-# Make sure you're logged into Turso
-turso auth login
+bun run db:push   # creates local.db
+bun run dev
+```
 
-# Run automated setup
-npm run setup
+**Option B: With Turso (production-ready)**
+```bash
+turso auth login
+bun run setup     # creates DB, writes .env, pushes schema
+bun run dev
 ```
 
 ### 4. Customize for Your Project
+
+> **First step:** Run `bun run db:push` once after cloning to initialize the schema (locally or against Turso).
 
 Update these files with your project details:
 
@@ -119,7 +120,7 @@ Update these files with your project details:
 ### 5. Start Building!
 
 ```bash
-npm run dev
+bun run dev
 ```
 
 ## 🔧 Setting Up This Repository as a Template
@@ -196,26 +197,50 @@ Consider removing or updating:
 ### 3. Set Up Your Environment
 
 ```bash
-# Create your .env file
-cp .env.example .env
+# Quick local start (no Turso account needed)
+bun run db:push
+bun run dev
 
-# Run setup
-npm run setup
-
-# Verify everything works
-npm run verify
+# Or run the full Turso setup for production
+bun run setup
+bun run verify
 ```
 
 ### 4. Initialize Your Own Git History
 
 ```bash
-# Make your first commit
 git add .
 git commit -m "Initial commit: project setup from template"
-
-# Push to your repository
 git push origin main
 ```
+
+## 🎭 Running a Live Demo (Showcase Deployment)
+
+You can maintain two deployments from the same repo without any code branching:
+
+| | GitHub Template | Live Demo |
+|---|---|---|
+| **What it is** | What people clone | What you link to publicly |
+| **Auth buttons** | Visible (full auth works) | Hidden |
+| **Database** | Not required for dev | Real Turso DB |
+| **Config** | Default | `TEMPLATE_SHOWCASE_MODE=true` in Vercel |
+
+### Why this pattern?
+
+The GitHub template should be a full working app — users who clone it expect auth to work. But a public showcase deployment with a shared database is a support nightmare.
+
+`TEMPLATE_SHOWCASE_MODE=true` hides the sign in/sign up buttons in the navigation, so the showcase looks clean without requiring a functioning login flow.
+
+### How to set it up
+
+1. Deploy the repo to Vercel normally (this becomes your live demo)
+2. In Vercel → your project → **Settings → Environment Variables**, add:
+   ```
+   TEMPLATE_SHOWCASE_MODE = true
+   ```
+3. Redeploy. The auth buttons disappear from the nav.
+
+Your GitHub template repo is unchanged — people who clone it still get full auth.
 
 ## 🔄 Updating from Template
 
@@ -268,7 +293,7 @@ If you want to pull in updates:
 1. Click "Use this template" on GitHub
 2. Create new repository
 3. Clone your new repository
-4. Run `npm install && npm run setup`
+4. Run `bun install && bun run db:push && bun run dev`
 5. Start building!
 
 **For Template Maintainers:**
