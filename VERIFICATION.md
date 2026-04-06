@@ -11,6 +11,7 @@ bun run verify
 ```
 
 This checks:
+
 - ✅ Node.js installation
 - ✅ Package manager
 - ✅ Dependencies
@@ -32,6 +33,7 @@ bun run setup
 ```
 
 **Expected output:**
+
 - ✅ Database created or found
 - ✅ Credentials generated
 - ✅ `.env` file updated
@@ -60,17 +62,18 @@ curl http://localhost:5173/api/health
 ```
 
 **Expected response:**
+
 ```json
 {
-  "status": "healthy",
-  "checks": {
-    "database": true,
-    "environment": {
-      "databaseUrl": true,
-      "databaseToken": true
-    },
-    "timestamp": "2024-..."
-  }
+	"status": "healthy",
+	"checks": {
+		"database": true,
+		"environment": {
+			"databaseUrl": true,
+			"databaseToken": true
+		},
+		"timestamp": "2024-..."
+	}
 }
 ```
 
@@ -141,6 +144,7 @@ bun run db:studio
 ```
 
 **Expected:**
+
 - Browser opens with Drizzle Studio
 - Can see `user` and `session` tables
 - Can query data
@@ -251,11 +255,13 @@ bun run preview      # Should preview build
 If something doesn't work:
 
 1. **Run verification script:**
+
    ```bash
    bun run verify
    ```
 
 2. **Check health endpoint:**
+
    ```bash
    curl http://localhost:5173/api/health
    ```
@@ -266,6 +272,7 @@ If something doesn't work:
    - Check network tab for API calls
 
 4. **Re-run setup:**
+
    ```bash
    bun run setup
    ```
@@ -304,4 +311,3 @@ bun run build
 ```
 
 If all commands succeed, your template is fully functional! 🎉
-

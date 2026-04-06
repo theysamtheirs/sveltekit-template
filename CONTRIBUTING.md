@@ -20,6 +20,7 @@ Thank you for your interest in improving this template! This guide will help you
 ### Making Changes
 
 1. **Create a branch** from `main`:
+
    ```bash
    git checkout -b feature/your-feature-name
    ```
@@ -27,6 +28,7 @@ Thank you for your interest in improving this template! This guide will help you
 2. **Make your changes** following the code style guidelines below
 
 3. **Test your changes**:
+
    ```bash
    bun run lint      # Check linting
    bun run check     # Check types
@@ -35,6 +37,7 @@ Thank you for your interest in improving this template! This guide will help you
    ```
 
 4. **Commit your changes**:
+
    ```bash
    git add .
    git commit -m "feat: add your feature description"
@@ -102,6 +105,7 @@ Before submitting a PR, ensure:
 ### Adding a UI Component
 
 Use shadcn-svelte CLI:
+
 ```bash
 npx shadcn-svelte@latest add component-name
 ```
@@ -122,6 +126,7 @@ When reporting issues, please include:
 ### PR Title Format
 
 Use conventional commits format:
+
 - `feat:` for new features
 - `fix:` for bug fixes
 - `docs:` for documentation
@@ -131,6 +136,7 @@ Use conventional commits format:
 - `chore:` for maintenance
 
 Examples:
+
 - `feat: add user profile page`
 - `fix: resolve database connection issue`
 - `docs: update README with new setup steps`
@@ -138,6 +144,7 @@ Examples:
 ### PR Description
 
 Include:
+
 - **What**: What changes you made
 - **Why**: Why you made these changes
 - **How**: How to test the changes
@@ -169,4 +176,3 @@ We welcome contributions in these areas:
 - Be respectful and constructive in all interactions
 
 Thank you for contributing! 🎉
-

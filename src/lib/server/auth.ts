@@ -4,7 +4,11 @@ import { sha256 } from '@oslojs/crypto/sha2';
 import { encodeBase64url, encodeHexLowerCase } from '@oslojs/encoding';
 import { db } from '$lib/server/db';
 import * as table from '$lib/server/db/schema';
-import { sessionCookieDeleteOptions, sessionCookieOptions, sessionPolicy } from '$lib/server/security';
+import {
+	sessionCookieDeleteOptions,
+	sessionCookieOptions,
+	sessionPolicy
+} from '$lib/server/security';
 
 export const sessionCookieName = 'auth-session';
 

@@ -60,4 +60,3 @@ export const POST: RequestHandler = async ({ request }) => {
 		timestamp: new Date().toISOString()
 	});
 };
-

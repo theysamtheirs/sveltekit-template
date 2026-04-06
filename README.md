@@ -379,11 +379,11 @@ bun run db:studio
 
 ### Environment Variables
 
-| Variable                 | Description                | Required   | Notes                                                        |
-| ------------------------ | -------------------------- | ---------- | ------------------------------------------------------------ |
-| `DATABASE_URL`           | Turso database URL         | Production | Falls back to `file:local.db` in dev if not set              |
-| `DATABASE_AUTH_TOKEN`    | Turso authentication token | Production | Optional in dev, required in production                      |
-| `TEMPLATE_SHOWCASE_MODE` | Hides auth UI              | No         | Set to `true` on your live demo deployment (see below)       |
+| Variable                 | Description                | Required   | Notes                                                  |
+| ------------------------ | -------------------------- | ---------- | ------------------------------------------------------ |
+| `DATABASE_URL`           | Turso database URL         | Production | Falls back to `file:local.db` in dev if not set        |
+| `DATABASE_AUTH_TOKEN`    | Turso authentication token | Production | Optional in dev, required in production                |
+| `TEMPLATE_SHOWCASE_MODE` | Hides auth UI              | No         | Set to `true` on your live demo deployment (see below) |
 
 ## 🔐 Authentication
 
@@ -425,15 +425,15 @@ import { getRequestEvent } from '$app/server';
 import type { PageServerLoad } from './$types';
 
 export const load: PageServerLoad = async () => {
-  const { locals } = getRequestEvent();
+	const { locals } = getRequestEvent();
 
-  if (!locals.user) {
-    redirect(302, '/sign-in');
-  }
+	if (!locals.user) {
+		redirect(302, '/sign-in');
+	}
 
-  return {
-    user: locals.user
-  };
+	return {
+		user: locals.user
+	};
 };
 ```
 
@@ -505,7 +505,7 @@ Use icons with the dynamic selector syntax:
 ```html
 <!-- Material Design Light icons -->
 <span class="icon-[mdi-light--home]"></span>
-<span class="icon-[mdi-light--user]"></span>
+<span class="icon-[mdi-light--account]"></span>
 
 <!-- Lucide icons -->
 <span class="icon-[lucide--search]"></span>
@@ -545,7 +545,7 @@ Icons inherit text color and can be styled like text:
 <span class="icon-[heroicons--bars-3] text-2xl"></span>
 
 <!-- Combined styling -->
-<span class="text-xl text-green-500 icon-[mdi-light--user]"></span>
+<span class="icon-[mdi-light--account] text-xl text-green-500"></span>
 ```
 
 ### Popular Icon Sets
@@ -625,12 +625,12 @@ curl -X POST http://localhost:5173/api/example \
 
 You can run two separate deployments from one codebase:
 
-| | GitHub Template | Live Demo |
-|---|---|---|
-| **Purpose** | What people clone | What you link to publicly |
-| **Auth UI** | Visible | Hidden (no real user auth) |
-| **DB** | Not required for dev | Real Turso DB |
-| **Setup** | None | `TEMPLATE_SHOWCASE_MODE=true` in Vercel |
+|             | GitHub Template      | Live Demo                               |
+| ----------- | -------------------- | --------------------------------------- |
+| **Purpose** | What people clone    | What you link to publicly               |
+| **Auth UI** | Visible              | Hidden (no real user auth)              |
+| **DB**      | Not required for dev | Real Turso DB                           |
+| **Setup**   | None                 | `TEMPLATE_SHOWCASE_MODE=true` in Vercel |
 
 **How to set up the live demo:**
 

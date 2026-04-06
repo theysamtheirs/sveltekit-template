@@ -44,7 +44,7 @@
 			</CardDescription>
 		</CardHeader>
 		<CardContent class="flex flex-col gap-4">
-			<Button href="/" class="w-full"> Go Home </Button>
+			<Button href="/" class="w-full">Go Home</Button>
 			{#if dev && status === 500 && error}
 				<details class="mt-4">
 					<summary class="cursor-pointer text-sm text-muted-foreground">

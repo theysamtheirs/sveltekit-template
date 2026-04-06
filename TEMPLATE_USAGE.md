@@ -15,11 +15,11 @@ A **template repository** is a special type of GitHub repository that allows use
 
 ### Template vs Fork vs Clone
 
-| Method | Use Case | Git History | Connection to Original |
-|--------|---------|-------------|----------------------|
+| Method       | Use Case              | Git History   | Connection to Original        |
+| ------------ | --------------------- | ------------- | ----------------------------- |
 | **Template** | Starting new projects | Fresh history | None - completely independent |
-| **Fork** | Contributing back | Full history | Shows "forked from" |
-| **Clone** | Local development | Full history | Remote connection |
+| **Fork**     | Contributing back     | Full history  | Shows "forked from"           |
+| **Clone**    | Local development     | Full history  | Remote connection             |
 
 ## 🎯 How to Use This Template
 
@@ -38,6 +38,7 @@ This is the easiest and recommended way:
 5. **Click "Create repository"**
 
 **What happens:**
+
 - ✅ GitHub creates a new repository with all the template files
 - ✅ Fresh git history (no template commits)
 - ✅ You own it completely
@@ -49,17 +50,20 @@ If you prefer more control:
 
 1. **Create a new empty repository** on GitHub
 2. **Clone this template:**
+
    ```bash
    git clone https://github.com/your-username/sveltekit-template.git my-new-project
    cd my-new-project
    ```
 
 3. **Remove the existing git history:**
+
    ```bash
    rm -rf .git
    ```
 
 4. **Initialize new git repository:**
+
    ```bash
    git init
    git add .
@@ -93,12 +97,14 @@ bun install
 ### 3. Start Developing
 
 **Option A: Local dev (instant, no accounts needed)**
+
 ```bash
 bun run db:push   # creates local.db
 bun run dev
 ```
 
 **Option B: With Turso (production-ready)**
+
 ```bash
 turso auth login
 bun run setup     # creates DB, writes .env, pushes schema
@@ -146,6 +152,7 @@ Add this to your README to show it's a template:
 ### Step 3: Update README
 
 Make sure your README clearly indicates it's a template and includes:
+
 - Clear "Use this template" instructions
 - What the template includes
 - Quick start guide
@@ -162,6 +169,7 @@ When someone uses your template, they get:
 ✅ **Documentation** (README, CONTRIBUTING, etc.)
 
 ❌ **NOT copied:**
+
 - Git history (fresh start)
 - Issues and pull requests
 - GitHub Actions run history
@@ -190,6 +198,7 @@ After creating from template, immediately update:
 ### 2. Remove Template-Specific Content
 
 Consider removing or updating:
+
 - Template documentation (like this file) if not needed
 - Example/demo routes if not using them
 - Template-specific scripts if customizing
@@ -218,12 +227,12 @@ git push origin main
 
 You can maintain two deployments from the same repo without any code branching:
 
-| | GitHub Template | Live Demo |
-|---|---|---|
-| **What it is** | What people clone | What you link to publicly |
-| **Auth buttons** | Visible (full auth works) | Hidden |
-| **Database** | Not required for dev | Real Turso DB |
-| **Config** | Default | `TEMPLATE_SHOWCASE_MODE=true` in Vercel |
+|                  | GitHub Template           | Live Demo                               |
+| ---------------- | ------------------------- | --------------------------------------- |
+| **What it is**   | What people clone         | What you link to publicly               |
+| **Auth buttons** | Visible (full auth works) | Hidden                                  |
+| **Database**     | Not required for dev      | Real Turso DB                           |
+| **Config**       | Default                   | `TEMPLATE_SHOWCASE_MODE=true` in Vercel |
 
 ### Why this pattern?
 
@@ -249,16 +258,19 @@ Your GitHub template repo is unchanged — people who clone it still get full au
 If you want to pull in updates:
 
 1. **Add template as a remote:**
+
    ```bash
    git remote add template https://github.com/original-owner/sveltekit-template.git
    ```
 
 2. **Fetch template updates:**
+
    ```bash
    git fetch template
    ```
 
 3. **Merge specific updates:**
+
    ```bash
    git merge template/main --allow-unrelated-histories
    ```
@@ -290,6 +302,7 @@ If you want to pull in updates:
 ## 🎯 Quick Reference
 
 **For Template Users:**
+
 1. Click "Use this template" on GitHub
 2. Create new repository
 3. Clone your new repository
@@ -297,6 +310,7 @@ If you want to pull in updates:
 5. Start building!
 
 **For Template Maintainers:**
+
 1. Enable "Template repository" in Settings
 2. Keep template up to date
 3. Write clear documentation
@@ -305,4 +319,3 @@ If you want to pull in updates:
 ---
 
 **Need help?** Open an issue on the template repository or check the main README for setup instructions.
-

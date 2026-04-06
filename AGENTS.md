@@ -72,20 +72,20 @@ The token itself never touches the database — only its SHA256 hash. This means
 
 ```svelte
 <script lang="ts">
-  // ✅ Svelte 5
-  let { data }: { data: PageData } = $props();
-  let count = $state(0);
-  let doubled = $derived(count * 2);
+	// ✅ Svelte 5
+	let { data }: { data: PageData } = $props();
+	let count = $state(0);
+	let doubled = $derived(count * 2);
 
-  // For multi-line derivations use $derived.by():
-  let message = $derived.by(() => {
-    if (count > 10) return 'high';
-    return 'low';
-  });
+	// For multi-line derivations use $derived.by():
+	let message = $derived.by(() => {
+		if (count > 10) return 'high';
+		return 'low';
+	});
 
-  // ❌ Never Svelte 4
-  export let data;
-  $: doubled = count * 2;
+	// ❌ Never Svelte 4
+	export let data;
+	$: doubled = count * 2;
 </script>
 ```
 
@@ -97,8 +97,8 @@ import { redirect } from '@sveltejs/kit';
 import type { PageServerLoad } from './$types';
 
 export const load: PageServerLoad = async ({ locals }) => {
-  if (!locals.user) redirect(302, '/sign-in');
-  return { user: locals.user };
+	if (!locals.user) redirect(302, '/sign-in');
+	return { user: locals.user };
 };
 ```
 
@@ -141,9 +141,9 @@ import { enforceRateLimit } from '$lib/server/rate-limit';
 import { buildRateLimitKey } from '$lib/server/validation';
 
 await enforceRateLimit({
-  key: buildRateLimitKey(['auth', 'my-action', 'ip', event.getClientAddress()]),
-  windowMs: 60_000,
-  max: 10
+	key: buildRateLimitKey(['auth', 'my-action', 'ip', event.getClientAddress()]),
+	windowMs: 60_000,
+	max: 10
 });
 ```
 
@@ -169,19 +169,20 @@ This project has **two icon systems**. Use the right one:
 
 ```svelte
 <span class="icon-[lucide--home]"></span>
-<span class="icon-[lucide--user] text-red-500 text-xl"></span>
+<span class="icon-[lucide--user] text-xl text-red-500"></span>
 ```
 
 Syntax: `icon-[{prefix}--{name}]` with double hyphens. Verify names at [icon-sets.iconify.design](https://icon-sets.iconify.design/). Common prefixes: `lucide`, `heroicons`, `tabler`, `mdi-light`.
 
-**Never use placeholder names** like `icon-[lucide--icon-name]` — they silently render nothing.
+**Never use placeholder names** like `icon-[prefix--name]` — they silently render nothing. Always verify the exact name at [icon-sets.iconify.design](https://icon-sets.iconify.design/) first.
 
 ### 2. @lucide/svelte imports (only in shadcn-svelte components)
 
 ```svelte
 <script lang="ts">
-  import CheckIcon from "@lucide/svelte/icons/check";
+	import CheckIcon from '@lucide/svelte/icons/check';
 </script>
+
 <CheckIcon class="size-4" />
 ```
 
@@ -220,14 +221,14 @@ Add these at the top of the test file (Vitest hoists `vi.mock` calls automatical
 ## Quick Reference
 
 ```typescript
-import { db } from '$lib/server/db';                          // database
-import * as table from '$lib/server/db/schema';              // schema
-import * as auth from '$lib/server/auth';                    // session management
+import { db } from '$lib/server/db'; // database
+import * as table from '$lib/server/db/schema'; // schema
+import * as auth from '$lib/server/auth'; // session management
 import { validateUsername, validatePassword, buildRateLimitKey } from '$lib/server/validation';
 import { enforceRateLimit } from '$lib/server/rate-limit';
 
-event.locals.user    // current user (null if not logged in)
-event.locals.session // current session (null if not logged in)
+event.locals.user; // current user (null if not logged in)
+event.locals.session; // current session (null if not logged in)
 ```
 
 ## Deployment

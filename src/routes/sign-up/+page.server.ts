@@ -49,7 +49,9 @@ export const actions: Actions = {
 		const passwordHash = await hash(password, argon2Options);
 
 		try {
-			await db.insert(table.user).values({ id: userId, username: normalizedUsername, passwordHash });
+			await db
+				.insert(table.user)
+				.values({ id: userId, username: normalizedUsername, passwordHash });
 
 			const sessionToken = auth.generateSessionToken();
 			const session = await auth.createSession(sessionToken, userId);

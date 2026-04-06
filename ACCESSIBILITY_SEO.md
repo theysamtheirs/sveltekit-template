@@ -125,20 +125,20 @@ import type { PageServerLoad } from './$types';
 import type { SEOProps } from '$lib/utils/seo';
 
 export const load: PageServerLoad = async ({ params }) => {
-  const post = await fetchPost(params.slug);
+	const post = await fetchPost(params.slug);
 
-  return {
-    post,
-    // SEO data will be automatically used by layout
-    seo: {
-      title: post.title,
-      description: post.excerpt,
-      image: post.featuredImage,
-      url: `/blog/${params.slug}`,
-      type: 'article',
-      keywords: post.tags?.join(', ')
-    } as SEOProps
-  };
+	return {
+		post,
+		// SEO data will be automatically used by layout
+		seo: {
+			title: post.title,
+			description: post.excerpt,
+			image: post.featuredImage,
+			url: `/blog/${params.slug}`,
+			type: 'article',
+			keywords: post.tags?.join(', ')
+		} as SEOProps
+	};
 };
 ```
 
@@ -146,9 +146,9 @@ The layout will automatically render SEO tags. If you need to skip layout SEO an
 
 ```typescript
 return {
-  seo: {
-    skipDefault: true // Layout won't render SEO, use your own component
-  }
+	seo: {
+		skipDefault: true // Layout won't render SEO, use your own component
+	}
 };
 ```
 
@@ -187,9 +187,9 @@ Edit `src/routes/sitemap.xml/+server.ts` to add new public routes:
 
 ```typescript
 const routes = [
-  { url: '', changefreq: 'weekly', priority: 1.0 },
-  { url: '/about', changefreq: 'monthly', priority: 0.8 },
-  // Add your routes here
+	{ url: '', changefreq: 'weekly', priority: 1.0 },
+	{ url: '/about', changefreq: 'monthly', priority: 0.8 }
+	// Add your routes here
 ];
 ```
 
@@ -341,18 +341,18 @@ The root layout supports automatic SEO rendering from page load functions. This 
 ```typescript
 // In any +page.server.ts
 export const load: PageServerLoad = async ({ params }) => {
-  return {
-    // Your page data
-    content: await getContent(),
+	return {
+		// Your page data
+		content: await getContent(),
 
-    // SEO data - automatically rendered by layout
-    seo: {
-      title: 'Dynamic Page Title',
-      description: 'Page description',
-      url: `/path/${params.id}`,
-      type: 'article'
-    }
-  };
+		// SEO data - automatically rendered by layout
+		seo: {
+			title: 'Dynamic Page Title',
+			description: 'Page description',
+			url: `/path/${params.id}`,
+			type: 'article'
+		}
+	};
 };
 ```
 

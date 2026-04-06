@@ -55,7 +55,10 @@ function withSecurityHeaders(response: Response): Response {
 	response.headers.set('Cross-Origin-Resource-Policy', 'same-origin');
 
 	if (!dev) {
-		response.headers.set('Strict-Transport-Security', 'max-age=31536000; includeSubDomains; preload');
+		response.headers.set(
+			'Strict-Transport-Security',
+			'max-age=31536000; includeSubDomains; preload'
+		);
 	}
 
 	return response;

@@ -12,10 +12,7 @@ type RateLimitOptions = {
 export async function enforceRateLimit({ key, windowMs, max }: RateLimitOptions): Promise<void> {
 	const now = Date.now();
 
-	const [existing] = await db
-		.select()
-		.from(table.rateLimit)
-		.where(eq(table.rateLimit.key, key));
+	const [existing] = await db.select().from(table.rateLimit).where(eq(table.rateLimit.key, key));
 
 	if (!existing || now >= existing.resetAt) {
 		// Start a fresh window — onConflictDoUpdate handles both insert and reset atomically
